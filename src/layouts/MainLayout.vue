@@ -2,41 +2,43 @@
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
       <q-toolbar>
-        <q-btn
+        <!-- <q-btn
           flat
           dense
           round
           icon="menu"
           aria-label="Menu"
-          @click="leftDrawerOpen = !leftDrawerOpen"
-        />
-
-        <q-toolbar-title>
-          Quasar App
-        </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
+        /> -->
       </q-toolbar>
     </q-header>
 
     <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
+      :value="true"
       bordered
-      content-class="bg-grey-1"
+      content-class="bg-white"
+      behavior="desktop"
     >
+      <q-toolbar-title>
+          <img
+            class="full-width q-pa-lg"
+            alt="Quasar logo"
+            src="~assets/stacs_logo.png"
+          >
+      </q-toolbar-title>
       <q-list>
-        <q-item-label
-          header
-          class="text-grey-8"
-        >
-          Essential Links
-        </q-item-label>
-        <EssentialLink
-          v-for="link in essentialLinks"
+        <q-item
+          v-for="link in navLinks"
           :key="link.title"
-          v-bind="link"
-        />
+          v-ripple
+          :exact-active-class="$style.activeLink"
+          :to="link.to"
+        >
+          <q-item-section>
+            <q-item-label>
+              {{ link.title }}
+            </q-item-label>
+          </q-item-section>
+        </q-item>
       </q-list>
     </q-drawer>
 
@@ -47,57 +49,50 @@
 </template>
 
 <script>
-import EssentialLink from 'components/EssentialLink'
+import { mapState } from 'vuex';
+import { role } from 'src/config';
 
 export default {
   name: 'MainLayout',
 
-  components: {
-    EssentialLink
-  },
-
   data () {
     return {
-      leftDrawerOpen: false,
-      essentialLinks: [
-        {
-          title: 'Docs',
-          caption: 'quasar.dev',
-          icon: 'school',
-          link: 'https://quasar.dev'
-        },
-        {
-          title: 'Github',
-          caption: 'github.com/quasarframework',
-          icon: 'code',
-          link: 'https://github.com/quasarframework'
-        },
-        {
-          title: 'Discord Chat Channel',
-          caption: 'chat.quasar.dev',
-          icon: 'chat',
-          link: 'https://chat.quasar.dev'
-        },
-        {
-          title: 'Forum',
-          caption: 'forum.quasar.dev',
-          icon: 'record_voice_over',
-          link: 'https://forum.quasar.dev'
-        },
-        {
-          title: 'Twitter',
-          caption: '@quasarframework',
-          icon: 'rss_feed',
-          link: 'https://twitter.quasar.dev'
-        },
-        {
-          title: 'Facebook',
-          caption: '@QuasarFramework',
-          icon: 'public',
-          link: 'https://facebook.quasar.dev'
-        }
-      ]
+      linksByRole: {
+        [role.cpUser]: [
+          {
+            title: 'Fee Adjustment',
+            to: { name: 'feeSchedule/adjustment' }
+          },
+          {
+            title: 'Approval List',
+            to: { name: 'feeSchedule/approvallist' }
+          },
+          {
+            title: 'History',
+            to: { name: 'feeSchedule/history' }
+          },
+        ]
+      },
+    }
+  },
+  computed: {
+    ...mapState({
+      userRole: state => state.user.role,
+    }),
+    /**
+     * Returns navigation links based on role
+     * 
+     * @returns {Object[]} - links
+     */
+    navLinks() {
+      return this.linksByRole[this.userRole];
     }
   }
 }
 </script>
+
+<style lang="scss" module>
+.activeLink {
+  background-color: $blue-1;
+}
+</style>
