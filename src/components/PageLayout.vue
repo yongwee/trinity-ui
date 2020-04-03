@@ -1,6 +1,6 @@
 <template>
   <q-page padding :class="$style.pageLayout" class="q-mx-auto">
-    <div class="text-h4 q-mb-xl">
+    <div class="text-h4 text-weight-light q-mb-xl">
       <span>{{ title }}</span>
       <q-separator color="primary" />
     </div>

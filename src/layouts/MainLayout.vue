@@ -14,22 +14,24 @@
 
     <q-drawer
       :value="true"
+      :width="200"
       bordered
       content-class="bg-white"
       behavior="desktop"
     >
-      <q-toolbar-title>
-          <img
-            class="full-width q-pa-lg"
-            alt="Quasar logo"
-            src="~assets/stacs_logo.png"
-          >
-      </q-toolbar-title>
-      <q-list>
+      <img
+        :class="$style.logo"
+        alt="Quasar logo"
+        src="~assets/stacs_logo.png"
+      >
+
+      <q-separator />
+
+      <q-list class="text-grey-9">
         <q-item
+          :class="$style.drawerItem"
           v-for="link in navLinks"
           :key="link.title"
-          v-ripple
           :exact-active-class="$style.activeLink"
           :to="link.to"
         >
@@ -92,7 +94,21 @@ export default {
 </script>
 
 <style lang="scss" module>
+.logo {
+  display: block;
+  width: 128px;
+  margin: map-get($space-md, "y") auto ;
+}
+
+.drawerItem:focus, .drawerItem:hover {
+  color: $primary;
+
+  & > :global(.q-focus-helper) {
+    opacity: 0 !important;
+  }
+}
+
 .activeLink {
-  background-color: $blue-1;
+  font-weight: bold;
 }
 </style>
