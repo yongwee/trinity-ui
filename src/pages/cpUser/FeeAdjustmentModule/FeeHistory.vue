@@ -15,14 +15,17 @@
             </q-td>
             <q-td key="approved" :props="props">
               <div :class="props.row.approved ? 'text-positive' : 'text-negative'" class="text-weight-bold">
-                {{ props.row.approved ? 'Approved' : 'Rejected' }}
+                {{props.row.approved
+                    ? $t('feeHistory.approved')
+                    : $t('feeHistory.rejected')
+                }}
               </div>
             </q-td>
             <q-td key="actions" :props="props">
               <q-btn
               unelevated
               color="primary"
-              label="View Details"
+              :label="$t('feeHistory.viewDetails')"
               icon="mdi-eye-outline"
               class="q-mr-sm"
               dense
@@ -32,7 +35,7 @@
             <q-btn
               unelevated
               color="secondary"
-              label="Download"
+              :label="$t('feeHistory.download')"
               dense
               icon="mdi-cloud-download-outline"
             />

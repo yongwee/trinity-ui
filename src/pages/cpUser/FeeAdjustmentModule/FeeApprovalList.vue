@@ -1,5 +1,5 @@
 <template>
-  <PageLayout title="Approval List">
+  <PageLayout :title="$t('feeApprovalList.title')">
     <q-table
       :data="approvalList"
       :columns="columns"
@@ -11,12 +11,12 @@
       <template v-slot:body="props">
         <q-tr :props="props">
           <q-td key="uploader" :props="props" :class="$style.uploaderCell">
-            <span>{{ `${props.row.uploader} has uploaded a new fee schedule` }}</span>
+            <span>{{ $t('feeApprovalList.newSchedule', { name: props.row.uploader }) }}</span>
           </q-td>
           <q-td key="actions" :props="props">
             <q-btn
               icon="mdi-eye-outline"
-              label="View Details"
+              :label="$t('feeApprovalList.viewDetails')"
               color="primary"
               class="text-no-wrap"
               dense

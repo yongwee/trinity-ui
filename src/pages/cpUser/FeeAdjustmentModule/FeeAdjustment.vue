@@ -1,14 +1,14 @@
 <template>
-  <PageLayout title="Fee Adjustment">
+  <PageLayout :title="$t('feeAdjustment.title')">
     <div class="row q-gutter-md q-mb-lg">
       <q-select outlined v-model="client" :options="clientOptions" label="Client" class="col-6 q-mr-sm" />
       <q-select outlined v-model="market" :options="marketOptions" label="Market" class="col-6" />
     </div>
-    <div class="q-mb-sm">Add fee schedule</div>
+    <div class="q-mb-sm">{{ $t('feeAdjustment.addScheduleLabel')}}</div>
     <q-uploader
       flat
       bordered
-      label="Import as CSV"
+      :label="$t('feeAdjustment.importAsCSV')"
       :filter="checkFileType"
       :style="{ width: '100%', height: '200px'}"
       @added="addedFiles"
@@ -17,7 +17,7 @@
       <template v-slot:list v-if="!hasFiles">
         <div class="column flex-center text-h6 text-grey-8 non-selectable full-height">
           <q-icon name="mdi-cloud-upload-outline" size="xl" />
-          <div>Drag and drop CSV files here</div>
+          <div>{{ $t('feeAdjustment.dragAndDrop') }}</div>
         </div>
       </template>
     </q-uploader>

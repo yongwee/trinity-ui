@@ -5,7 +5,7 @@
   >
     <q-card>
       <q-card-section class="column flex-center">
-        <div class="text-h6 q-mb-lg">Unsaved changes</div>
+        <div class="text-h6 q-mb-lg">Discard unsaved changes?</div>
         <div>You have unsaved changes. Are you sure you want to leave without saving?</div>
       </q-card-section>
       <q-card-actions>
