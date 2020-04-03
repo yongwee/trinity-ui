@@ -18,7 +18,7 @@ const routes = [
       {
         path: '/feehistory',
         name: 'feeSchedule/history',
-        component: () => import('pages/cpUser/FeeAdjustmentModule/FeeHistory/index.vue'),
+        component: () => import('pages/cpUser/FeeAdjustmentModule/FeeHistory.vue'),
       },
     ]
   }

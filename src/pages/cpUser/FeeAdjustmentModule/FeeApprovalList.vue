@@ -1,37 +1,72 @@
 <template>
   <PageLayout title="Approval List">
-    <q-card
-      v-for="(approval, i) in approvalList"
-      :key="i"
+    <q-table
+      :data="approvalList"
+      :columns="columns"
+      hide-header
+      hide-bottom
       flat
       bordered
-      class="q-mb-sm"
     >
-        <q-expansion-item
-          :label="`${approval.uploader} has uploaded a new fee schedule`"
-        >
-          <FeeAdjustmentTable :data="approval.data" />
-          <q-separator />
-          <q-card-actions>
-            <q-space />
-            <q-input dense label="Reason" class="q-mr-lg" :class="$style.reasonInput" outlined />
-            <q-btn unelevated color="primary" label="Accept" :class="$style.approvalBtn" @click="doApprove(approval.id)" />
-            <q-btn unelevated color="negative" label="Deny" :class="$style.approvalBtn" @click="doDeny(approval.id)" />
-          </q-card-actions>
-        </q-expansion-item>
-    </q-card>
+      <template v-slot:body="props">
+        <q-tr :props="props">
+          <q-td key="uploader" :props="props" :class="$style.uploaderCell">
+            <span>{{ `${props.row.uploader} has uploaded a new fee schedule` }}</span>
+          </q-td>
+          <q-td key="actions" :props="props">
+            <q-btn
+              icon="mdi-eye-outline"
+              label="View Details"
+              color="primary"
+              class="text-no-wrap"
+              dense
+              @click="doShowDetails(props.row.data)"
+            />
+          </q-td>
+        </q-tr>
+      </template>
+    </q-table>
+
+    <FeeAdjustmentDetailsDialog :data="shownData" :value="showDetailsDialog" @input="onShowDetailsDialogChange">
+      <template v-slot:actions>
+        <q-space />
+        <FeeAdjustmentApprovalActions
+          @change="onApprovalValueChange"
+          @submit="onApprovalSubmit"
+        />
+      </template>
+    </FeeAdjustmentDetailsDialog>
+
+    <DirtyState v-model="goNext" :isDirty.sync="isDirty" />
   </PageLayout>
 </template>
 
 <script>
 import PageLayout from 'src/components/PageLayout';
-import FeeAdjustmentTable from 'src/components/FeeAdjustmentModule/FeeAdjustmentTable';
+import FeeAdjustmentDetailsDialog from 'src/components/FeeAdjustmentModule/FeeAdjustmentDetailsDialog';
+import FeeAdjustmentApprovalActions from 'src/components/FeeAdjustmentModule/FeeAdjustmentApprovalActions';
+import DirtyState from 'src/components/DirtyState';
 
 export default {
   name: 'FeeApprovalList',
   data() {
     return {
+      columns: [
+        {
+          name: 'uploader',
+          require: true,
+          align: 'left',
+        },
+        {
+          name: 'actions',
+          align: 'right',
+        },
+      ],
       approvalList: [],
+      showDetailsDialog: false,
+      shownData: null,
+      goNext: null,
+      isDirty: false,
     };
   },
   created() {
@@ -43,26 +78,43 @@ export default {
      */
     fetchApprovalList() {
       // TODO: proper fetch
+  const jpmorganData = [
+        {
+          region: 'North America',
+          productName: 'eqldx-US',
+          productType: 'Mixed',
+          currency: 'USD',
+          brokerageAmount: '0.70',
+          modification: 'New',
+        },
+        {
+          region: 'EMEA',
+          productName: 'eqldx-EUR-dj',
+          productType: 'Future',
+          currency: 'EUR',
+          brokerageAmount: '0.60',
+        },
+      ];
+
       this.approvalList = [
         {
           uploader: 'JP Morgan',
           id: 1,
           data: [
-            {
-              region: 'North America',
-              productName: 'eqldx-US',
-              productType: 'Mixed',
-              currency: 'USD',
-              brokerageAmount: '0.70',
-              modification: 'New',
-            },
-            {
-              region: 'EMEA',
-              productName: 'eqldx-EUR-dj',
-              productType: 'Future',
-              currency: 'EUR',
-              brokerageAmount: '0.60',
-            },
+            ...jpmorganData,
+            ...jpmorganData,
+            ...jpmorganData,
+            ...jpmorganData,
+            ...jpmorganData,
+            ...jpmorganData,
+            ...jpmorganData,
+            ...jpmorganData,
+            ...jpmorganData,
+            ...jpmorganData,
+            ...jpmorganData,
+            ...jpmorganData,
+            ...jpmorganData,
+            ...jpmorganData,
           ]
         },
         {
@@ -81,26 +133,58 @@ export default {
         }
       ]
     },
-    doApprove(id) {
-      console.log('approved ', id);
+    /**
+     * Shows details dialog
+     */
+    doShowDetails(data) {
+      this.shownData = data;
+      this.showDetailsDialog = true;
     },
-    doDeny(id) {
-      console.log('denied ', id);
+    /**
+     * Hides details dialog
+     */
+    doHideDetails() {
+      this.showDetailsDialog = false;
     },
+    /**
+     * Sets goNext to contain a function that hides dialog when invoked
+     * if event payload is false
+     */
+    onShowDetailsDialogChange(showDetailsDialog) {
+      if (!showDetailsDialog) {
+        this.goNext = () => {
+          this.doHideDetails();
+        };
+      }
+    },
+    onApprovalValueChange() {
+      this.isDirty = true;
+    },
+    onApprovalSubmit(approved) {
+      // TODO: proper submission
+      // TODO: refetch after submission
+    },
+  },
+  beforeRouteLeave(_to, _from, next) {
+    this.goNext = () => {
+      this.doHideDetails();
+      next();
+    };
   },
   components: {
     PageLayout,
-    FeeAdjustmentTable,
+    FeeAdjustmentDetailsDialog,
+    FeeAdjustmentApprovalActions,
+    DirtyState,
   },
 }
 </script>
 
 <style lang="scss" module>
-.reasonInput {
-  width: 300px;
-}
-
-.approvalBtn {
-  width: 80px;
+.uploaderCell {
+  max-width: 600px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 </style>

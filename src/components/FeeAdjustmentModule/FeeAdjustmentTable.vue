@@ -4,6 +4,7 @@
     hide-bottom
     :columns="columns"
     :data="data"
+    :pagination.sync="pagination"
   />
 </template>
 
@@ -55,6 +56,7 @@ export default {
           align: 'left',
         },
       ],
+      pagination: {rowsPerPage: 0},
     };
   },
   props: {
