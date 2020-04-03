@@ -1,7 +1,9 @@
 export const role = {
-  croUser: 'croUser',
-  opsUser: 'opsUser',
-  marketUser: 'marketUser',
-  crUser: 'crUser',
-  cpUser: 'cpUser',
+  cro: 'cro',
+  ops: 'ops',
+  market: 'market',
+  creditRisk: 'creditRisk',
+  counterParty: 'counterParty',
+  broker: 'broker',
+  esi: 'esi',
 }

@@ -58,7 +58,7 @@ export default {
   data () {
     return {
       linksByRole: {
-        [role.cpUser]: [
+        [role.counterParty]: [
           {
             title: 'Fee Adjustment',
             to: { name: 'feeSchedule/adjustment' }

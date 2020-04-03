@@ -6,7 +6,7 @@ import { role } from 'src/config';
  * @param {Object} context
  */
 async function fetchRole({ commit }) {
-  const mockRole = role.cpUser;
+  const mockRole = role.counterParty;
 
   commit('setRole', mockRole);
 }
