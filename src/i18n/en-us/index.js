@@ -2,13 +2,18 @@ export default {
   feeAdjustment: {
     title: 'Fee Adjustment',
     addScheduleLabel: 'Add fee schedule',
+    importAsCsv: 'Import fee schedule as CSV',
     importAsCSV: 'Import as CSV',
-    dragAndDrop: 'Drag and drop CSV files here',
+    uploaderText: 'Drop CSV file here, or click to browse.',
+    uploaderError: 'Please select a CSV file',
+    submit: 'Submit',
+    reset: 'Reset',
+    successLabel: 'The schedule has been uploaded and is awaiting verification by client',
   },
   feeApprovalList: {
     title: 'Approval List',
     newSchedule: '{name} has uploaded a new fee schedule',
-    viewDetails: 'View Details',
+    review: 'Review',
   },
   feeHistory: {
     title: 'History',
@@ -20,8 +25,15 @@ export default {
   components: {
     feeAdjustmentApprovalActions: {
       reason: 'Reason',
-      accept: 'Accept',
-      deny: 'Deny',
+      accept: 'Approve',
+      deny: 'Reject',
+    },
+    submissionDialog: {
+      submitting: 'Submitting',
+      successTitle: 'Success',
+      successLabel: 'Submission completed successfully',
+      failureTitle: 'Failed',
+      failureLabel: 'Submission failed, please try again',
     }
   },
 };

@@ -1,36 +1,50 @@
 <template>
   <PageLayout :title="$t('feeAdjustment.title')">
-    <div class="row q-gutter-md q-mb-lg">
-      <q-select outlined v-model="client" :options="clientOptions" label="Client" class="col-6 q-mr-sm" />
-      <q-select outlined v-model="market" :options="marketOptions" label="Market" class="col-6" />
-    </div>
-    <div class="q-mb-sm">{{ $t('feeAdjustment.addScheduleLabel')}}</div>
-    <q-uploader
-      flat
-      bordered
-      :label="$t('feeAdjustment.importAsCSV')"
-      :filter="checkFileType"
-      :style="{ width: '100%', height: '200px'}"
-      @added="addedFiles"
-      @removed="removedFiles"
-    >
-      <template v-slot:list v-if="!hasFiles">
-        <div class="column flex-center text-h6 text-grey-8 non-selectable full-height">
-          <q-icon name="mdi-cloud-upload-outline" size="xl" />
-          <div>{{ $t('feeAdjustment.dragAndDrop') }}</div>
+    <q-form @submit="submit" @reset="reset" @change="onFormChange" ref="form">
+      <div class="row q-gutter-md q-mb-lg">
+        <q-select outlined v-model="client" :options="clientOptions" label="Client" class="col-6 q-mr-sm" />
+        <q-select outlined v-model="market" :options="marketOptions" label="Market" class="col-6" />
+      </div>
+      <div class="text-h6">{{ $t('feeAdjustment.addScheduleLabel')}}</div>
+      <div class="q-mb-sm text-caption">{{ $t('feeAdjustment.importAsCsv')}}</div>
+
+      <q-file
+        v-model="files"
+        outlined
+        accept="text/csv"
+        clearable
+        :rules="[value => !!value || $t('feeAdjustment.uploaderError')]"
+      >
+        <div v-if="!files" class="col-12 row flex-center text-grey-8 non-selectable full-height">
+          <q-icon class="q-mr-sm" name="mdi-cloud-upload-outline" size="md" />
+          <div>{{ $t('feeAdjustment.uploaderText') }}</div>
         </div>
-      </template>
-    </q-uploader>
+      </q-file>
+
+      <q-separator class="q-my-lg" />
+
+      <div class="row justify-end">
+        <q-btn type="reset" flat color="primary" :label="$t('feeAdjustment.reset')" class="q-mr-sm" />
+        <q-btn type="submit" color="primary" :label="$t('feeAdjustment.submit')" />
+      </div>
+    </q-form>
+
+    <SubmissionDialog :state.sync="submissionState" :successLabel="$t('feeAdjustment.successLabel')" />
+
+    <DirtyState :isDirty.sync="isDirty" v-model="goNext" />
   </PageLayout>
 </template>
 
 <script>
 import PageLayout from 'src/components/PageLayout';
+import SubmissionDialog from 'src/components/SubmissionDialog';
+import DirtyState from 'src/components/DirtyState';
 
 export default {
   name: 'FeeAdjustment',
   data() {
     return {
+      files: null,
       clientOptions: [
         'Eastspring',
       ],
@@ -40,29 +54,52 @@ export default {
       client: null,
       market: null,
       hasFiles: false,
+      goNext: null,
+      isDirty: false,
+      submissionState: null,
     }
   },
   methods: {
-    checkFileType(files) {
-      return files.filter(file => {
-        const isCsv = file.type === 'text/csv';
-
-        if (!isCsv) {
-
-        }
-
-        return isCsv;
-      });
-    },
     addedFiles() {
       this.hasFiles = true;
     },
     removedFiles() {
       this.hasFiles = false;
     },
+    onFormChange() {
+      this.isDirty = true;
+    },
+    submit() {
+      this.submissionState = 'submitting';
+
+      // TODO: send file to API
+      setTimeout(() => {
+        this.onSubmitSuccessful();
+      }, 2000)
+    },
+    onSubmitSuccessful() {
+      this.submissionState = 'success';
+      this.onSubmitDone();
+    },
+    onSubmitFailure() {
+      this.submissionState = 'failure';
+      this.onSubmitDone();
+    },
+    onSubmitDone() {
+      this.$refs.form.reset();
+    },
+    reset() {
+      this.files = null;
+      this.isDirty = false;
+    },
   },
   components: {
     PageLayout,
+    SubmissionDialog,
+    DirtyState,
+  },
+  beforeRouteLeave(_to, _from, next) {
+    this.goNext = next;
   }
 }
 </script>

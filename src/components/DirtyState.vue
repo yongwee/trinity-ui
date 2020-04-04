@@ -10,8 +10,8 @@
       </q-card-section>
       <q-card-actions>
         <q-space />
-        <q-btn outline color="primary" label="Cancel" @click="doStay" />
-        <q-btn  unelevated color="negative" label="Discard" @click="doDiscard" />
+        <q-btn flat color="primary" label="Cancel" @click="doStay" />
+        <q-btn  flat color="negative" label="Discard" @click="doDiscard" />
       </q-card-actions>
     </q-card>
   </q-dialog>
