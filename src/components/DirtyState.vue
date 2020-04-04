@@ -18,6 +18,18 @@
 </template>
 
 <script>
+/**
+ * DirtyState component hijacks an exit (moving away from a page, closing a
+ * dialog box etc.) and shows a confirmation to user to make sure they really
+ * want to exit as they'll lose the changes that they have made on that page/dialog/etc.
+ * 
+ * Parent will have to set the `isDirty` prop
+ * Parent can trigger the dialog by setting the `value` prop (v-model) with an
+ * exit function (e.g. `next` function provided by vue-router navigation guards or
+ * the close function that closes a dialog box).
+ * 
+ * DirtyState dialog will automatically show when a value is set and if `isDirty` is true
+ */
 export default {
   name: 'DirtyState',
   data() {

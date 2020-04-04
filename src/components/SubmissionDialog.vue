@@ -48,6 +48,11 @@ const stateType = {
   failure: 'failure',
 };
 
+/**
+ * SubmissionDialog shows the status of submission (usually by forms)
+ * It is automatically triggered to show by setting the 'state' prop to one of
+ * values defined by the `stateType` map above.
+ */
 export default {
   name: 'SubmissionDialog',
   props: {

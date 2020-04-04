@@ -6,9 +6,11 @@
     </div>
     <section>
       <template v-if="isLoading">
+        <!-- @slot Slot for inserting loading state body -->
         <slot name="loading"></slot>
       </template>
       <template v-else>
+        <!-- @slot Slot for inserting regular body content -->
         <slot></slot>
       </template>
     </section>
@@ -16,6 +18,9 @@
 </template>
 
 <script>
+/**
+ * PageLayout provides common elements of a page and their arrangement.
+ */
 export default {
   name: 'PageLayout',
   props: {
