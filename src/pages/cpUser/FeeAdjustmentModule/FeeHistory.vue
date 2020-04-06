@@ -14,37 +14,32 @@
               {{ props.row.uploader }}
             </q-td>
             <q-td key="approved" :props="props">
-              <div :class="props.row.approved ? 'text-positive' : 'text-negative'" class="text-weight-bold">
+              <q-badge :color="props.row.approved ? 'positive' : 'negative'" class="text-weight-bold q-pa-xs">
                 {{props.row.approved
                     ? $t('feeHistory.approved')
                     : $t('feeHistory.rejected')
                 }}
-              </div>
+              </q-badge>
             </q-td>
             <q-td key="actions" :props="props">
               <q-btn
-              unelevated
-              color="primary"
-              :label="$t('feeHistory.viewDetails')"
-              icon="mdi-eye-outline"
-              class="q-mr-sm"
-              dense
-              @click="doShowDetails(props.row.data)"
-            >
-            </q-btn>
-            <q-btn
-              unelevated
-              color="secondary"
-              :label="$t('feeHistory.download')"
-              dense
-              icon="mdi-cloud-download-outline"
-            />
+                flat
+                color="secondary"
+                class="q-mr-sm"
+                :label="$t('feeHistory.download')"
+              />
+              <q-btn
+                flat
+                color="primary"
+                :label="$t('feeHistory.viewDetails')"
+                @click="doShowDetails(props.row)"
+              />
             </q-td>
           </q-tr>
         </template>
       </q-table>
 
-    <FeeAdjustmentDetailsDialog v-model="showDetailsDialog" :data="shownDetails" />
+    <FeeAdjustmentDetailsDialog v-model="showDetailsDialog" :details="shownDetails" />
   </PageLayout>
 </template>
 
@@ -85,6 +80,9 @@ export default {
     this.fetchHistory();
   },
   methods: {
+    /**
+     * Fetches details modal.
+     */
     fetchHistory() {
       // TODO: proper fetching
       this.history = [
@@ -126,16 +124,19 @@ export default {
       ];
     },
     /**
-     * Triggers modal to show details
+     * Triggers modal to show details.
      * 
-     * @param {Object} data - data portion of history
+     * @param {Object} details
+     * @param {String} details.uploader
+     * @param {String} details.id
+     * @param {Object[]} details.data
      */
-    doShowDetails(data) {
+    doShowDetails(details) {
       this.showDetailsDialog = true;
-      this.shownDetails = data;
+      this.shownDetails = details;
     },
     /**
-     * Closes details modal
+     * Closes details modal.
      */
     doHideDetails() {
       this.showDetailsDialog = false;
