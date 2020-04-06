@@ -14,6 +14,10 @@ export default {
     title: 'Approval List',
     newSchedule: '{name} has uploaded a new fee schedule',
     review: 'Review',
+    approveSuccessTitle: 'Approved Successfully',
+    approveSuccessLabel: 'The schedule has been stored securely on the blockchain',
+    rejectSuccessTitle: 'Rejected Successfully',
+    rejectSuccessLabel: 'The schedule has been rejected',
   },
   feeHistory: {
     title: 'History',

@@ -56,7 +56,10 @@ const stateType = {
 export default {
   name: 'SubmissionDialog',
   props: {
-    // state prop: 'success'/'failure'. Everything else = submission in progress
+    /**
+     * state prop
+     * @values 'submitting', 'success', 'failure'
+     */ 
     state: {
       type: String,
       default: '',

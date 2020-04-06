@@ -1,7 +1,7 @@
 <template>
   <PageLayout :title="$t('feeApprovalList.title')">
     <q-table
-      :data="approvalList"
+      :data="pendingList"
       :columns="columns"
       hide-header
       hide-bottom
@@ -15,27 +15,31 @@
           </q-td>
           <q-td key="actions" :props="props">
             <q-btn
-              icon="mdi-eye-outline"
-              :label="$t('feeApprovalList.viewDetails')"
+              flat
+              :label="$t('feeApprovalList.review')"
               color="primary"
               class="text-no-wrap"
-              dense
-              @click="doShowDetails(props.row.data)"
+              @click="doShowDetails(props.row)"
             />
           </q-td>
         </q-tr>
       </template>
     </q-table>
 
-    <FeeAdjustmentDetailsDialog :data="shownData" :value="showDetailsDialog" @input="onShowDetailsDialogChange">
-      <template v-slot:actions>
+
+    <!-- Dialogs -->
+    <FeeAdjustmentDetailsDialog :details="shownDetails" :value="showDetailsDialog" @input="onShowDetailsDialogChange">
+      <template v-slot:actions="{ id }">
         <q-space />
         <FeeAdjustmentApprovalActions
+          :id="id"
           @change="onApprovalValueChange"
           @submit="onApprovalSubmit"
         />
       </template>
     </FeeAdjustmentDetailsDialog>
+
+    <SubmissionDialog :state.sync="submissionState" :successTitle="successTitle" :successLabel="successLabel" />
 
     <DirtyState v-model="goNext" :isDirty.sync="isDirty" />
   </PageLayout>
@@ -46,11 +50,14 @@ import PageLayout from 'src/components/PageLayout';
 import FeeAdjustmentDetailsDialog from 'src/components/FeeAdjustmentModule/FeeAdjustmentDetailsDialog';
 import FeeAdjustmentApprovalActions from 'src/components/FeeAdjustmentModule/FeeAdjustmentApprovalActions';
 import DirtyState from 'src/components/DirtyState';
+import SubmissionDialog from 'src/components/SubmissionDialog';
+import { URI } from 'src/config';
 
 export default {
   name: 'FeeApprovalList',
   data() {
     return {
+      // TODO: ensure columns are correct
       columns: [
         {
           name: 'uploader',
@@ -62,21 +69,24 @@ export default {
           align: 'right',
         },
       ],
-      approvalList: [],
+      pendingList: [],
       showDetailsDialog: false,
-      shownData: null,
+      shownDetails: null,
       goNext: null,
       isDirty: false,
+      submissionState: null,
+      successTitle: '',
+      successLabel: '',
     };
   },
   created() {
-    this.fetchApprovalList();
+    this.fetchPendingList();
   },
   methods: {
     /**
-     * Fetches list of items awaiting approval
+     * Fetches list of items awaiting approval.
      */
-    fetchApprovalList() {
+    fetchPendingList() {
       // TODO: proper fetch
   const jpmorganData = [
         {
@@ -96,10 +106,10 @@ export default {
         },
       ];
 
-      this.approvalList = [
+      this.pendingList = [
         {
           uploader: 'JP Morgan',
-          id: 1,
+          id: '1',
           data: [
             ...jpmorganData,
             ...jpmorganData,
@@ -119,7 +129,7 @@ export default {
         },
         {
           uploader: 'Citigroup',
-          id: 2,
+          id: '2',
           data: [
             {
               region: 'Asia',
@@ -134,48 +144,120 @@ export default {
       ]
     },
     /**
-     * Shows details dialog
+     * Shows details dialog.
+     *
+     * @param {Object} details
+     * @param {String} details.uploader
+     * @param {String} details.id
+     * @param {Object} details.data
      */
-    doShowDetails(data) {
-      this.shownData = data;
+    doShowDetails(details) {
+      // TODO: ensure the shape of details fits what's received from server
+      // assumed shape: { uploader, id, data }
+      this.shownDetails = details;
       this.showDetailsDialog = true;
     },
     /**
-     * Hides details dialog
+     * Hides details dialog.
      */
     doHideDetails() {
       this.showDetailsDialog = false;
     },
     /**
      * Sets goNext to contain a function that hides dialog when invoked
-     * if event payload is false
+     * if event payload is false.
+     * 
+     * @param {Boolean} showDetailsDialog
      */
     onShowDetailsDialogChange(showDetailsDialog) {
       if (!showDetailsDialog) {
-        this.goNext = () => {
+        const hideDetails = () => {
           this.doHideDetails();
         };
+
+        this.confirmExitIfDirty(hideDetails);
       }
     },
+    /**
+     * Event handler that is invoked when Approval Actions state has been changed.
+     */
     onApprovalValueChange() {
       this.isDirty = true;
     },
-    onApprovalSubmit(approved) {
-      // TODO: proper submission
-      // TODO: refetch after submission
+    /**
+     * Handles approval submission.
+     * 
+     * @param {Object} approvalObj
+     * @param {String} approvalObj.id
+     * @param {Boolean} approvalObj.isApproved
+     * @param {String} approvalObj.reason
+     */
+    onApprovalSubmit(approvalObj) {
+      this.submissionState = 'submitting';
+
+      const approvalURI = approvalObj.isApproved ? URI.feeScheduleApprove : URI.feeScheduleDeny;
+      this.$axios.post(
+        approvalURI.replace('{id}', approvalObj.id),
+        { reason: approvalObj.reason }
+      )
+        .then(() => {
+          this.onSubmitSuccess(approvalObj.isApproved);
+        })
+        .catch(() => {
+          this.onSubmitFailure();
+        })
+    },
+    /**
+     * Approval submission success handler
+     * 
+     * @param {Boolean} isApproved
+     */
+    onSubmitSuccess(isApproved) {
+      this.successTitle = isApproved
+        ? this.$t('feeApprovalList.approveSuccessTitle')
+        : this.$t('feeApprovalList.rejectSuccessTitle');
+
+      this.successLabel = isApproved
+        ? this.$t('feeApprovalList.approveSuccessLabel')
+        : this.$t('feeApprovalList.rejectSuccessLabel');
+
+      this.submissionState = 'success';
+      this.isDirty = false;
+
+      this.doHideDetails();
+
+      this.fetchPendingList();
+    },
+    /**
+     * Approval submission failure handler
+     */
+    onSubmitFailure() {
+      this.submissionState = 'failure';
+    },
+    /**
+     * Triggers dirty dialog if state is dirty.
+     * otherwise continue to go next state as per normal.
+     * 
+     * @param {Function} next - function to trigger next state
+     */
+    confirmExitIfDirty(next) {
+      this.goNext = next;
     },
   },
   beforeRouteLeave(_to, _from, next) {
-    this.goNext = () => {
+    const hideDetailsAndLeave = () => {
       this.doHideDetails();
       next();
     };
+
+    this.confirmExitIfDirty(hideDetailsAndLeave);
   },
   components: {
     PageLayout,
     FeeAdjustmentDetailsDialog,
     FeeAdjustmentApprovalActions,
     DirtyState,
+    SubmissionDialog,
   },
 }
 </script>

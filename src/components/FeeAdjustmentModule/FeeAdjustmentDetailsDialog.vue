@@ -11,11 +11,11 @@
         <q-btn round unelevated icon="close" @click="doHideDetails" />
       </q-card-section>
       <q-scroll-area class="col-grow q-mb-md">
-        <FeeAdjustmentTable v-if="data" :data="data" />
+        <FeeAdjustmentTable v-if="details" :data="details.data" />
       </q-scroll-area>
 
       <q-card-actions>
-        <slot name="actions" />
+        <slot name="actions" :id="details && details.id || ''" />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -31,8 +31,13 @@ export default {
       type: Boolean,
       default: false,
     },
-    data: {
-      type: Array, // Array of objects
+    /**
+     * details props.
+     * @property {String} id
+     * @property {Object} data 
+     */
+    details: {
+      type: Object,
       default: null,
     },
   },
