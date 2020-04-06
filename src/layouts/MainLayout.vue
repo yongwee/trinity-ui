@@ -63,17 +63,23 @@ export default {
         [role.counterParty]: [
           {
             title: 'Fee Adjustment',
-            to: { name: 'feeSchedule/adjustment' }
+            to: { name: 'feeSchedule/adjustment' },
           },
           {
             title: 'Approval List',
-            to: { name: 'feeSchedule/approvallist' }
+            to: { name: 'feeSchedule/approvallist' },
           },
           {
             title: 'History',
-            to: { name: 'feeSchedule/history' }
+            to: { name: 'feeSchedule/history' },
           },
-        ]
+        ],
+        [role.esi]: [
+          {
+            title: 'Trade Enrichment',
+            to: { name: 'tradeEnrichment' },
+          },
+        ],
       },
     }
   },

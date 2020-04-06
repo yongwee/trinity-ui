@@ -26,6 +26,23 @@ export default {
     download: 'Download',
   },
 
+  // Trade Enrichment module
+  tradeEnrichment: {
+    title: 'Trade Enrichment',
+
+    stepUploadTrade: 'Upload Trade',
+    uploadTrade: 'Upload Trade',
+    importAsXml: 'Import as XML',
+
+    stepDownloadEnrichedTrade: 'Download Enriched Trade',
+    downloadEnrichedTrade: 'Download Enriched Trade',
+    downloadEnrichedTradeCaption: 'Download enriched trade as CSV',
+
+    uploaderText: 'Drop XML file here, or click to browse.',
+    uploaderError: 'Please select a XML file',
+    successLabel: 'Trade has been enriched',
+  },
+
   // Common components
   components: {
     form: {

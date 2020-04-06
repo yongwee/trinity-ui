@@ -22,6 +22,6 @@ export const URI = {
   feeScheduleDeny: feeScheduleURL + '/deny/{id}',
   feeSchedulePending: feeScheduleURL + '/pending',
 
-  // Trade enrich
+  // Trade enrichment
   tradeEnrich: tradeEnrichURL,
 }

@@ -5,6 +5,7 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/Index.vue') },
+      // Fee Adjustment module
       {
         path: '/feeadjustment',
         name: 'feeSchedule/adjustment',
@@ -19,6 +20,13 @@ const routes = [
         path: '/feehistory',
         name: 'feeSchedule/history',
         component: () => import('pages/cpUser/FeeAdjustmentModule/FeeHistory.vue'),
+      },
+
+      // Trade Enrichment module
+      {
+        path: '/tradeenrichment',
+        name: 'tradeEnrichment',
+        component: () => import('pages/TradeEnrichmentModule/TradeEnrichment.vue'),
       },
     ]
   }
