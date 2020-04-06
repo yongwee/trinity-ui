@@ -29,6 +29,8 @@
       </div>
     </q-form>
 
+
+    <!-- dialogs -->
     <SubmissionDialog :state.sync="submissionState" :successLabel="$t('feeAdjustment.successLabel')" />
 
     <DirtyState :isDirty.sync="isDirty" v-model="goNext" />
@@ -39,6 +41,7 @@
 import PageLayout from 'src/components/PageLayout';
 import SubmissionDialog from 'src/components/SubmissionDialog';
 import DirtyState from 'src/components/DirtyState';
+import { URI } from 'src/config';
 
 export default {
   name: 'FeeAdjustment',
@@ -69,13 +72,19 @@ export default {
     onFormChange() {
       this.isDirty = true;
     },
-    submit() {
+    submit(e) {
       this.submissionState = 'submitting';
 
-      // TODO: send file to API
-      setTimeout(() => {
-        this.onSubmitSuccessful();
-      }, 2000)
+      const formData = new FormData();
+      formData.append('file', this.files);
+
+      this.$axios.post(URI.feeSchedule, formData)
+        .then(res => {
+          this.onSubmitSuccessful();
+        })
+        .catch(() => {
+          this.onSubmitFailure();
+        });
     },
     onSubmitSuccessful() {
       this.submissionState = 'success';
@@ -83,7 +92,7 @@ export default {
     },
     onSubmitFailure() {
       this.submissionState = 'failure';
-      this.onSubmitDone();
+      // We do not reset form here so that user may attempt a resubmission
     },
     onSubmitDone() {
       this.$refs.form.reset();
@@ -92,6 +101,15 @@ export default {
       this.files = null;
       this.isDirty = false;
     },
+    /**
+     * Triggers dirty dialog if state is dirty
+     * otherwise continue to go next state as per normal
+     *
+     * @param {Function} next - function to trigger next state
+     */
+    confirmExitIfDirty(next) {
+      this.goNext = next;
+    }
   },
   components: {
     PageLayout,
@@ -99,7 +117,7 @@ export default {
     DirtyState,
   },
   beforeRouteLeave(_to, _from, next) {
-    this.goNext = next;
+    this.confirmExitIfDirty(next);
   }
 }
 </script>
