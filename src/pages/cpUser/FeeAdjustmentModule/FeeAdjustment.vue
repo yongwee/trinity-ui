@@ -5,8 +5,11 @@
         <q-select outlined v-model="client" :options="clientOptions" label="Client" class="col-6 q-mr-sm" />
         <q-select outlined v-model="market" :options="marketOptions" label="Market" class="col-6" />
       </div>
-      <div class="text-h6">{{ $t('feeAdjustment.addScheduleLabel')}}</div>
-      <div class="q-mb-sm text-caption">{{ $t('feeAdjustment.importAsCsv')}}</div>
+
+      <FormSectionHeader
+        :header="$t('feeAdjustment.addScheduleLabel')"
+        :caption="$t('feeAdjustment.importAsCsv')"
+      />
 
       <q-file
         v-model="files"
@@ -21,12 +24,7 @@
         </div>
       </q-file>
 
-      <q-separator class="q-my-lg" />
-
-      <div class="row justify-end">
-        <q-btn type="reset" flat color="primary" :label="$t('feeAdjustment.reset')" class="q-mr-sm" />
-        <q-btn type="submit" color="primary" :label="$t('feeAdjustment.submit')" />
-      </div>
+      <FormActionBar />
     </q-form>
 
 
@@ -39,6 +37,8 @@
 
 <script>
 import PageLayout from 'src/components/PageLayout';
+import FormSectionHeader from 'src/components/form/SectionHeader';
+import FormActionBar from 'src/components/form/ActionBar';
 import SubmissionDialog from 'src/components/SubmissionDialog';
 import DirtyState from 'src/components/DirtyState';
 import { URI } from 'src/config';
@@ -113,6 +113,8 @@ export default {
   },
   components: {
     PageLayout,
+    FormSectionHeader,
+    FormActionBar,
     SubmissionDialog,
     DirtyState,
   },

@@ -1,4 +1,5 @@
 export default {
+  // Fee Adjustment module
   feeAdjustment: {
     title: 'Fee Adjustment',
     addScheduleLabel: 'Add fee schedule',
@@ -6,8 +7,6 @@ export default {
     importAsCSV: 'Import as CSV',
     uploaderText: 'Drop CSV file here, or click to browse.',
     uploaderError: 'Please select a CSV file',
-    submit: 'Submit',
-    reset: 'Reset',
     successLabel: 'The schedule has been uploaded and is awaiting verification by client',
   },
   feeApprovalList: {
@@ -26,7 +25,13 @@ export default {
     viewDetails: 'View Details',
     download: 'Download',
   },
+
+  // Common components
   components: {
+    form: {
+      submit: 'Submit',
+      reset: 'Reset',
+    },
     feeAdjustmentApprovalActions: {
       reason: 'Reason',
       accept: 'Approve',
