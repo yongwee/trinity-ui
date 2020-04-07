@@ -5,33 +5,34 @@
       :class="$style.container"
     >
       <q-card-section class="column flex-center">
-        <div class="q-mb-lg">
-          <transition name="fade" mode="out-in">
-            <span v-if="isSubmitting" key="spinner">
-              <q-spinner color="primary" size="xl" />
-            </span>
-            <div
-              v-else class="q-pa-lg"
-              :class="{
-                [$style.iconContainer]: true,
-                [$style.failureIconContainer]: !isSuccessful
-              }"
-              key="doneIcon"
-            >
-              <q-icon v-if="isSuccessful" name="mdi-check" size="xl" />
-              <q-icon v-else name="mdi-close" size="xl" />
-            </div>
-          </transition>
-        </div>
+        <transition name="fade" mode="out-in">
+          <span v-if="isSubmitting" key="spinner">
+            <q-spinner color="primary" size="xl" />
+          </span>
+          <div
+            v-else class="q-pa-lg"
+            :class="{
+              [$style.iconContainer]: true,
+              [$style.failureIconContainer]: !isSuccessful
+            }"
+            key="doneIcon"
+          >
+            <q-icon v-if="isSuccessful" name="mdi-check" size="xl" />
+            <q-icon v-else name="mdi-close" size="xl" />
+          </div>
+        </transition>
+      </q-card-section>
 
+      <q-card-section>
         <div v-if="isSubmitting" class="text-grey-9">{{ submittingLabel }}</div>
-        <template v-else>
-          <div class="text-h6">{{ isSuccessful ? successTitle : failureTitle }}</div>
-          <div class="text-grey-9 text-caption">{{ isSuccessful
+        <div v-else class="text-h6">{{ isSuccessful ? successTitle : failureTitle }}</div>
+      </q-card-section>
+
+      <q-card-section v-if="!isSubmitting" class="q-pt-none q-dialog__message">
+          {{ isSuccessful
               ? successLabel
               : failureLabel
-            }}</div>
-        </template>
+          }}
       </q-card-section>
 
       <q-card-actions v-if="!isSubmitting">

@@ -1,10 +1,10 @@
 <template>
   <PageLayout :title="$t('feeAdjustment.title')">
     <q-form @submit="submit" @reset="reset" @change="onFormChange" ref="form">
-      <div class="row q-gutter-md q-mb-lg">
+      <!-- <div class="row q-gutter-md q-mb-lg">
         <q-select outlined v-model="client" :options="clientOptions" label="Client" class="col-6 q-mr-sm" />
         <q-select outlined v-model="market" :options="marketOptions" label="Market" class="col-6" />
-      </div>
+      </div> -->
 
       <FormSectionHeader
         :header="$t('feeAdjustment.addScheduleLabel')"
