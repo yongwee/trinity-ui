@@ -9,17 +9,17 @@ const routes = [
       {
         path: '/feeadjustment',
         name: 'feeSchedule/adjustment',
-        component: () => import('pages/cpUser/FeeAdjustmentModule/FeeAdjustment.vue'),
+        component: () => import('pages/FeeAdjustmentModule/FeeAdjustment.vue'),
       },
       {
         path: '/feeapproval',
         name: 'feeSchedule/approvallist',
-        component: () => import('pages/cpUser/FeeAdjustmentModule/FeeApprovalList.vue'),
+        component: () => import('pages/FeeAdjustmentModule/FeeApprovalList.vue'),
       },
       {
         path: '/feehistory',
         name: 'feeSchedule/history',
-        component: () => import('pages/cpUser/FeeAdjustmentModule/FeeHistory.vue'),
+        component: () => import('pages/FeeAdjustmentModule/FeeHistory.vue'),
       },
 
       // Trade Enrichment module
