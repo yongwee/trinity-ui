@@ -1,6 +1,7 @@
 <template>
   <PageLayout :title="$t('feeApprovalList.title')">
     <q-table
+      v-if="pendingList && pendingList.length"
       :data="pendingList"
       :columns="columns"
       hide-header
@@ -26,6 +27,10 @@
       </template>
     </q-table>
 
+    <div class="row flex-center" v-else>
+      <span>{{ $t('feeApprovalList.emptyListMessage') }}</span>
+    </div>
+
 
     <!-- Dialogs -->
     <FeeAdjustmentDetailsDialog :details="shownDetails" :value="showDetailsDialog" @input="onShowDetailsDialogChange">
@@ -39,8 +44,6 @@
       </template>
     </FeeAdjustmentDetailsDialog>
 
-
-    <!-- Dialogs -->
     <SubmissionDialog :state.sync="submissionState" :successTitle="successTitle" :successLabel="successLabel" />
   </PageLayout>
 </template>
@@ -87,7 +90,7 @@ export default {
      */
     fetchPendingList() {
       // TODO: proper fetch
-  const jpmorganData = [
+      const jpmorganData = [
         {
           region: 'North America',
           productName: 'eqldx-US',

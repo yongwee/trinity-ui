@@ -1,6 +1,7 @@
 <template>
   <PageLayout title="History">
       <q-table
+        v-if="history && history.length"
         hide-header
         hide-bottom
         flat
@@ -38,6 +39,10 @@
           </q-tr>
         </template>
       </q-table>
+
+      <div class="row flex-center" v-else>
+        <span>{{ $t('feeHistory.emptyHistoryMessage') }}</span>
+      </div>
 
     <FeeAdjustmentDetailsDialog v-model="showDetailsDialog" :details="shownDetails" />
   </PageLayout>

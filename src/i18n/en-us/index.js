@@ -11,19 +11,27 @@ export default {
   },
   feeApprovalList: {
     title: 'Approval List',
+
     newSchedule: '{name} has uploaded a new fee schedule',
     review: 'Review',
+
     approveSuccessTitle: 'Approved Successfully',
     approveSuccessLabel: 'The schedule has been stored securely on the blockchain',
     rejectSuccessTitle: 'Rejected Successfully',
     rejectSuccessLabel: 'The schedule has been rejected',
+
+    emptyListMessage: 'There are currently no items that are pending approval.'
   },
   feeHistory: {
     title: 'History',
+
     approved: 'Approved',
     rejected: 'Rejected',
+
     viewDetails: 'View Details',
     download: 'Download',
+
+    emptyHistoryMessage: 'There are currently no items in history.',
   },
 
   // Trade Enrichment module
