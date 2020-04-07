@@ -1,5 +1,9 @@
 <template>
-  <q-page padding :class="$style.pageLayout" class="q-mx-auto">
+  <q-page
+    padding
+    :class="$style.pageLayout"
+    class="q-mx-auto"
+  >
     <div class="text-h4 text-weight-light q-mb-xl">
       <span>{{ title }}</span>
       <q-separator color="primary" />
@@ -7,11 +11,11 @@
     <section>
       <template v-if="isLoading">
         <!-- @slot Slot for inserting loading state body -->
-        <slot name="loading"></slot>
+        <slot name="loading" />
       </template>
       <template v-else>
         <!-- @slot Slot for inserting regular body content -->
-        <slot></slot>
+        <slot />
       </template>
     </section>
   </q-page>

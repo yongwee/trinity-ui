@@ -1,50 +1,68 @@
 <template>
   <PageLayout title="History">
-      <q-table
-        v-if="history && history.length"
-        hide-header
-        hide-bottom
-        flat
-        bordered
-        :columns="columns"
-        :data="history"
-      >
-        <template v-slot:body="props">
-          <q-tr :props="props">
-            <q-td key="uploader" :props="props">
-              {{ props.row.uploader }}
-            </q-td>
-            <q-td key="approved" :props="props">
-              <q-badge :color="props.row.approved ? 'positive' : 'negative'" class="text-weight-bold q-pa-xs">
-                {{props.row.approved
-                    ? $t('feeHistory.approved')
-                    : $t('feeHistory.rejected')
-                }}
-              </q-badge>
-            </q-td>
-            <q-td key="actions" :props="props">
-              <q-btn
-                flat
-                color="secondary"
-                class="q-mr-sm"
-                :label="$t('feeHistory.download')"
-              />
-              <q-btn
-                flat
-                color="primary"
-                :label="$t('feeHistory.viewDetails')"
-                @click="doShowDetails(props.row)"
-              />
-            </q-td>
-          </q-tr>
-        </template>
-      </q-table>
+    <q-table
+      v-if="history && history.length"
+      hide-header
+      hide-bottom
+      flat
+      bordered
+      :columns="columns"
+      :data="history"
+    >
+      <template v-slot:body="props">
+        <q-tr :props="props">
+          <q-td
+            key="uploader"
+            :props="props"
+          >
+            {{ props.row.uploader }}
+          </q-td>
+          <q-td
+            key="approved"
+            :props="props"
+          >
+            <q-badge
+              :color="props.row.approved ? 'positive' : 'negative'"
+              class="text-weight-bold q-pa-xs"
+            >
+              {{ props.row.approved
+                ? $t('feeHistory.approved')
+                : $t('feeHistory.rejected')
+              }}
+            </q-badge>
+          </q-td>
+          <q-td
+            key="actions"
+            :props="props"
+          >
+            <q-btn
+              flat
+              color="secondary"
+              class="q-mr-sm"
+              :label="$t('feeHistory.download')"
+            />
+            <q-btn
+              flat
+              color="primary"
+              :label="$t('feeHistory.viewDetails')"
+              @click="doShowDetails(props.row)"
+            />
+          </q-td>
+        </q-tr>
+      </template>
+    </q-table>
 
-      <div class="row flex-center" v-else>
-        <span>{{ $t('feeHistory.emptyHistoryMessage') }}</span>
-      </div>
+    <div
+      v-else
+      class="row flex-center"
+    >
+      <span>{{ $t('feeHistory.emptyHistoryMessage') }}</span>
+    </div>
 
-    <FeeAdjustmentDetailsDialog v-model="showDetailsDialog" :details="shownDetails" />
+    <FeeAdjustmentDetailsDialog
+      v-model="showDetailsDialog"
+      :details="shownDetails"
+    />
   </PageLayout>
 </template>
 
@@ -54,6 +72,10 @@ import FeeAdjustmentDetailsDialog from 'src/components/FeeAdjustmentModule/FeeAd
 
 export default {
   name: 'FeeHistory',
+  components: {
+    PageLayout,
+    FeeAdjustmentDetailsDialog,
+  },
   data() {
     return {
       columns:[
@@ -130,7 +152,7 @@ export default {
     },
     /**
      * Triggers modal to show details.
-     * 
+     *
      * @param {Object} details
      * @param {String} details.uploader
      * @param {String} details.id
@@ -146,10 +168,6 @@ export default {
     doHideDetails() {
       this.showDetailsDialog = false;
     },
-  },
-  components: {
-    PageLayout,
-    FeeAdjustmentDetailsDialog,
   },
 }
 </script>

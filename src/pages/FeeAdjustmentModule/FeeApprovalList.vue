@@ -11,10 +11,17 @@
     >
       <template v-slot:body="props">
         <q-tr :props="props">
-          <q-td key="uploader" :props="props" :class="$style.uploaderCell">
+          <q-td
+            key="uploader"
+            :props="props"
+            :class="$style.uploaderCell"
+          >
             <span>{{ $t('feeApprovalList.newSchedule', { name: props.row.uploader }) }}</span>
           </q-td>
-          <q-td key="actions" :props="props">
+          <q-td
+            key="actions"
+            :props="props"
+          >
             <q-btn
               flat
               :label="$t('feeApprovalList.review')"
@@ -27,13 +34,20 @@
       </template>
     </q-table>
 
-    <div class="row flex-center" v-else>
+    <div
+      v-else
+      class="row flex-center"
+    >
       <span>{{ $t('feeApprovalList.emptyListMessage') }}</span>
     </div>
 
 
     <!-- Dialogs -->
-    <FeeAdjustmentDetailsDialog :details="shownDetails" :value="showDetailsDialog" @input="onShowDetailsDialogChange">
+    <FeeAdjustmentDetailsDialog
+      :details="shownDetails"
+      :value="showDetailsDialog"
+      @input="onShowDetailsDialogChange"
+    >
       <template v-slot:actions="{ id }">
         <q-space />
         <FeeAdjustmentApprovalActions
@@ -44,7 +58,11 @@
       </template>
     </FeeAdjustmentDetailsDialog>
 
-    <SubmissionDialog :state.sync="submissionState" :successTitle="successTitle" :successLabel="successLabel" />
+    <SubmissionDialog
+      :state.sync="submissionState"
+      :success-title="successTitle"
+      :success-label="successLabel"
+    />
   </PageLayout>
 </template>
 
@@ -58,6 +76,12 @@ import { URI } from 'src/config';
 
 export default {
   name: 'FeeApprovalList',
+  components: {
+    PageLayout,
+    FeeAdjustmentDetailsDialog,
+    FeeAdjustmentApprovalActions,
+    SubmissionDialog,
+  },
   mixins: [DirtyStateMixin],
   data() {
     return {
@@ -168,7 +192,7 @@ export default {
     /**
      * Sets goNext to contain a function that hides dialog when invoked
      * if event payload is false.
-     * 
+     *
      * @param {Boolean} showDetailsDialog
      */
     onShowDetailsDialogChange(showDetailsDialog) {
@@ -190,7 +214,7 @@ export default {
     },
     /**
      * Handles approval submission.
-     * 
+     *
      * @param {Object} approvalObj
      * @param {String} approvalObj.id
      * @param {Boolean} approvalObj.isApproved
@@ -213,7 +237,7 @@ export default {
     },
     /**
      * Approval submission success handler
-     * 
+     *
      * @param {Boolean} isApproved
      */
     onSubmitSuccess(isApproved) {
@@ -253,12 +277,6 @@ export default {
 
       this.confirmLeaveIfDirty(hideDetailsAndLeave);
     },
-  },
-  components: {
-    PageLayout,
-    FeeAdjustmentDetailsDialog,
-    FeeAdjustmentApprovalActions,
-    SubmissionDialog,
   },
 }
 </script>

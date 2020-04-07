@@ -1,7 +1,14 @@
 <template>
   <div class="q-mb-sm">
-    <div class="text-h6">{{ header }}</div>
-    <div v-if="caption" class="text-caption text-grey-9">{{ caption }}</div>
+    <div class="text-h6">
+      {{ header }}
+    </div>
+    <div
+      v-if="caption"
+      class="text-caption text-grey-9"
+    >
+      {{ caption }}
+    </div>
   </div>
 </template>
 

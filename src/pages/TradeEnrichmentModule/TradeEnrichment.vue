@@ -11,7 +11,12 @@
         :title="$t('tradeEnrichment.stepUploadTrade')"
         icon="mdi-cloud-upload"
       >
-        <q-form ref="form" @reset="onReset" @submit="onSubmit" @change="onFormChange">
+        <q-form
+          ref="form"
+          @reset="onReset"
+          @submit="onSubmit"
+          @change="onFormChange"
+        >
           <FormSectionHeader
             :header="$t('tradeEnrichment.uploadTrade')"
             :caption="$t('tradeEnrichment.importAsXml')"
@@ -24,8 +29,15 @@
             clearable
             :rules="[value => !!value || $t('tradeEnrichment.uploaderError')]"
           >
-            <div v-if="!file" class="col-12 row flex-center text-grey-8 non-selectable full-height">
-              <q-icon class="q-mr-sm" name="mdi-cloud-upload-outline" size="md" />
+            <div
+              v-if="!file"
+              class="col-12 row flex-center text-grey-8 non-selectable full-height"
+            >
+              <q-icon
+                class="q-mr-sm"
+                name="mdi-cloud-upload-outline"
+                size="md"
+              />
               <div>{{ $t('tradeEnrichment.uploaderText') }}</div>
             </div>
           </q-file>
@@ -44,14 +56,30 @@
             :header="$t('tradeEnrichment.downloadEnrichedTrade')"
             :caption="$t('tradeEnrichment.downloadEnrichedTradeCaption')"
           />
-          <q-card flat bordered class="q-mb-xl">
+          <q-card
+            flat
+            bordered
+            class="q-mb-xl"
+          >
             <q-card-section class="row flex-center">
-              <q-icon name="mdi-file-document-outline" size="sm" class="q-mr-sm" />
+              <q-icon
+                name="mdi-file-document-outline"
+                size="sm"
+                class="q-mr-sm"
+              />
               <!-- TODO: show actual file name and fix download url -->
               <span>enriched_trade.csv</span>
               <q-space />
-              <a href="http://downloadlinkhere" download :class="$style.downloadAnchor">
-                <q-btn color="secondary" unelevated label="Download" />
+              <a
+                href="http://downloadlinkhere"
+                download
+                :class="$style.downloadAnchor"
+              >
+                <q-btn
+                  color="secondary"
+                  unelevated
+                  label="Download"
+                />
               </a>
             </q-card-section>
           </q-card>
@@ -59,7 +87,12 @@
           <q-separator class="q-mb-lg" />
 
           <div class="row justify-end">
-            <q-btn color="primary" flat label="Back" @click="onBack()" />
+            <q-btn
+              color="primary"
+              flat
+              label="Back"
+              @click="onBack()"
+            />
           </div>
         </div>
       </q-step>
@@ -67,7 +100,10 @@
 
 
     <!-- dialogs -->
-    <SubmissionDialog :state.sync="submissionState" :successLabel="$t('tradeEnrichment.successLabel')" />
+    <SubmissionDialog
+      :state.sync="submissionState"
+      :success-label="$t('tradeEnrichment.successLabel')"
+    />
   </PageLayout>
 </template>
 
@@ -81,6 +117,12 @@ import { URI } from 'src/config';
 
 export default {
   name: 'TradeEnrichment',
+  components: {
+    PageLayout,
+    FormSectionHeader,
+    FormActionBar,
+    SubmissionDialog,
+  },
   mixins: [DirtyStateMixin],
   data() {
     return {
@@ -177,12 +219,6 @@ export default {
 
       this.onBack(next);
     },
-  },
-  components: {
-    PageLayout,
-    FormSectionHeader,
-    FormActionBar,
-    SubmissionDialog,
   },
 
 }

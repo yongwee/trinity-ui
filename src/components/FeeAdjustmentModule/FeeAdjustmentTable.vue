@@ -11,6 +11,21 @@
 <script>
 export default {
   name: 'FeeAdjustmentTable',
+  props: {
+    data: {
+      /**
+       * @typedef Data
+       * @property {string} region
+       * @property {string} productName
+       * @property {string} productType
+       * @property {string} currency
+       * @property {string} brokerageAmount
+       * @property {string} modification
+       */
+      type: Array,
+      required: true,
+    }
+  },
   data() {
     return {
       columns: [
@@ -58,21 +73,6 @@ export default {
       ],
       pagination: {rowsPerPage: 0},
     };
-  },
-  props: {
-    data: {
-      /**
-       * @typedef Data
-       * @property {string} region
-       * @property {string} productName
-       * @property {string} productType
-       * @property {string} currency
-       * @property {string} brokerageAmount
-       * @property {string} modification
-       */
-      type: Array,
-      required: true,
-    }
   }
 }
 </script>

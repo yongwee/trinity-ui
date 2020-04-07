@@ -1,6 +1,11 @@
 <template>
   <PageLayout :title="$t('feeAdjustment.title')">
-    <q-form @submit="submit" @reset="reset" @change="onFormChange" ref="form">
+    <q-form
+      ref="form"
+      @submit="submit"
+      @reset="reset"
+      @change="onFormChange"
+    >
       <!-- <div class="row q-gutter-md q-mb-lg">
         <q-select outlined v-model="client" :options="clientOptions" label="Client" class="col-6 q-mr-sm" />
         <q-select outlined v-model="market" :options="marketOptions" label="Market" class="col-6" />
@@ -18,8 +23,15 @@
         clearable
         :rules="[value => !!value || $t('feeAdjustment.uploaderError')]"
       >
-        <div v-if="!files" class="col-12 row flex-center text-grey-8 non-selectable full-height">
-          <q-icon class="q-mr-sm" name="mdi-cloud-upload-outline" size="md" />
+        <div
+          v-if="!files"
+          class="col-12 row flex-center text-grey-8 non-selectable full-height"
+        >
+          <q-icon
+            class="q-mr-sm"
+            name="mdi-cloud-upload-outline"
+            size="md"
+          />
           <div>{{ $t('feeAdjustment.uploaderText') }}</div>
         </div>
       </q-file>
@@ -29,7 +41,10 @@
 
 
     <!-- dialogs -->
-    <SubmissionDialog :state.sync="submissionState" :successLabel="$t('feeAdjustment.successLabel')" />
+    <SubmissionDialog
+      :state.sync="submissionState"
+      :success-label="$t('feeAdjustment.successLabel')"
+    />
   </PageLayout>
 </template>
 
@@ -43,6 +58,12 @@ import { URI } from 'src/config';
 
 export default {
   name: 'FeeAdjustment',
+  components: {
+    PageLayout,
+    FormSectionHeader,
+    FormActionBar,
+    SubmissionDialog,
+  },
   mixins: [DirtyStateMixin],
   data() {
     return {
@@ -106,12 +127,6 @@ export default {
       this.files = null;
       this.isDirty = false;
     },
-  },
-  components: {
-    PageLayout,
-    FormSectionHeader,
-    FormActionBar,
-    SubmissionDialog,
   },
 }
 </script>

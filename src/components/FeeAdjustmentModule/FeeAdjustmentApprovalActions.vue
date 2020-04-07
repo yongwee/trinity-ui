@@ -1,8 +1,29 @@
 <template>
   <div class="row">
-    <q-input dense :label="$t('components.feeAdjustmentApprovalActions.reason')" class="q-mr-lg" :class="$style.reasonInput" outlined @input="onInput" v-model="inputValue" />
-    <q-btn flat color="primary" :label="$t('components.feeAdjustmentApprovalActions.accept')" :class="$style.approvalBtn" class="q-mr-xs" @click="doSubmit(true)" />
-    <q-btn flat color="negative" :label="$t('components.feeAdjustmentApprovalActions.deny')" :class="$style.approvalBtn" @click="doSubmit(false)" />
+    <q-input
+      v-model="inputValue"
+      dense
+      :label="$t('components.feeAdjustmentApprovalActions.reason')"
+      class="q-mr-lg"
+      :class="$style.reasonInput"
+      outlined
+      @input="onInput"
+    />
+    <q-btn
+      flat
+      color="primary"
+      :label="$t('components.feeAdjustmentApprovalActions.accept')"
+      :class="$style.approvalBtn"
+      class="q-mr-xs"
+      @click="doSubmit(true)"
+    />
+    <q-btn
+      flat
+      color="negative"
+      :label="$t('components.feeAdjustmentApprovalActions.deny')"
+      :class="$style.approvalBtn"
+      @click="doSubmit(false)"
+    />
   </div>
 </template>
 

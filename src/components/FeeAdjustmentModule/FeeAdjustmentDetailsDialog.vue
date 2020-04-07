@@ -1,21 +1,35 @@
 <template>
   <q-dialog
-      :value="value"
-      @input="onInput"
-      position="bottom"
-      full-width
-      persistent
+    :value="value"
+    position="bottom"
+    full-width
+    persistent
+    @input="onInput"
+  >
+    <q-card
+      :class="$style.dialogCard"
+      class="column"
     >
-    <q-card :class="$style.dialogCard" class="column">
       <q-card-section class="row justify-end">
-        <q-btn round unelevated icon="close" @click="doHideDetails" />
+        <q-btn
+          round
+          unelevated
+          icon="close"
+          @click="doHideDetails"
+        />
       </q-card-section>
       <q-scroll-area class="col-grow q-mb-md">
-        <FeeAdjustmentTable v-if="details" :data="details.data" />
+        <FeeAdjustmentTable
+          v-if="details"
+          :data="details.data"
+        />
       </q-scroll-area>
 
       <q-card-actions>
-        <slot name="actions" :id="details && details.id || ''" />
+        <slot
+          :id="details && details.id || ''"
+          name="actions"
+        />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -26,6 +40,9 @@ import FeeAdjustmentTable from './FeeAdjustmentTable';
 
 export default {
   name: 'FeeAdjustmentDetailsDialog',
+  components: {
+    FeeAdjustmentTable,
+  },
   props: {
     value: {
       type: Boolean,
@@ -56,9 +73,6 @@ export default {
     onInput(val) {
       this.$emit('input', val);
     },
-  },
-  components: {
-    FeeAdjustmentTable,
   },
 }
 </script>

@@ -27,12 +27,12 @@
 
       <q-list>
         <q-item
-          :class="$style.drawerItem"
           v-for="link in navLinks"
           :key="link.title"
+          v-ripple
+          :class="$style.drawerItem"
           :exact-active-class="$style.activeLink"
           :to="link.to"
-          v-ripple
         >
           <q-item-section>
             <q-item-label>
@@ -88,7 +88,7 @@ export default {
     }),
     /**
      * Returns navigation links based on role
-     * 
+     *
      * @returns {Object[]} - links
      */
     navLinks() {
