@@ -172,11 +172,11 @@ export default {
      */
     preBeforeRouteLeave(_to, _from, next) {
     if (this.step === 1) {
-     return true;
-    }
+        return true;
+      }
 
-    this.onBack(next);
-  },
+      this.onBack(next);
+    },
   },
   components: {
     PageLayout,
