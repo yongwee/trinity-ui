@@ -39,9 +39,9 @@
       </template>
     </FeeAdjustmentDetailsDialog>
 
-    <SubmissionDialog :state.sync="submissionState" :successTitle="successTitle" :successLabel="successLabel" />
 
-    <DirtyState v-model="goNext" :isDirty.sync="isDirty" />
+    <!-- Dialogs -->
+    <SubmissionDialog :state.sync="submissionState" :successTitle="successTitle" :successLabel="successLabel" />
   </PageLayout>
 </template>
 
@@ -49,12 +49,13 @@
 import PageLayout from 'src/components/PageLayout';
 import FeeAdjustmentDetailsDialog from 'src/components/FeeAdjustmentModule/FeeAdjustmentDetailsDialog';
 import FeeAdjustmentApprovalActions from 'src/components/FeeAdjustmentModule/FeeAdjustmentApprovalActions';
-import DirtyState from 'src/components/DirtyState';
 import SubmissionDialog from 'src/components/SubmissionDialog';
+import DirtyStateMixin from 'src/mixins/DirtyStateMixin';
 import { URI } from 'src/config';
 
 export default {
   name: 'FeeApprovalList',
+  mixins: [DirtyStateMixin],
   data() {
     return {
       // TODO: ensure columns are correct
@@ -72,8 +73,6 @@ export default {
       pendingList: [],
       showDetailsDialog: false,
       shownDetails: null,
-      goNext: null,
-      isDirty: false,
       submissionState: null,
       successTitle: '',
       successLabel: '',
@@ -175,7 +174,7 @@ export default {
           this.doHideDetails();
         };
 
-        this.confirmExitIfDirty(hideDetails);
+        this.confirmLeaveIfDirty(hideDetails);
       }
     },
     /**
@@ -234,15 +233,6 @@ export default {
     onSubmitFailure() {
       this.submissionState = 'failure';
     },
-    /**
-     * Triggers dirty dialog if state is dirty.
-     * otherwise continue to go next state as per normal.
-     * 
-     * @param {Function} next - function to trigger next state
-     */
-    confirmExitIfDirty(next) {
-      this.goNext = next;
-    },
   },
   beforeRouteLeave(_to, _from, next) {
     const hideDetailsAndLeave = () => {
@@ -250,13 +240,12 @@ export default {
       next();
     };
 
-    this.confirmExitIfDirty(hideDetailsAndLeave);
+    this.confirmLeaveIfDirty(hideDetailsAndLeave);
   },
   components: {
     PageLayout,
     FeeAdjustmentDetailsDialog,
     FeeAdjustmentApprovalActions,
-    DirtyState,
     SubmissionDialog,
   },
 }

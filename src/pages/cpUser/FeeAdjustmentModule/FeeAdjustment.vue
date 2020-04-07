@@ -30,8 +30,6 @@
 
     <!-- dialogs -->
     <SubmissionDialog :state.sync="submissionState" :successLabel="$t('feeAdjustment.successLabel')" />
-
-    <DirtyState :isDirty.sync="isDirty" v-model="goNext" />
   </PageLayout>
 </template>
 
@@ -40,11 +38,12 @@ import PageLayout from 'src/components/PageLayout';
 import FormSectionHeader from 'src/components/form/SectionHeader';
 import FormActionBar from 'src/components/form/ActionBar';
 import SubmissionDialog from 'src/components/SubmissionDialog';
-import DirtyState from 'src/components/DirtyState';
+import DirtyStateMixin from 'src/mixins/DirtyStateMixin';
 import { URI } from 'src/config';
 
 export default {
   name: 'FeeAdjustment',
+  mixins: [DirtyStateMixin],
   data() {
     return {
       files: null,
@@ -56,23 +55,20 @@ export default {
       ],
       client: null,
       market: null,
-      hasFiles: false,
-      goNext: null,
-      isDirty: false,
       submissionState: null,
     }
   },
   methods: {
-    addedFiles() {
-      this.hasFiles = true;
-    },
-    removedFiles() {
-      this.hasFiles = false;
-    },
+    /**
+     * Event handler that sets dirty state when form is updated.
+     */
     onFormChange() {
       this.isDirty = true;
     },
-    submit(e) {
+    /**
+     * Handles form submission.
+     */
+    submit() {
       this.submissionState = 'submitting';
 
       const formData = new FormData();
@@ -86,41 +82,37 @@ export default {
           this.onSubmitFailure();
         });
     },
+    /**
+     * Handles successful submission.
+     */
     onSubmitSuccessful() {
       this.submissionState = 'success';
-      this.onSubmitDone();
+      this.resetForm();
     },
+    /**
+     * Handles failed submision.
+     */
     onSubmitFailure() {
       this.submissionState = 'failure';
       // We do not reset form here so that user may attempt a resubmission
     },
-    onSubmitDone() {
+    /**
+     * Resets form.
+     */
+    resetForm() {
       this.$refs.form.reset();
     },
     reset() {
       this.files = null;
       this.isDirty = false;
     },
-    /**
-     * Triggers dirty dialog if state is dirty
-     * otherwise continue to go next state as per normal
-     *
-     * @param {Function} next - function to trigger next state
-     */
-    confirmExitIfDirty(next) {
-      this.goNext = next;
-    }
   },
   components: {
     PageLayout,
     FormSectionHeader,
     FormActionBar,
     SubmissionDialog,
-    DirtyState,
   },
-  beforeRouteLeave(_to, _from, next) {
-    this.confirmExitIfDirty(next);
-  }
 }
 </script>
 

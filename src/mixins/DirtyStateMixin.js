@@ -24,15 +24,15 @@ const DirtyMixin = {
      */
     showDirtyStateDialog(next) {
       this.$q.dialog({
-        title: $t('mixins.dirtyState.title'),
-        message: $t('mixins.dirtyState.message'),
+        title: this.$t('mixins.dirtyState.title'),
+        message: this.$t('mixins.dirtyState.message'),
         persistent: true,
         ok: {
-          label: $t('mixins.dirtyState.ok'),
+          label: this.$t('mixins.dirtyState.ok'),
           flat: true,
         },
         cancel: {
-          label: $t('mixins.dirtyState.cancel'),
+          label: this.$t('mixins.dirtyState.cancel'),
           flat: true,
         },
         focus: 'none',
