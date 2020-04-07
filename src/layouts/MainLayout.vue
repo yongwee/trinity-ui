@@ -14,7 +14,7 @@
 
     <q-drawer
       :value="true"
-      :width="200"
+      :width="220"
       bordered
       content-class="bg-white"
       behavior="desktop"
@@ -25,15 +25,14 @@
         src="~assets/stacs_logo.png"
       >
 
-      <q-separator />
-
-      <q-list class="text-grey-9">
+      <q-list>
         <q-item
           :class="$style.drawerItem"
           v-for="link in navLinks"
           :key="link.title"
           :exact-active-class="$style.activeLink"
           :to="link.to"
+          v-ripple
         >
           <q-item-section>
             <q-item-label>
@@ -103,18 +102,20 @@ export default {
 .logo {
   display: block;
   width: 128px;
-  margin: map-get($space-md, "y") auto ;
+  margin: map-get($space-md, "y") auto;
+  margin-bottom: map-get($space-lg, "y");
 }
 
-.drawerItem:focus, .drawerItem:hover {
-  color: $primary;
+// .drawerItem:focus, .drawerItem:hover {
+//   color: $primary;
 
-  & > :global(.q-focus-helper) {
-    opacity: 0 !important;
-  }
-}
+//   & > :global(.q-focus-helper) {
+//     opacity: 0 !important;
+//   }
+// }
 
 .activeLink {
+  background-color: $blue-1;
   font-weight: bold;
 }
 </style>
