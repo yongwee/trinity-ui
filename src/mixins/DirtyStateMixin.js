@@ -14,7 +14,7 @@ const DirtyMixin = {
     confirmLeaveIfDirty(next) {
       this.isDirty
         ? this.showDirtyStateDialog(next)
-        : next();
+        : next(true);
     },
     /**
      * Shows a dirty state dialog that confirms with user if they
@@ -38,7 +38,7 @@ const DirtyMixin = {
         focus: 'none',
       })
         .onOk(() => {
-          next();
+          next(true);
         })
         .onCancel(() => {
           next(false);

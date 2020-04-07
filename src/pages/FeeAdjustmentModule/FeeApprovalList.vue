@@ -170,8 +170,10 @@ export default {
      */
     onShowDetailsDialogChange(showDetailsDialog) {
       if (!showDetailsDialog) {
-        const hideDetails = () => {
-          this.doHideDetails();
+        const hideDetails = (shouldGoNext) => {
+          if (shouldGoNext !== false) {
+            this.doHideDetails();
+          }
         };
 
         this.confirmLeaveIfDirty(hideDetails);
@@ -233,14 +235,21 @@ export default {
     onSubmitFailure() {
       this.submissionState = 'failure';
     },
-  },
-  beforeRouteLeave(_to, _from, next) {
-    const hideDetailsAndLeave = () => {
-      this.doHideDetails();
-      next();
-    };
+    /**
+     * Override dirty state mixin's beforeRouteLeave hook
+     * @override
+     */
+    preBeforeRouteLeave(_to, _from, next) {
+      const hideDetailsAndLeave = (shouldGoNext) => {
+        if (shouldGoNext !== false) {
+          this.doHideDetails();
+        }
 
-    this.confirmLeaveIfDirty(hideDetailsAndLeave);
+        next(shouldGoNext);
+      };
+
+      this.confirmLeaveIfDirty(hideDetailsAndLeave);
+    },
   },
   components: {
     PageLayout,
