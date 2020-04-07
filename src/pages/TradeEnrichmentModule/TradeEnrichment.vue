@@ -59,7 +59,7 @@
           <q-separator class="q-mb-lg" />
 
           <div class="row justify-end">
-            <q-btn color="primary" flat label="Back" @click="onBack" />
+            <q-btn color="primary" flat label="Back" @click="onBack()" />
           </div>
         </div>
       </q-step>
@@ -68,8 +68,6 @@
 
     <!-- dialogs -->
     <SubmissionDialog :state.sync="submissionState" :successLabel="$t('tradeEnrichment.successLabel')" />
-
-    <DirtyState :isDirty.sync="isDirty" v-model="goNext" />
   </PageLayout>
 </template>
 
@@ -78,17 +76,16 @@ import PageLayout from 'src/components/PageLayout';
 import FormSectionHeader from 'src/components/form/SectionHeader';
 import FormActionBar from 'src/components/form/ActionBar';
 import SubmissionDialog from 'src/components/SubmissionDialog';
-import DirtyState from 'src/components/DirtyState';
+import DirtyStateMixin from 'src/mixins/DirtyStateMixin';
 import { URI } from 'src/config';
 
 export default {
   name: 'TradeEnrichment',
+  mixins: [DirtyStateMixin],
   data() {
     return {
       file: null,
       submissionState: null,
-      isDirty: false,
-      goNext: null,
       step: 1,
     };
   },
@@ -145,24 +142,47 @@ export default {
       this.isDirty = true;
     },
     /**
-     * Handles back button press to go back one step
+     * Handles back button press to show confirmation and go back one step
+     * if user confirms it
      */
-    onBack() {
-      this.step--;
+    onBack(next) {
+      this.$q.dialog({
+        title: $t('tradeEnrichment.goBackDialogTitle'),
+        message: $t('tradeEnrichment.goBackDialogMessage'),
+        ok: {
+          label: $t('tradeEnrichment.goBackDialogOk'),
+          flat: true,
+        },
+        cancel: true,
+        focus: 'none',
+      })
+        .onOk(() => {
+          next
+            ? next()
+            : this.step--;
+        })
+        .onCancel(() => {
+          next(false);
+        });
     },
-    confirmExitIfDirty(next) {
-      this.goNext = next;
-    },
+    /**
+     * Runs dirty state's navigation guard if step is at 1,
+     * otherwise show goback confirmation.
+     * @override
+     */
+    preBeforeRouteLeave(_to, _from, next) {
+    if (this.step === 1) {
+     return true;
+    }
+
+    this.onBack(next);
   },
-  beforeRouteLeave(_to, _from, next) {
-    this.confirmExitIfDirty(next);
   },
   components: {
     PageLayout,
     FormSectionHeader,
     FormActionBar,
     SubmissionDialog,
-    DirtyState,
   },
 
 }

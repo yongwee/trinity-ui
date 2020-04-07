@@ -21,4 +21,9 @@ export default {
 .fade-enter, fade-leave-to {
   opacity: 0;
 }
+
+// Dialog message body style
+.q-dialog__message {
+  color: $grey-9;
+}
 </style>

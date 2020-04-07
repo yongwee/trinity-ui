@@ -41,7 +41,23 @@ export default {
     uploaderText: 'Drop XML file here, or click to browse.',
     uploaderError: 'Please select a XML file',
     successLabel: 'Trade has been enriched',
+
+    goBackDialogTitle: 'Go back?',
+    goBackDialogMessage: 'You will not be able to return to the Download Enriched Trade step until a new enrichment is submitted. Do you still want to go back?',
+    goBackDialogOk: 'Go Back',
   },
+
+
+  // Mixins
+  mixins: {
+    dirtyState: {
+      title: 'Discard changes?',
+      message: 'You have unsaved changes. Are you sure you want to leave without saving?',
+      ok: 'Discard',
+      cancel: 'Stay',
+    }
+  },
+
 
   // Common components
   components: {
