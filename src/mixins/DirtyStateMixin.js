@@ -38,6 +38,7 @@ const DirtyMixin = {
         focus: 'none',
       })
         .onOk(() => {
+          this.isDirty = false;
           next(true);
         })
         .onCancel(() => {
