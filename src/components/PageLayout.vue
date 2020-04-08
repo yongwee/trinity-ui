@@ -5,7 +5,9 @@
     class="q-mx-auto"
   >
     <div class="text-h4 text-weight-light q-mb-xl">
-      <span>{{ title }}</span>
+      <span>
+        <slot name="title">{{ title }}</slot>
+      </span>
       <q-separator color="primary" />
     </div>
     <section>
@@ -30,7 +32,6 @@ export default {
   props: {
     title: {
       type: String,
-      required: true,
     },
     isLoading: {
       type: Boolean,
