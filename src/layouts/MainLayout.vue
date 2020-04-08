@@ -43,7 +43,12 @@
       </q-list>
 
       <template v-else>
-        <q-skeleton v-for="i in 3" type="rect" :key="i" class="q-ma-lg" />
+        <q-skeleton
+          v-for="i in 3"
+          :key="i"
+          type="rect"
+          class="q-ma-lg"
+        />
       </template>
     </q-drawer>
 
