@@ -25,7 +25,7 @@
         src="~assets/stacs_logo.png"
       >
 
-      <q-list>
+      <q-list v-if="navLinks && navLinks.length">
         <q-item
           v-for="link in navLinks"
           :key="link.title"
@@ -41,6 +41,10 @@
           </q-item-section>
         </q-item>
       </q-list>
+
+      <template v-else>
+        <q-skeleton v-for="i in 3" type="rect" :key="i" class="q-ma-lg" />
+      </template>
     </q-drawer>
 
     <q-page-container>
@@ -51,37 +55,10 @@
 
 <script>
 import { mapState } from 'vuex';
-import { role } from 'src/config';
+import { role, routeAccess } from 'src/config';
 
 export default {
   name: 'MainLayout',
-
-  data () {
-    return {
-      linksByRole: {
-        [role.counterParty]: [
-          {
-            title: 'Fee Adjustment',
-            to: { name: 'feeSchedule/adjustment' },
-          },
-          {
-            title: 'Approval List',
-            to: { name: 'feeSchedule/approvallist' },
-          },
-          {
-            title: 'History',
-            to: { name: 'feeSchedule/history' },
-          },
-        ],
-        [role.esi]: [
-          {
-            title: 'Trade Enrichment',
-            to: { name: 'tradeEnrichment' },
-          },
-        ],
-      },
-    }
-  },
   computed: {
     ...mapState({
       userRole: state => state.user.role,
@@ -92,7 +69,12 @@ export default {
      * @returns {Object[]} - links
      */
     navLinks() {
-      return this.linksByRole[this.userRole];
+      return routeAccess[this.userRole].map(route => {
+        return {
+          title: route.title,
+          to: { name: route.name },
+        };
+      });
     }
   }
 }

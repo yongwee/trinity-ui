@@ -1,3 +1,4 @@
+import { routes as routeConfig } from 'src/config';
 
 const routes = [
   {
@@ -8,24 +9,24 @@ const routes = [
       // Fee Adjustment module
       {
         path: '/feeadjustment',
-        name: 'feeSchedule/adjustment',
+        name: routeConfig.feeAdjustment.name,
         component: () => import('pages/FeeAdjustmentModule/FeeAdjustment.vue'),
       },
       {
         path: '/feeapproval',
-        name: 'feeSchedule/approvallist',
+        name: routeConfig.feeApproval.name,
         component: () => import('pages/FeeAdjustmentModule/FeeApprovalList.vue'),
       },
       {
         path: '/feehistory',
-        name: 'feeSchedule/history',
+        name: routeConfig.feeHistory.name,
         component: () => import('pages/FeeAdjustmentModule/FeeHistory.vue'),
       },
 
       // Trade Enrichment module
       {
         path: '/tradeenrichment',
-        name: 'tradeEnrichment',
+        name: routeConfig.tradeEnrichment.name,
         component: () => import('pages/TradeEnrichmentModule/TradeEnrichment.vue'),
       },
     ]
