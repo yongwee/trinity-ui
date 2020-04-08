@@ -1,4 +1,15 @@
 export default {
+  // Route titles
+  routes: {
+    // Fee Adjustment module
+    feeAdjustment: 'Fee Adjustment',
+    feeApproval: 'Fee Approval',
+    feeHistory: 'Fee History',
+
+    // Trade enrichment module
+    tradeEnrichment: 'Trade Enrichment',
+  },
+
   // Fee Adjustment module
   feeAdjustment: {
     title: 'Fee Adjustment',

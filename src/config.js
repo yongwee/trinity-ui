@@ -13,21 +13,21 @@ export const role = {
 export const routes = {
   // Fee schedule module
   feeAdjustment: {
-    title: 'Fee Adjustment',
+    titleKey: 'routes.feeAdjustment',
     name: 'feeSchedule/adjustment',
   },
   feeApproval: {
-    title: 'Fee Approval',
+    titleKey: 'routes.feeApproval',
     name: 'feeSchedule/approval',
   },
   feeHistory: {
-    title: 'Fee History',
+    titleKey: 'routes.feeHistory',
     name: 'feeSchedule/history',
   },
 
   // Trade enrichment module
   tradeEnrichment: {
-    title: 'Trade Enrichment',
+    titleKey: 'routes.tradeEnrichment',
     name: 'tradeEnrichment',
   },
 }

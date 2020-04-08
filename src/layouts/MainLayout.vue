@@ -36,7 +36,7 @@
         >
           <q-item-section>
             <q-item-label>
-              {{ link.title }}
+              {{ $t(link.titleKey) }}
             </q-item-label>
           </q-item-section>
         </q-item>
@@ -71,7 +71,7 @@ export default {
     navLinks() {
       return routeAccess[this.userRole].map(route => {
         return {
-          title: route.title,
+          titleKey: route.titleKey,
           to: { name: route.name },
         };
       });
