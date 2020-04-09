@@ -43,8 +43,8 @@ export const routeAccess = {
 }
 
 // ======================== URI ========================
-// const host = 'http://stacspilot-720094188.ap-southeast-1.elb.amazonaws.com';
-const host = 'http://localhost:4444';
+const host = 'http://stacspilot-720094188.ap-southeast-1.elb.amazonaws.com/v1';
+// const host = 'http://localhost:4444';
 const feeScheduleURL = host + '/feeSchedule';
 const tradeEnrichURL = host + '/tradeEnrich';
 
