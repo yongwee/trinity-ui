@@ -39,7 +39,7 @@ export const routeAccess = {
   [role.creditRisk]: [],
   [role.counterParty]: [],
   [role.broker]: [routes.feeAdjustment, routes.feeApproval, routes.feeHistory],
-  [role.esi]: [routes.tradeEnrichment],
+  [role.esi]: [routes.feeApproval, routes.feeHistory, routes.tradeEnrichment],
 }
 
 // ======================== URI ========================
