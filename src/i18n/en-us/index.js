@@ -1,6 +1,9 @@
 export default {
   // Route titles
   routes: {
+    // FX Token
+    fxTokenOpenPosition: 'FX Token Open Position',
+
     // Fee Adjustment module
     feeAdjustment: 'Fee Adjustment',
     feeApproval: 'Fee Approval',
@@ -8,6 +11,22 @@ export default {
 
     // Trade enrichment module
     tradeEnrichment: 'Trade Enrichment',
+  },
+
+  // FX Token
+  fxTokenOpenPosition: {
+    title: 'FX Token Open Position',
+
+    createToken: 'Create FX Token',
+    search: 'Search',
+    tokenSelectLabel: 'FX Token Code',
+
+    // Create token
+    createTokenSectionHeader: 'Create FX Token',
+
+    // History
+    txHistoryTab: 'Transaction History',
+    navHistoryTab: 'NAV History',
   },
 
   // Fee Adjustment module
@@ -83,6 +102,10 @@ export default {
     form: {
       submit: 'Submit',
       reset: 'Reset',
+    },
+    dataTable: {
+      searchLabel: 'Search',
+      selectLabel: 'Select',
     },
     feeAdjustmentApprovalActions: {
       reason: 'Reason',

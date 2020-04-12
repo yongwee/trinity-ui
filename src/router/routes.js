@@ -6,6 +6,29 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/Index.vue') },
+      // FX Token
+      {
+        path: '/fxtokenopenposition',
+        component: () => import('pages/FxToken/FXTokenOpenPosition/Layout.vue'),
+        children: [
+          {
+            path: '',
+            name: routeConfig.fxTokenOpenPosition.name,
+            component: () => import('pages/FxToken/FXTokenOpenPosition/Home.vue')
+          },
+          {
+            path: 'createtoken',
+            name: routeConfig.fxTokenOpenPositionCreateToken.name,
+            component: () => import('pages/FxToken/FXTokenOpenPosition/CreateToken.vue')
+          },
+          {
+            path: 'history',
+            name: routeConfig.fxTokenOpenPositionHistory.name,
+            component: () => import('pages/FxToken/FXTokenOpenPosition/History.vue')
+          },
+        ]
+      },
+
       // Fee Adjustment module
       {
         path: '/feeadjustment',

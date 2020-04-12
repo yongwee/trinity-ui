@@ -11,6 +11,18 @@ export const role = {
 
 // ======================== Routes ========================
 export const routes = {
+  // FX token
+  fxTokenOpenPosition: {
+    titleKey: 'routes.fxTokenOpenPosition',
+    name: 'fxToken/openPosition',
+  },
+  fxTokenOpenPositionCreateToken: {
+    name: 'fxToken/openPosition/createToken',
+  },
+  fxTokenOpenPositionHistory: {
+    name: 'fxToken/openPosition/history',
+  },
+
   // Fee schedule module
   feeAdjustment: {
     titleKey: 'routes.feeAdjustment',
@@ -33,7 +45,7 @@ export const routes = {
 }
 
 export const routeAccess = {
-  [role.cro]: [],
+  [role.cro]: [routes.fxTokenOpenPosition],
   [role.ops]: [],
   [role.market]: [],
   [role.creditRisk]: [],
