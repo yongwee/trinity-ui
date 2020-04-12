@@ -101,7 +101,7 @@ export default {
 //   }
 // }
 
-.activeLink {
+:global(.q-router-link--active) {
   background-color: $blue-1;
   font-weight: bold;
 }
