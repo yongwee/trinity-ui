@@ -28,6 +28,11 @@ const routes = [
           },
         ]
       },
+      {
+        path: '/fxtokenclosedposition',
+        name: routeConfig.fxTokenClosedPosition.name,
+        component: () => import('pages/FxToken/FXTokenClosedPosition.vue'),
+      },
 
       // Fee Adjustment module
       {

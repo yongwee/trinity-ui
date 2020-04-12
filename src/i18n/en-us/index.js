@@ -3,6 +3,7 @@ export default {
   routes: {
     // FX Token
     fxTokenOpenPosition: 'FX Token Open Position',
+    fxTokenClosedPosition: 'FX Token Closed Position',
 
     // Fee Adjustment module
     feeAdjustment: 'Fee Adjustment',
@@ -23,6 +24,14 @@ export default {
 
     // Create token
     createTokenSectionHeader: 'Create FX Token',
+
+    // History
+    txHistoryTab: 'Transaction History',
+    navHistoryTab: 'NAV History',
+  },
+
+  fxTokenClosedPosition: {
+    title: 'FX Token Closed Position',
 
     // History
     txHistoryTab: 'Transaction History',
