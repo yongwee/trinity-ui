@@ -10,6 +10,9 @@ export default {
     feeApproval: 'Fee Approval',
     feeHistory: 'Fee History',
 
+    // Investor risk
+    investorRisk: 'Investor Risk',
+
     // Trade enrichment module
     tradeEnrichment: 'Trade Enrichment',
   },
@@ -36,6 +39,13 @@ export default {
     // History
     txHistoryTab: 'Transaction History',
     navHistoryTab: 'NAV History',
+  },
+
+  // Investor Risk
+  investorRisk: {
+    title: 'Investor Risk',
+
+    selectLabel: 'Investor',
   },
 
   // Fee Adjustment module

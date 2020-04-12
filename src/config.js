@@ -41,6 +41,12 @@ export const routes = {
     name: 'feeSchedule/history',
   },
 
+  // Investor Risk
+  investorRisk: {
+    titleKey: 'routes.investorRisk',
+    name: 'investorRisk',
+  },
+
   // Trade enrichment module
   tradeEnrichment: {
     titleKey: 'routes.tradeEnrichment',
@@ -49,7 +55,7 @@ export const routes = {
 }
 
 export const routeAccess = {
-  [role.cro]: [routes.fxTokenOpenPosition, routes.fxTokenClosedPosition],
+  [role.cro]: [routes.fxTokenOpenPosition, routes.fxTokenClosedPosition, routes.investorRisk],
   [role.ops]: [],
   [role.market]: [],
   [role.creditRisk]: [],

@@ -34,6 +34,13 @@ const routes = [
         component: () => import('pages/FxToken/FXTokenClosedPosition.vue'),
       },
 
+      // Investor Risk
+      {
+        path: '/investorrisk',
+        name: routeConfig.investorRisk.name,
+        component: () => import('pages/InvestorRisk/InvestorRisk.vue'),
+      },
+
       // Fee Adjustment module
       {
         path: '/feeadjustment',
