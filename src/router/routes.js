@@ -1,4 +1,6 @@
 import { routes as routeConfig } from 'src/config';
+import FXTokenOpenPositionLayout from 'src/pages/FxToken/FXTokenOpenPosition/Layout';
+import SPTokenLayout from 'src/pages/SPToken/Layout';
 
 const routes = [
   {
@@ -9,7 +11,7 @@ const routes = [
       // FX Token
       {
         path: '/fxtokenopenposition',
-        component: () => import('pages/FxToken/FXTokenOpenPosition/Layout.vue'),
+        component: FXTokenOpenPositionLayout,
         children: [
           {
             path: '',
@@ -26,12 +28,30 @@ const routes = [
             name: routeConfig.fxTokenOpenPositionHistory.name,
             component: () => import('pages/FxToken/FXTokenOpenPosition/History.vue')
           },
-        ]
+        ],
       },
       {
         path: '/fxtokenclosedposition',
         name: routeConfig.fxTokenClosedPosition.name,
         component: () => import('pages/FxToken/FXTokenClosedPosition.vue'),
+      },
+
+      // SP Token
+      {
+        path: '/sptoken',
+        component: SPTokenLayout,
+        children: [
+          {
+            path: '',
+            name: routeConfig.spToken.name,
+            component: () => import('pages/SPToken/Home.vue')
+          },
+          {
+            path: 'createtoken',
+            name: routeConfig.spTokenCreateToken.name,
+            component: () => import('pages/SPToken/CreateToken.vue')
+          },
+        ],
       },
 
       // Investor Risk

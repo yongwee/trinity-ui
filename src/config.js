@@ -47,6 +47,16 @@ export const routes = {
     name: 'investorRisk',
   },
 
+  // SP Token
+  spToken: {
+    titleKey: 'routes.spToken',
+    name: 'spToken/home',
+  },
+  spTokenCreateToken: {
+    titleKey: 'routes.spTokenCreateToken',
+    name: 'spToken/createToken',
+  },
+
   // Trade enrichment module
   tradeEnrichment: {
     titleKey: 'routes.tradeEnrichment',
@@ -55,7 +65,7 @@ export const routes = {
 }
 
 export const routeAccess = {
-  [role.cro]: [routes.fxTokenOpenPosition, routes.fxTokenClosedPosition, routes.investorRisk],
+  [role.cro]: [routes.fxTokenOpenPosition, routes.fxTokenClosedPosition, routes.spToken, routes.investorRisk],
   [role.ops]: [],
   [role.market]: [],
   [role.creditRisk]: [],
@@ -68,6 +78,7 @@ export const routeAccess = {
 const host = 'http://stacspilot-720094188.ap-southeast-1.elb.amazonaws.com/v1';
 // const host = 'http://localhost:4444';
 const feeScheduleURL = host + '/feeSchedule';
+const spTokenURL = host + '/SPToken';
 const tradeEnrichURL = host + '/tradeEnrich';
 
 export const URI = {
@@ -77,6 +88,11 @@ export const URI = {
   feeScheduleApprove: feeScheduleURL + '/approve/{id}',
   feeScheduleDeny: feeScheduleURL + '/deny/{id}',
   feeSchedulePending: feeScheduleURL + '/pending',
+
+  // SP Token
+  spToken: spTokenURL,
+  spTokenCreate: spTokenURL + '/issue',
+  spTokenById: spTokenURL + '/issue/{id}',
 
   // Trade enrichment
   tradeEnrich: tradeEnrichURL,

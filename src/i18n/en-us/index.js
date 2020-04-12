@@ -13,6 +13,9 @@ export default {
     // Investor risk
     investorRisk: 'Investor Risk',
 
+    // SP Token
+    spToken: 'SP Token',
+
     // Trade enrichment module
     tradeEnrichment: 'Trade Enrichment',
   },
@@ -46,6 +49,22 @@ export default {
     title: 'Investor Risk',
 
     selectLabel: 'Investor',
+  },
+
+  // SP Token
+  spToken: {
+    title: 'SP Token',
+
+    // Home
+    createToken: 'Create SP Token',
+    selectLabel: 'SP Token Code',
+
+    // Create Token
+    createTokenSectionheader: 'Create SP Token',
+    createTokenNameInput: 'Token Name',
+    createTokenDescriptionInput: 'Description',
+    createTokenInvestorInput: 'Investor',
+    createTokenAmountInput: 'Amount',
   },
 
   // Fee Adjustment module
