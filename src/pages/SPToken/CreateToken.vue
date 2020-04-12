@@ -1,12 +1,37 @@
 <template>
   <div>
-    <q-form @submit="submit" @reset="reset" @change="onFormChange" ref="form">
+    <q-form
+      ref="form"
+      @submit="submit"
+      @reset="reset"
+      @change="onFormChange"
+    >
       <SectionHeader :header="$t('spToken.createTokenSectionheader')" />
 
-      <q-input outlined class="q-mb-md" :label="$t('spToken.createTokenNameInput')" v-model="tokenName" />
-      <q-input outlined class="q-mb-md" :label="$t('spToken.createTokenDescriptionInput')" v-model="description" />
-      <q-input outlined class="q-mb-md" :label="$t('spToken.createTokenInvestorInput')" v-model="investor" />
-      <q-input outlined class="q-mb-md" :label="$t('spToken.createTokenAmountInput')" v-model="amount" />
+      <q-input
+        v-model="tokenName"
+        outlined
+        class="q-mb-md"
+        :label="$t('spToken.createTokenNameInput')"
+      />
+      <q-input
+        v-model="description"
+        outlined
+        class="q-mb-md"
+        :label="$t('spToken.createTokenDescriptionInput')"
+      />
+      <q-input
+        v-model="investor"
+        outlined
+        class="q-mb-md"
+        :label="$t('spToken.createTokenInvestorInput')"
+      />
+      <q-input
+        v-model="amount"
+        outlined
+        class="q-mb-md"
+        :label="$t('spToken.createTokenAmountInput')"
+      />
 
       <ActionBar />
     </q-form>
@@ -27,6 +52,11 @@ import { URI } from 'src/config';
 
 export default {
   name: 'SPTokenCreateToken',
+  components: {
+    SectionHeader,
+    ActionBar,
+    SubmissionDialog,
+  },
   mixins: [DirtyStateMixin],
   data() {
     return {
@@ -76,11 +106,6 @@ export default {
     onFormChange() {
       this.isDirty = true;
     },
-  },
-  components: {
-    SectionHeader,
-    ActionBar,
-    SubmissionDialog,
   }
 }
 </script>

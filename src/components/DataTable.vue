@@ -12,10 +12,10 @@
         debounce="300"
         outlined
         :value="searchValue"
-        @input="val => $emit('update:searchValue', val)"
         clearable
         :placeholder="searchLabel"
         :class="$style.searchInput"
+        @input="val => $emit('update:searchValue', val)"
       >
         <template v-slot:append>
           <q-icon name="search" />
@@ -30,15 +30,21 @@
         outlined
         clearable
         :value="selectValue"
-        @input="val => $emit('update:selectValue', val)"
         :options="selectOptions"
         :label="selectLabel"
         :class="$style.selectInput"
+        @input="val => $emit('update:selectValue', val)"
       />
     </template>
 
-    <template v-if="!!$scopedSlots.body" v-slot:body="props">
-      <slot name="body" v-bind="props" />
+    <template
+      v-if="!!$scopedSlots.body"
+      v-slot:body="props"
+    >
+      <slot
+        name="body"
+        v-bind="props"
+      />
     </template>
   </q-table>
 </template>
@@ -51,7 +57,10 @@ export default {
       type: Array,
       required: true,
     },
-    data: Array,
+    data: {
+      type: Array,
+      default: undefined,
+    },
     searchLabel: {
       type: String,
       default() {
@@ -65,9 +74,18 @@ export default {
       },
     },
 
-    searchValue: String,
-    selectValue: String,
-    selectOptions: Array,
+    searchValue: {
+      type: String,
+      default: undefined,
+    },
+    selectValue: {
+      type: String,
+      default: undefined,
+    },
+    selectOptions: {
+      type: Array,
+      default: undefined,
+    },
   },
 }
 </script>

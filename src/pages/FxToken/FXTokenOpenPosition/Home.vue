@@ -11,24 +11,43 @@
     <DataTable
       :columns="columns"
       :data="data"
-      :searchLabel="$t('fxTokenOpenPosition.search')"
-      :selectLabel="$t('fxTokenOpenPosition.tokenSelectLabel')"
+      :search-label="$t('fxTokenOpenPosition.search')"
+      :select-label="$t('fxTokenOpenPosition.tokenSelectLabel')"
 
-      :searchValue.sync="searchValue"
-      :selectValue.sync="tokenSelectValue"
-      :selectOptions="tokenSelectOptions"
+      :search-value.sync="searchValue"
+      :select-value.sync="tokenSelectValue"
+      :select-options="tokenSelectOptions"
     >
       <template v-slot:body="props">
         <q-tr :props="props">
-          <q-td key="id" :props="props">
+          <q-td
+            key="id"
+            :props="props"
+          >
             {{ props.row.id }}
           </q-td>
-          <q-td key="token" :props="props">
+          <q-td
+            key="token"
+            :props="props"
+          >
             {{ props.row.token }}
           </q-td>
-          <q-td key="actions" :props="props">
-            <q-btn flat color="primary" label="TX History" @click="goToHistory('tx', props.row.id)" />
-            <q-btn flat color="primary" label="NAV History" @click="goToHistory('nav', props.row.id)" />
+          <q-td
+            key="actions"
+            :props="props"
+          >
+            <q-btn
+              flat
+              color="primary"
+              label="TX History"
+              @click="goToHistory('tx', props.row.id)"
+            />
+            <q-btn
+              flat
+              color="primary"
+              label="NAV History"
+              @click="goToHistory('nav', props.row.id)"
+            />
           </q-td>
         </q-tr>
       </template>
@@ -42,6 +61,9 @@ import { routes } from 'src/config';
 
 export default {
   name: 'FXTokenOpenPositionHome',
+  components: {
+    DataTable,
+  },
   data() {
     return {
       // TODO: proper definition
@@ -96,9 +118,6 @@ export default {
     goToHistory(type, id) {
       this.$router.push({ name: routes.fxTokenOpenPositionHistory.name, query: { type, id } });
     }
-  },
-  components: {
-    DataTable,
   },
 }
 </script>

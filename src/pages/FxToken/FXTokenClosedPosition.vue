@@ -1,29 +1,49 @@
 <template>
   <PageLayout :title="$t('fxTokenClosedPosition.title')">
-    <q-tabs v-model="tab" active-color="primary" indicator-color="primary" align="left">
-      <q-tab :name="tabType.tx" :label="$t('fxTokenClosedPosition.txHistoryTab')" />
-      <q-tab :name="tabType.nav" :label="$t('fxTokenClosedPosition.navHistoryTab')" />
+    <q-tabs
+      v-model="tab"
+      active-color="primary"
+      indicator-color="primary"
+      align="left"
+    >
+      <q-tab
+        :name="tabType.tx"
+        :label="$t('fxTokenClosedPosition.txHistoryTab')"
+      />
+      <q-tab
+        :name="tabType.nav"
+        :label="$t('fxTokenClosedPosition.navHistoryTab')"
+      />
     </q-tabs>
 
-    <q-tab-panels v-model="tab" animated>
-      <q-tab-panel :name="tabType.tx" class="q-px-none">
+    <q-tab-panels
+      v-model="tab"
+      animated
+    >
+      <q-tab-panel
+        :name="tabType.tx"
+        class="q-px-none"
+      >
         <DataTable
           :data="data"
           :columns="columns"
 
-          :searchValue.sync="searchValue"
-          :selectValue.sync="tokenSelectValue"
-          :selectOptions="tokenSelectOptions"
+          :search-value.sync="searchValue"
+          :select-value.sync="tokenSelectValue"
+          :select-options="tokenSelectOptions"
         />
       </q-tab-panel>
-      <q-tab-panel :name="tabType.nav" class="q-px-none">
+      <q-tab-panel
+        :name="tabType.nav"
+        class="q-px-none"
+      >
         <DataTable
           :data="data"
           :columns="columns"
 
-          :searchValue.sync="searchValue"
-          :selectValue.sync="tokenSelectValue"
-          :selectOptions="tokenSelectOptions"
+          :search-value.sync="searchValue"
+          :select-value.sync="tokenSelectValue"
+          :select-options="tokenSelectOptions"
         />
       </q-tab-panel>
     </q-tab-panels>
@@ -41,6 +61,10 @@ const tabType = {
 
 export default {
   name: 'FXTokenClosedPosition',
+  components: {
+    PageLayout,
+    DataTable,
+  },
   data() {
     return {
       tabType,
@@ -90,6 +114,17 @@ export default {
       });
     },
   },
+  created() {
+    this.fetchData();
+
+    const { id, type } = this.$route.query;
+
+    this.tab = (type == tabType.nav)
+      ? type
+      : tabType.tx;
+
+    this.id = id;
+  },
   methods: {
     fetchData() {
       // TODO: proper fetch
@@ -104,21 +139,6 @@ export default {
         },
       ]
     },
-  },
-  created() {
-    this.fetchData();
-
-    const { id, type } = this.$route.query;
-
-    this.tab = (type == tabType.nav)
-      ? type
-      : tabType.tx;
-
-    this.id = id;
-  },
-  components: {
-    PageLayout,
-    DataTable,
   },
 }
 </script>

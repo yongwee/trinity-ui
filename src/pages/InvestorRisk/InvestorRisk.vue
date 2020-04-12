@@ -4,11 +4,11 @@
       :data="data"
       :columns="columns"
 
-      :searchValue.sync="searchValue"
-      :selectValue.sync="investorSelectValue"
-      :selectOptions="investorSelectOptions"
+      :search-value.sync="searchValue"
+      :select-value.sync="investorSelectValue"
+      :select-options="investorSelectOptions"
 
-      :selectLabel="$t('investorRisk.selectLabel')"
+      :select-label="$t('investorRisk.selectLabel')"
     />
   </PageLayout>
 </template>
@@ -19,6 +19,10 @@ import DataTable from 'src/components/DataTable';
 
 export default {
   name: 'InvestorRisk',
+  components: {
+    PageLayout,
+    DataTable,
+  },
   data() {
     return {
       // TODO: proper definition
@@ -79,10 +83,6 @@ export default {
         },
       ];
     },
-  },
-  components: {
-    PageLayout,
-    DataTable,
   }
 }
 </script>

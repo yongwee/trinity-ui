@@ -30,6 +30,9 @@ import { routeAccess } from 'src/config';
 
 export default {
   name: 'PageIndex',
+  components: {
+    PageLayout,
+  },
   computed: {
     ...mapState({
       userRole: state => state.user.role,
@@ -54,9 +57,6 @@ export default {
         }
       }
     },
-  },
-  components: {
-    PageLayout,
   },
 }
 </script>

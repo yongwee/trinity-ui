@@ -1,16 +1,21 @@
 <template>
   <div>
-    <q-btn class="q-mb-md" color="primary" :label="$t('spToken.createToken')" @click="onCreateTokenClick" />
+    <q-btn
+      class="q-mb-md"
+      color="primary"
+      :label="$t('spToken.createToken')"
+      @click="onCreateTokenClick"
+    />
 
     <DataTable
       :data="data"
       :columns="columns"
 
-      :searchValue.sync="searchValue"
-      :selectValue.sync="tokenSelectValue"
-      :selectOptions="tokenSelectOptions"
+      :search-value.sync="searchValue"
+      :select-value.sync="tokenSelectValue"
+      :select-options="tokenSelectOptions"
 
-      :selectLabel="$t('spToken.selectLabel')"
+      :select-label="$t('spToken.selectLabel')"
     />
   </div>
 </template>
@@ -21,6 +26,9 @@ import { routes } from 'src/config';
 
 export default {
   name: 'SPTokenHome',
+  components: {
+    DataTable,
+  },
   data() {
     return {
       // TODO: proper definition
@@ -87,9 +95,6 @@ export default {
     viewToken(type, id) {
       // TODO: open dialog to show token details
     }
-  },
-  components: {
-    DataTable,
   },
 }
 </script>

@@ -32,6 +32,7 @@ export default {
   props: {
     title: {
       type: String,
+      default: undefined,
     },
     isLoading: {
       type: Boolean,
