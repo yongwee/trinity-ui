@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
-      <q-toolbar>
+      <q-toolbar class="justify-end">
         <!-- <q-btn
           flat
           dense
@@ -9,6 +9,7 @@
           icon="menu"
           aria-label="Menu"
         /> -->
+        <UserProfileBtn />
       </q-toolbar>
     </q-header>
 
@@ -61,9 +62,13 @@
 <script>
 import { mapState } from 'vuex';
 import { role, routeAccess } from 'src/config';
+import UserProfileBtn from 'src/components/UserProfileBtn';
 
 export default {
   name: 'MainLayout',
+  components: {
+    UserProfileBtn,
+  },
   computed: {
     ...mapState({
       userRole: state => state.user.role,
