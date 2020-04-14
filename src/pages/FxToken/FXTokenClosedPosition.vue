@@ -1,52 +1,59 @@
 <template>
-  <PageLayout :title="$t('fxTokenClosedPosition.title')">
-    <q-tabs
-      v-model="tab"
-      active-color="primary"
-      indicator-color="primary"
-      align="left"
+  <PageLayout>
+    <q-card
+      flat
+      bordered
     >
-      <q-tab
-        :name="tabType.tx"
-        :label="$t('fxTokenClosedPosition.txHistoryTab')"
-      />
-      <q-tab
-        :name="tabType.nav"
-        :label="$t('fxTokenClosedPosition.navHistoryTab')"
-      />
-    </q-tabs>
-
-    <q-tab-panels
-      v-model="tab"
-      animated
-    >
-      <q-tab-panel
-        :name="tabType.tx"
-        class="q-px-none"
+      <q-tabs
+        v-model="tab"
+        active-color="primary"
+        indicator-color="primary"
+        align="left"
       >
-        <DataTable
-          :data="data"
-          :columns="columns"
-
-          :search-value.sync="searchValue"
-          :select-value.sync="tokenSelectValue"
-          :select-options="tokenSelectOptions"
+        <q-tab
+          :name="tabType.tx"
+          :label="$t('fxTokenClosedPosition.txHistoryTab')"
         />
-      </q-tab-panel>
-      <q-tab-panel
-        :name="tabType.nav"
-        class="q-px-none"
+        <q-tab
+          :name="tabType.nav"
+          :label="$t('fxTokenClosedPosition.navHistoryTab')"
+        />
+      </q-tabs>
+
+      <q-separator />
+
+      <q-tab-panels
+        v-model="tab"
+        animated
       >
-        <DataTable
-          :data="data"
-          :columns="columns"
+        <q-tab-panel
+          :name="tabType.tx"
+          class="q-px-none"
+        >
+          <DataTable
+            :data="data"
+            :columns="columns"
 
-          :search-value.sync="searchValue"
-          :select-value.sync="tokenSelectValue"
-          :select-options="tokenSelectOptions"
-        />
-      </q-tab-panel>
-    </q-tab-panels>
+            :search-value.sync="searchValue"
+            :select-value.sync="tokenSelectValue"
+            :select-options="tokenSelectOptions"
+          />
+        </q-tab-panel>
+        <q-tab-panel
+          :name="tabType.nav"
+          class="q-px-none"
+        >
+          <DataTable
+            :data="data"
+            :columns="columns"
+
+            :search-value.sync="searchValue"
+            :select-value.sync="tokenSelectValue"
+            :select-options="tokenSelectOptions"
+          />
+        </q-tab-panel>
+      </q-tab-panels>
+    </q-card>
   </PageLayout>
 </template>
 

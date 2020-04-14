@@ -76,7 +76,7 @@ export default {
     navLinks() {
       return routeAccess[this.userRole].map(route => {
         return {
-          titleKey: route.titleKey,
+          titleKey: route.navBarTitleKey,
           to: { name: route.name },
         };
       });

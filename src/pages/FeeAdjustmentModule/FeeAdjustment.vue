@@ -1,5 +1,5 @@
 <template>
-  <PageLayout :title="$t('feeAdjustment.title')">
+  <PageLayout>
     <q-form
       ref="form"
       @submit="submit"

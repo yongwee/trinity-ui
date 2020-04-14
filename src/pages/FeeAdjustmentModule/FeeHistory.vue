@@ -1,5 +1,5 @@
 <template>
-  <PageLayout :title="$t('feeHistory.title')">
+  <PageLayout>
     <q-table
       v-if="history && history.length"
       hide-header

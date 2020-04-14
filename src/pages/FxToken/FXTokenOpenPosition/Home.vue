@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <PageLayout>
     <div class="q-mb-md">
       <q-btn
         :label="$t('fxTokenOpenPosition.createToken')"
@@ -17,6 +17,8 @@
       :search-value.sync="searchValue"
       :select-value.sync="tokenSelectValue"
       :select-options="tokenSelectOptions"
+
+      bordered
     >
       <template v-slot:body="props">
         <q-tr :props="props">
@@ -52,16 +54,18 @@
         </q-tr>
       </template>
     </DataTable>
-  </div>
+  </PageLayout>
 </template>
 
 <script>
+import PageLayout from 'src/components/PageLayout';
 import DataTable from 'src/components/DataTable';
 import { routes } from 'src/config';
 
 export default {
   name: 'FXTokenOpenPositionHome',
   components: {
+    PageLayout,
     DataTable,
   },
   data() {

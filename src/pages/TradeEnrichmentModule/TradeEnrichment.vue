@@ -1,5 +1,5 @@
 <template>
-  <PageLayout :title="$t('tradeEnrichment.title')">
+  <PageLayout>
     <q-stepper
       v-model="step"
       color="primary"

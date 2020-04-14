@@ -13,53 +13,64 @@ export const role = {
 export const routes = {
   // FX token
   fxTokenOpenPosition: {
-    titleKey: 'routes.fxTokenOpenPosition',
+    navBarTitleKey: 'routes.fxTokenOpenPosition',
+    titleKey: 'fxTokenOpenPosition.title',
     name: 'fxToken/openPosition',
   },
   fxTokenOpenPositionCreateToken: {
     name: 'fxToken/openPosition/createToken',
+    titleKey: 'fxTokenOpenPosition.createTokenTitle',
   },
   fxTokenOpenPositionHistory: {
     name: 'fxToken/openPosition/history',
+    titleKey: 'fxTokenOpenPosition.historyTitle',
   },
   fxTokenClosedPosition: {
-    titleKey: 'routes.fxTokenClosedPosition',
+    navBarTitleKey: 'routes.fxTokenClosedPosition',
+    titleKey: 'fxTokenClosedPosition.title',
     name: 'fxToken/closedPosition',
   },
 
   // Fee schedule module
   feeAdjustment: {
-    titleKey: 'routes.feeAdjustment',
+    navBarTitleKey: 'routes.feeAdjustment',
+    titleKey: 'feeAdjustment.title',
     name: 'feeSchedule/adjustment',
   },
   feeApproval: {
-    titleKey: 'routes.feeApproval',
+    navBarTitleKey: 'routes.feeApproval',
+    titleKey: 'feeApprovalList.title',
     name: 'feeSchedule/approval',
   },
   feeHistory: {
-    titleKey: 'routes.feeHistory',
+    navBarTitleKey: 'routes.feeHistory',
+    titleKey: 'feeHistory.title',
     name: 'feeSchedule/history',
   },
 
   // Investor Risk
   investorRisk: {
-    titleKey: 'routes.investorRisk',
+    navBarTitleKey: 'routes.investorRisk',
+    titleKey: 'investorRisk.title',
     name: 'investorRisk',
   },
 
   // SP Token
   spToken: {
-    titleKey: 'routes.spToken',
+    navBarTitleKey: 'routes.spToken',
+    titleKey: 'spToken.title',
     name: 'spToken/home',
   },
   spTokenCreateToken: {
-    titleKey: 'routes.spTokenCreateToken',
+    navBarTitleKey: 'routes.spTokenCreateToken',
+    titleKey: 'spToken.createTokenTitle',
     name: 'spToken/createToken',
   },
 
   // Trade enrichment module
   tradeEnrichment: {
-    titleKey: 'routes.tradeEnrichment',
+    navBarTitleKey: 'routes.tradeEnrichment',
+    titleKey: 'tradeEnrichment.title',
     name: 'tradeEnrichment',
   },
 }

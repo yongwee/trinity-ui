@@ -1,5 +1,5 @@
 <template>
-  <PageLayout :title="$t('investorRisk.title')">
+  <PageLayout>
     <DataTable
       :data="data"
       :columns="columns"
@@ -9,6 +9,8 @@
       :select-options="investorSelectOptions"
 
       :select-label="$t('investorRisk.selectLabel')"
+
+      bordered
     />
   </PageLayout>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <PageLayout :title="$t('feeApprovalList.title')">
+  <PageLayout>
     <q-table
       v-if="pendingList && pendingList.length"
       :data="pendingList"

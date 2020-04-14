@@ -24,14 +24,17 @@ export default {
   fxTokenOpenPosition: {
     title: 'FX Token Open Position',
 
+    // Home
     createToken: 'Create FX Token',
     search: 'Search',
     tokenSelectLabel: 'FX Token Code',
 
     // Create token
+    createTokenTitle: 'Create FX Token',
     createTokenSectionHeader: 'Create FX Token',
 
     // History
+    historyTitle: 'History',
     txHistoryTab: 'Transaction History',
     navHistoryTab: 'NAV History',
   },
@@ -40,6 +43,7 @@ export default {
     title: 'FX Token Closed Position',
 
     // History
+    historyTitle: 'History',
     txHistoryTab: 'Transaction History',
     navHistoryTab: 'NAV History',
   },
@@ -60,7 +64,7 @@ export default {
     selectLabel: 'SP Token Code',
 
     // Create Token
-    createTokenSectionheader: 'Create SP Token',
+    createTokenTitle: 'Create SP Token',
     createTokenNameInput: 'Token Name',
     createTokenDescriptionInput: 'Description',
     createTokenInvestorInput: 'Investor',

@@ -1,29 +1,28 @@
 <template>
-  <div>
+  <PageLayout>
     <q-form
       @submit="onSubmit"
       @reset="onReset"
       @change="onChange"
     >
-      <SectionHeader :header="$t('fxTokenOpenPosition.createTokenSectionHeader')" />
       <q-input
         label="Token Name"
         outlined
       />
       <ActionBar />
     </q-form>
-  </div>
+  </PageLayout>
 </template>
 
 <script>
-import SectionHeader from 'src/components/form/SectionHeader';
+import PageLayout from 'src/components/PageLayout';
 import ActionBar from 'src/components/form/ActionBar';
 import DirtyStateMixin from 'src/mixins/DirtyStateMixin';
 
 export default {
   name: 'FXTokenOpenPositionCreateToken',
   components: {
-    SectionHeader,
+    PageLayout,
     ActionBar,
   },
   mixins: [DirtyStateMixin],

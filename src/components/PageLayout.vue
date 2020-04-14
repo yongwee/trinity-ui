@@ -6,7 +6,7 @@
   >
     <div class="text-h4 text-weight-light q-mb-xl">
       <span>
-        <slot name="title">{{ title }}</slot>
+        <slot name="title">{{ title || $t(titleKey) }}</slot>
       </span>
       <q-separator color="primary" />
     </div>
@@ -39,6 +39,11 @@ export default {
       default: false,
     }
   },
+  computed: {
+    titleKey() {
+      return this.$route.meta.titleKey;
+    }
+  }
 }
 </script>
 

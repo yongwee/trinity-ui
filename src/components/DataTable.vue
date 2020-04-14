@@ -4,7 +4,7 @@
     :data="data"
     :filter="searchValue"
     flat
-    bordered
+    v-bind="$attrs"
   >
     <template v-slot:top>
       <q-input
