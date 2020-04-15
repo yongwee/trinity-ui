@@ -91,6 +91,7 @@ const host = 'http://stacspilot-720094188.ap-southeast-1.elb.amazonaws.com/v1';
 const feeScheduleURL = host + '/feeSchedule';
 const spTokenURL = host + '/SPToken';
 const tradeEnrichURL = host + '/tradeEnrich';
+const brokerURL = host + '/broker';
 
 export const URI = {
   // Fee schedule
@@ -99,6 +100,10 @@ export const URI = {
   feeScheduleApprove: feeScheduleURL + '/approve/{id}',
   feeScheduleDeny: feeScheduleURL + '/deny/{id}',
   feeSchedulePending: feeScheduleURL + '/pending',
+  feeSchedulePendingIndividual: feeScheduleURL + '/pending/{id}',
+
+  // Broker
+  broker: brokerURL,
 
   // SP Token
   spToken: spTokenURL,

@@ -1,9 +1,8 @@
 <template>
   <q-dialog
     :value="value"
-    position="bottom"
     full-width
-    persistent
+    full-height
     @input="onInput"
   >
     <q-card
@@ -12,22 +11,35 @@
     >
       <q-card-section class="row justify-end">
         <q-btn
+          dense
           round
           unelevated
           icon="close"
           @click="doHideDetails"
         />
       </q-card-section>
-      <q-scroll-area class="col-grow q-mb-md">
-        <FeeAdjustmentTable
-          v-if="details"
-          :data="details.data"
-        />
-      </q-scroll-area>
+
+      <FeeAdjustmentTable
+        v-if="details"
+        class="q-mb-md"
+        :class="$style.dialogBody"
+        :data="details.data"
+      />
+      <GenericErrorScreen
+        v-else-if="!!errorRetry"
+        :class="$style.dialogBody"
+        centered
+        @retry="errorRetry"
+      />
+      <GenericLoadingScreen
+        v-else
+        :class="$style.dialogBody"
+        centered
+      />
 
       <q-card-actions>
         <slot
-          :id="details && details.id || ''"
+          :id="details && details.id"
           name="actions"
         />
       </q-card-actions>
@@ -37,11 +49,15 @@
 
 <script>
 import FeeAdjustmentTable from './FeeAdjustmentTable';
+import GenericErrorScreen from 'src/components/GenericErrorScreen';
+import GenericLoadingScreen from 'src/components/GenericLoadingScreen';
 
 export default {
   name: 'FeeAdjustmentDetailsDialog',
   components: {
     FeeAdjustmentTable,
+    GenericErrorScreen,
+    GenericLoadingScreen,
   },
   props: {
     value: {
@@ -56,6 +72,10 @@ export default {
     details: {
       type: Object,
       default: null,
+    },
+    errorRetry: {
+      type: Function,
+      default: function() {},
     },
   },
   methods: {
@@ -80,5 +100,13 @@ export default {
 <style lang="scss" module>
 .dialogCard {
   height: 100vh;
+}
+
+.dialogBody {
+  position: relative;
+  flex-grow: 1;
+  overflow: auto;
+  width: 100%;
+  flex-basis: 0;
 }
 </style>

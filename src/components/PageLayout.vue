@@ -10,25 +10,38 @@
       </span>
       <q-separator color="primary" />
     </div>
-    <section>
+    <section class="relative-position">
       <template v-if="isLoading">
         <!-- @slot Slot for inserting loading state body -->
-        <slot name="loading" />
+        <slot name="loading">
+          <GenericLoadingScreen />
+        </slot>
       </template>
       <template v-else>
         <!-- @slot Slot for inserting regular body content -->
         <slot />
+        <GenericErrorScreen
+          v-if="hasError"
+          @retry="retry"
+        />
       </template>
     </section>
   </q-page>
 </template>
 
 <script>
+import GenericLoadingScreen from 'src/components/GenericLoadingScreen'
+import GenericErrorScreen from 'src/components/GenericErrorScreen'
+
 /**
  * PageLayout provides common elements of a page and their arrangement.
  */
 export default {
   name: 'PageLayout',
+  components: {
+    GenericLoadingScreen,
+    GenericErrorScreen,
+  },
   props: {
     title: {
       type: String,
@@ -37,6 +50,14 @@ export default {
     isLoading: {
       type: Boolean,
       default: false,
+    },
+    hasError: {
+      type: Boolean,
+      default: false,
+    },
+    retry: {
+      type: Function,
+      default: function() {},
     }
   },
   computed: {

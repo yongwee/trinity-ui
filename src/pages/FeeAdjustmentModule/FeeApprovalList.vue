@@ -1,5 +1,9 @@
 <template>
-  <PageLayout>
+  <PageLayout
+    :is-loading="isLoading"
+    :has-error="hasError"
+    :retry="boundFetchAll"
+  >
     <q-table
       v-if="pendingList && pendingList.length"
       :data="pendingList"
@@ -16,7 +20,7 @@
             :props="props"
             :class="$style.uploaderCell"
           >
-            <span>{{ $t('feeApprovalList.newSchedule', { name: props.row.uploader }) }}</span>
+            <span>{{ $t('feeApprovalList.newSchedule', { name: getBrokerCoyName(props.row.feeScheduleBrokerId) }) }}</span>
           </q-td>
           <q-td
             key="actions"
@@ -27,7 +31,7 @@
               :label="$t('feeApprovalList.review')"
               color="primary"
               class="text-no-wrap"
-              @click="doShowDetails(props.row)"
+              @click="doShowDetails(props.row.feeScheduleId)"
             />
           </q-td>
         </q-tr>
@@ -46,11 +50,13 @@
     <FeeAdjustmentDetailsDialog
       :details="shownDetails"
       :value="showDetailsDialog"
+      :error-retry="showDetailsErrorRetry"
       @input="onShowDetailsDialogChange"
     >
       <template v-slot:actions="{ id }">
         <q-space />
         <FeeAdjustmentApprovalActions
+          v-if="id"
           :id="id"
           @change="onApprovalValueChange"
           @submit="onApprovalSubmit"
@@ -67,6 +73,7 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex';
 import PageLayout from 'src/components/PageLayout';
 import FeeAdjustmentDetailsDialog from 'src/components/FeeAdjustmentModule/FeeAdjustmentDetailsDialog';
 import FeeAdjustmentApprovalActions from 'src/components/FeeAdjustmentModule/FeeAdjustmentApprovalActions';
@@ -85,10 +92,14 @@ export default {
   mixins: [DirtyStateMixin],
   data() {
     return {
+      isLoading: false,
+      hasError: false,
+
       // TODO: ensure columns are correct
       columns: [
         {
           name: 'uploader',
+          field: 'feeScheduleBrokerId',
           require: true,
           align: 'left',
         },
@@ -99,75 +110,81 @@ export default {
       ],
       pendingList: [],
       showDetailsDialog: false,
+      showDetailsErrorRetry: null,
       shownDetails: null,
       submissionState: null,
       successTitle: '',
       successLabel: '',
     };
   },
+  computed: {
+    ...mapState({
+      brokers: state => state.business.brokers,
+    }),
+    /**
+     * Map of broker id to broker data
+     * e.g. { brokerId: brokerData }
+     */
+    brokerMap() {
+      const brokerMap = {};
+
+      if (!this.brokers) {
+        return brokerMap;
+      }
+
+      for (const broker of Object.values(this.brokers)) {
+        brokerMap[broker.brokerMapId] = broker;
+      }
+
+      return brokerMap;
+    },
+  },
   created() {
-    this.fetchPendingList();
+    this.fetchAll();
+
+    // Meant for passing into other components to be called
+    this.boundFetchAll = () => {
+      return this.fetchAll();
+    };
   },
   methods: {
+    ...mapActions({
+      fetchBrokers: 'business/fetchBrokers',
+    }),
+    /**
+     * Fetches pending items and broker data
+     */
+    fetchAll() {
+      this.isLoading = true;
+      this.hasError = false;
+
+      Promise.all([
+        this.fetchBrokers(),
+        this.fetchPendingList(),
+      ])
+        .catch(() => {
+          this.hasError = true;
+        })
+        .finally(() => {
+          this.isLoading = false;
+        });
+    },
     /**
      * Fetches list of items awaiting approval.
      */
     fetchPendingList() {
-      // TODO: proper fetch
-      const jpmorganData = [
-        {
-          region: 'North America',
-          productName: 'eqldx-US',
-          productType: 'Mixed',
-          currency: 'USD',
-          brokerageAmount: '0.70',
-          modification: 'New',
-        },
-        {
-          region: 'EMEA',
-          productName: 'eqldx-EUR-dj',
-          productType: 'Future',
-          currency: 'EUR',
-          brokerageAmount: '0.60',
-        },
-      ];
-
-      this.pendingList = [
-        {
-          uploader: 'JP Morgan',
-          id: '1',
-          data: [
-            ...jpmorganData,
-            ...jpmorganData,
-            ...jpmorganData,
-            ...jpmorganData,
-            ...jpmorganData,
-            ...jpmorganData,
-            ...jpmorganData,
-            ...jpmorganData,
-            ...jpmorganData,
-            ...jpmorganData,
-            ...jpmorganData,
-            ...jpmorganData,
-            ...jpmorganData,
-            ...jpmorganData,
-          ]
-        },
-        {
-          uploader: 'Citigroup',
-          id: '2',
-          data: [
-            {
-              region: 'Asia',
-              productName: 'eqldx-INR-CNX',
-              productType: 'Mixed',
-              currency: 'INR',
-              brokerageAmount: '2.00',
-              modification: 'New',
-            },
-          ]
-        }
-      ]
+      return this.$axios.get(URI.feeSchedulePending)
+        .then(res => {
+          this.pendingList = res.data;
+        });
+    },
+    /**
+     * Gets broker coy name given an id
+     *
+     * @param {Number} id
+     */
+    getBrokerCoyName(id) {
+      return this.brokerMap[id].cpBrokerCoyName;
     },
     /**
      * Shows details dialog.
@@ -177,11 +194,24 @@ export default {
      * @param {String} details.id
      * @param {Object} details.data
      */
-    doShowDetails(details) {
-      // TODO: ensure the shape of details fits what's received from server
-      // assumed shape: { uploader, id, data }
-      this.shownDetails = details;
-      this.showDetailsDialog = true;
+    doShowDetails(id) {
+      const fetchDetails = () => {
+        this.showDetailsDialog = true;
+        this.showDetailsErrorRetry = null;
+
+        this.$axios.get(URI.feeSchedulePendingIndividual.replace('{id}', id))
+          .then(({ data }) => {
+            this.shownDetails = {
+              id,
+              data,
+            };
+          })
+          .catch(() => {
+            this.showDetailsErrorRetry = fetchDetails;
+          });
+      }
+
+      fetchDetails();
     },
     /**
      * Hides details dialog.

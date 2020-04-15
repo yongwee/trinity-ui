@@ -11,18 +11,18 @@
     />
     <q-btn
       flat
+      color="negative"
+      :label="$t('components.feeAdjustmentApprovalActions.deny')"
+      :class="$style.approvalBtn"
+      @click="doSubmit(false)"
+    />
+    <q-btn
+      flat
       color="primary"
       :label="$t('components.feeAdjustmentApprovalActions.accept')"
       :class="$style.approvalBtn"
       class="q-mr-xs"
       @click="doSubmit(true)"
-    />
-    <q-btn
-      flat
-      color="negative"
-      :label="$t('components.feeAdjustmentApprovalActions.deny')"
-      :class="$style.approvalBtn"
-      @click="doSubmit(false)"
     />
   </div>
 </template>
@@ -32,7 +32,7 @@ export default {
   name: 'FeeAdjustmentApprovalActions',
   props: {
     id: {
-      type: String,
+      type: Number,
       required: true,
     },
   },
@@ -67,7 +67,7 @@ export default {
 
 <style lang="scss" module>
 .reasonInput {
-  width: 300px;
+  width: 50vw;
 }
 
 .approvalBtn {

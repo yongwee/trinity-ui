@@ -74,7 +74,17 @@ export default {
   // Fee Adjustment module
   feeAdjustment: {
     title: 'Fee Adjustment',
+
     addScheduleLabel: 'Add fee schedule',
+    clientSelectLabel: 'Client',
+    cpBrokerSelectLabel: 'Counterparty Broker',
+    exBrokerSelectLabel: 'Executing Broker',
+    marketSelectLabel: 'Market',
+
+    clientSelectError: 'Please select a client',
+    brokerSelectError: 'Please select a broker',
+    marketSelectError: 'Please select a market',
+
     importAsCsv: 'Import fee schedule as CSV',
     importAsCSV: 'Import as CSV',
     uploaderText: 'Drop CSV file here, or click to browse.',
@@ -160,6 +170,10 @@ export default {
       successLabel: 'Submission completed successfully',
       failureTitle: 'Failed',
       failureLabel: 'Submission failed, please try again',
-    }
+    },
+    genericErrorScreen: {
+      message: 'Something went wrong, please wait awhile and try again.',
+      retry: 'Retry',
+    },
   },
 };
