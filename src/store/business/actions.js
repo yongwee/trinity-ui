@@ -9,7 +9,7 @@ import { URI } from 'src/config';
  * @param {Boolean} forced - forces a fetch to be perform even if broker data exists in state
  */
 async function fetchBrokers ({ commit, state }, forced) {
-  const existingBroker = state.broker;
+  const existingBroker = state.brokers;
 
   if (existingBroker && !forced) {
     return existingBroker;
