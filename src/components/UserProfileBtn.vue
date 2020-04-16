@@ -39,20 +39,52 @@
             {{ item }}
           </q-item>
         </q-list>
+
+        <q-separator />
+
+        <q-item-label header>
+          Test login
+        </q-item-label>
+        <q-card-section>
+          <q-form @submit="login">
+            <q-input
+              v-model="username"
+              label="username"
+            />
+            <q-input
+              v-model="password"
+              class="q-mb-sm"
+              label="password"
+              type="password"
+            />
+            <q-btn
+              type="submit"
+              :loading="isLoggingIn"
+              color="primary"
+              label="login"
+            />
+          </q-form>
+        </q-card-section>
       </q-menu>
     </q-btn>
   </div>
 </template>
 
 <script>
-import { role } from 'src/config';
+import { LocalStorage } from 'quasar';
 import { mapState } from 'vuex';
+import { role } from 'src/config';
 
 export default {
   name: 'UserProfileBtn',
   data() {
     return {
       items: Array.from(Object.values(role)),
+
+      // Login
+      isLoggingIn: false,
+      username: '',
+      password: '',
     };
   },
   computed: {
@@ -64,6 +96,39 @@ export default {
     changeRole(newRole) {
       this.$store.commit('user/setRole', newRole);
     },
+    login() {
+      this.isLoggingIn = true;
+
+      // this.$axios.post('http://trinity-auth.ap-southeast-1.elasticbeanstalk.com/auth', {
+      this.$axios.post('http://localhost:4444/auth', {
+        username: this.username,
+        password: this.password,
+      })
+        .then(({ data }) => {
+          const { idToken, accessToken, session } = data;
+
+          idToken && LocalStorage.set('idToken', idToken);
+          accessToken && LocalStorage.set('accessToken', accessToken);
+          session && LocalStorage.set('session', session);
+
+          this.$q.notify({
+            color: 'positive',
+            message: 'Login succeeded',
+            position: 'top',
+          });
+        })
+        .catch(err => {
+          console.log('login err: ', err)
+          this.$q.notify({
+            color: 'negative',
+            message: 'Login failed',
+            position: 'top',
+          });
+        })
+        .finally(() => {
+          this.isLoggingIn = false;
+        });
+    }
   }
 }
 </script>
