@@ -108,5 +108,12 @@ export default {
   overflow: auto;
   width: 100%;
   flex-basis: 0;
+
+  thead tr:first-child th {
+    background-color: white;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
 }
 </style>
