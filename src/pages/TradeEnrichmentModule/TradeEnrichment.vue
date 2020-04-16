@@ -189,10 +189,10 @@ export default {
      */
     onBack(next) {
       this.$q.dialog({
-        title: $t('tradeEnrichment.goBackDialogTitle'),
-        message: $t('tradeEnrichment.goBackDialogMessage'),
+        title: this.$t('tradeEnrichment.goBackDialogTitle'),
+        message: this.$t('tradeEnrichment.goBackDialogMessage'),
         ok: {
-          label: $t('tradeEnrichment.goBackDialogOk'),
+          label: this.$t('tradeEnrichment.goBackDialogOk'),
           flat: true,
         },
         cancel: true,
@@ -204,7 +204,7 @@ export default {
             : this.step--;
         })
         .onCancel(() => {
-          next(false);
+          next && next(false);
         });
     },
     /**

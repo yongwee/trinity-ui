@@ -120,11 +120,11 @@ export default {
   tradeEnrichment: {
     title: 'Trade Enrichment',
 
-    stepUploadTrade: 'Upload Trade',
+    stepUploadTrade: 'Step 1: Upload Trade',
     uploadTrade: 'Upload Trade',
     importAsXml: 'Import as XML',
 
-    stepDownloadEnrichedTrade: 'Download Enriched Trade',
+    stepDownloadEnrichedTrade: 'Step 2: Download Enriched Trade',
     downloadEnrichedTrade: 'Download Enriched Trade',
     downloadEnrichedTradeCaption: 'Download enriched trade as CSV',
 
