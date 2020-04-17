@@ -26,4 +26,8 @@ export default {
 .q-dialog__message {
   color: $grey-9;
 }
+
+.q-breadcrumbs .q-router-link--active {
+  background: none;
+}
 </style>

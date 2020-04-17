@@ -25,6 +25,12 @@ const routes = [
             name: routeConfig.fxTokenOpenPositionCreateToken.name,
             meta: {
               titleKey: routeConfig.fxTokenOpenPositionCreateToken.titleKey,
+              breadcrumbs: [
+                {
+                  labelKey: routeConfig.fxTokenOpenPosition.titleKey,
+                  name: routeConfig.fxTokenOpenPosition.name,
+                },
+              ],
             },
             component: () => import('pages/FxToken/FXTokenOpenPosition/CreateToken.vue')
           },
@@ -33,6 +39,12 @@ const routes = [
             name: routeConfig.fxTokenOpenPositionHistory.name,
             meta: {
               titleKey: routeConfig.fxTokenOpenPositionHistory.titleKey,
+              breadcrumbs: [
+                {
+                  labelKey: routeConfig.fxTokenOpenPosition.titleKey,
+                  name: routeConfig.fxTokenOpenPosition.name,
+                },
+              ],
             },
             component: () => import('pages/FxToken/FXTokenOpenPosition/History.vue')
           },
@@ -65,6 +77,12 @@ const routes = [
             name: routeConfig.spTokenCreateToken.name,
             meta: {
               titleKey: routeConfig.spTokenCreateToken.titleKey,
+              breadcrumbs: [
+                {
+                  labelKey: routeConfig.spTokenCreateToken.titleKey,
+                  name: routeConfig.spTokenCreateToken.name,
+                },
+              ],
             },
             component: () => import('pages/SPToken/CreateToken.vue')
           },

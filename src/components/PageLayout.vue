@@ -4,12 +4,46 @@
     :class="$style.pageLayout"
     class="q-mx-auto"
   >
-    <div class="text-h4 text-weight-light q-mb-xl">
-      <span>
+    <div class="q-mb-xl">
+      <q-breadcrumbs
+        v-if="breadcrumbs"
+        class="q-mb-md"
+      >
+        <template v-slot:separator>
+          <q-icon
+            size="1.2em"
+            name="chevron_right"
+          />
+        </template>
+        <q-breadcrumbs-el
+          v-for="{ labelKey, name } in breadcrumbs"
+          :key="labelKey"
+          :label="$t(labelKey)"
+          :to="{ name }"
+        />
+        <!-- current page breadcrumb el -->
+        <q-breadcrumbs-el
+          key="here"
+          :label="$t($route.meta.titleKey)"
+          :to="{ name: $route.name }"
+        />
+      </q-breadcrumbs>
+
+      <span class="text-h4 text-weight-light row items-center">
+        <q-btn
+          v-if="breadcrumbs"
+          dense
+          flat
+          round
+          icon="mdi-arrow-left"
+          class="q-mr-sm"
+          @click="goBack"
+        />
         <slot name="title">{{ title || $t(titleKey) }}</slot>
       </span>
       <q-separator color="primary" />
     </div>
+
     <section class="relative-position">
       <template v-if="isLoading">
         <!-- @slot Slot for inserting loading state body -->
@@ -63,8 +97,16 @@ export default {
   computed: {
     titleKey() {
       return this.$route.meta.titleKey;
-    }
-  }
+    },
+    breadcrumbs() {
+      return this.$route.meta.breadcrumbs;
+    },
+  },
+  methods: {
+    goBack() {
+      this.$router.back();
+    },
+  },
 }
 </script>
 
