@@ -79,12 +79,56 @@ const routes = [
               titleKey: routeConfig.spTokenCreateToken.titleKey,
               breadcrumbs: [
                 {
-                  labelKey: routeConfig.spTokenCreateToken.titleKey,
-                  name: routeConfig.spTokenCreateToken.name,
+                  labelKey: routeConfig.spToken.titleKey,
+                  name: routeConfig.spToken.name,
                 },
               ],
             },
             component: () => import('pages/SPToken/CreateToken.vue')
+          },
+        ],
+      },
+
+      // Base Cash Token
+      {
+        path: '/basecashtoken',
+        component: ProxyLayout,
+        children: [
+          {
+            path: '',
+            name: routeConfig.baseCashToken.name,
+            meta: {
+              titleKey: routeConfig.baseCashToken.titleKey,
+            },
+            component: () => import('pages/BaseCashToken/Home.vue')
+          },
+          {
+            path: 'createtoken',
+            name: routeConfig.baseCashTokenCreateToken.name,
+            meta: {
+              titleKey: routeConfig.baseCashTokenCreateToken.titleKey,
+              breadcrumbs: [
+                {
+                  labelKey: routeConfig.baseCashToken.titleKey,
+                  name: routeConfig.baseCashToken.name,
+                },
+              ],
+            },
+            component: () => import('pages/BaseCashToken/CreateToken.vue')
+          },
+          {
+            path: '/history',
+            name: routeConfig.baseCashTokenHistory.name,
+            meta: {
+              titleKey: routeConfig.baseCashTokenHistory.titleKey,
+              breadcrumbs: [
+                {
+                  labelKey: routeConfig.baseCashToken.titleKey,
+                  name: routeConfig.baseCashToken.name,
+                },
+              ],
+            },
+            component: () => import('pages/BaseCashToken/History.vue'),
           },
         ],
       },

@@ -16,7 +16,7 @@
           outlined
           :options="clientOptions"
           :label="$t('feeAdjustment.clientSelectLabel')"
-          class="col-6"
+          class="col-3"
           :rules="[val => !!val || $t('feeAdjustment.clientSelectError')]"
           @input="onFormChange"
         />
@@ -25,7 +25,7 @@
           outlined
           :options="brokerOptions"
           :label="$t(brokerSelectLabel)"
-          class="col-6"
+          class="col-4"
           :rules="[val => !!val || $t('feeAdjustment.brokerSelectError')]"
           @input="onFormChange"
         />
@@ -34,7 +34,7 @@
           outlined
           :options="marketOptions"
           :label="$t('feeAdjustment.marketSelectLabel')"
-          class="col-6"
+          class="col-3"
           :rules="[val => !!val || $t('feeAdjustment.marketSelectError')]"
           @input="onFormChange"
         />

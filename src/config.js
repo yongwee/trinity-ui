@@ -67,6 +67,23 @@ export const routes = {
     name: 'spToken/createToken',
   },
 
+  // Base Cash Token
+  baseCashToken: {
+    navBarTitleKey: 'routes.baseCashToken',
+    titleKey: 'baseCashToken.title',
+    name: 'baseCashToken/home',
+  },
+  baseCashTokenCreateToken: {
+    navBarTitleKey: 'routes.baseCashTokenCreateToken',
+    titleKey: 'baseCashToken.createTokenTitle',
+    name: 'baseCashToken/createToken',
+  },
+  baseCashTokenHistory: {
+    navBarTitleKey: 'routes.baseCashToken',
+    titleKey: 'baseCashToken.historyTitle',
+    name: 'baseCashToken/history',
+  },
+
   // Trade enrichment module
   tradeEnrichment: {
     navBarTitleKey: 'routes.tradeEnrichment',
@@ -77,7 +94,7 @@ export const routes = {
 
 export const routeAccess = {
   [role.cro]: [routes.fxTokenOpenPosition, routes.fxTokenClosedPosition, routes.spToken, routes.investorRisk],
-  [role.ops]: [],
+  [role.ops]: [routes.fxTokenOpenPosition, routes.fxTokenClosedPosition, routes.spToken, routes.baseCashToken],
   [role.market]: [],
   [role.creditRisk]: [],
   [role.counterParty]: [],
@@ -92,6 +109,7 @@ const feeScheduleURL = host + '/feeSchedule';
 const spTokenURL = host + '/SPToken';
 const tradeEnrichURL = host + '/tradeEnrich';
 const brokerURL = host + '/broker';
+const baseCashTokenURL = host + '/baseCashToken';
 
 export const URI = {
   // Fee schedule
@@ -109,6 +127,15 @@ export const URI = {
   spToken: spTokenURL,
   spTokenCreate: spTokenURL + '/issue',
   spTokenById: spTokenURL + '/issue/{id}',
+
+  // Base Cash Token
+  baseCashToken: baseCashTokenURL,
+  baseCashTokenById: baseCashTokenURL + '/{id}',
+  baseCashTokenIssue: baseCashTokenURL + '/issue',
+  baseCashTokenIssueById: baseCashTokenURL + '/issue/{id}',
+  baseCashTokenTransferHistory: baseCashTokenURL + '/transferHistory',
+  baseCashTokenTransferHistoryById: baseCashTokenURL + '/transferHistory/{id}',
+  baseCashTokenTransfer: baseCashTokenURL + '/transfer',
 
   // Trade enrichment
   tradeEnrich: tradeEnrichURL,

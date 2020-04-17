@@ -16,6 +16,9 @@ export default {
     // SP Token
     spToken: 'SP Token',
 
+    // Base Cash Token
+    baseCashToken: 'Base Cash Token',
+
     // Trade enrichment module
     tradeEnrichment: 'Trade Enrichment',
   },
@@ -69,6 +72,61 @@ export default {
     createTokenDescriptionInput: 'Description',
     createTokenInvestorInput: 'Investor',
     createTokenAmountInput: 'Amount',
+  },
+
+  //Base Cash Token
+  baseCashToken: {
+    title: 'Base Cash Token',
+
+    // Home
+    createToken: 'Mint',
+    transferToken: 'Transfer',
+    selectLabel: 'Base Case Code',
+
+    viewTransferHistoryBtn: 'View Transfer History',
+    viewDetailsBtn: 'View Details',
+
+    // Create Token
+    createTokenTitle: 'Create Base Cash Token',
+    basicInformationSubSectionHeader: 'Basic Information',
+    createTokenTypeInput: 'Token Type',
+    createTokenUnderlyingInput: 'Underlying',
+    createTokenTokenCodeInput: 'Token Code',
+    createTokenCurrencyCodeInput: 'Currency Code',
+    createTokenAmountInput: 'Amount',
+
+    issuanceInformationSubSectionHeader: 'Issuance Information',
+    createTokenIssuerIdInput: 'Issuer ID',
+    createTokenIssuingAddressInput: 'Issuing Address',
+    createTokenSupportingDocumentsHeader: 'Supporting Documents',
+
+    uploaderLabel: 'Upload Supporting Documents',
+    uploaderText: 'Drop supporting document files here, or click to browse.',
+
+    createTokenTypeError: 'Please select a token type',
+    createTokenUnderlyingError: 'Please provide an underlying',
+    createTokenTokenCodeError: 'Please provide a token code',
+    createTokenCurrencyCodeError: 'Please provide a currency code',
+    createTokenAmountError: 'Please provide an amount',
+
+    createTokenIssuerIdError: 'Please provide an issuer ID',
+    createTokenIssuingAddressError: 'Please proivde an issuing address',
+    uploaderError: 'Please select a file',
+
+    // View Token
+    viewTokenName: 'Token Name',
+    viewTokenDescription: 'Description',
+    viewTokenAmount: 'Amount',
+
+
+    // Transfer Token
+    transferTokenHeader: 'Transfer Base Cash Token',
+    transferTokenAmount: 'Amount',
+    transferTokenInvestorAccount: 'Investor Account',
+    transferTokenTransfer: 'Transfer',
+
+    // History
+    historyTitle: '{tokenCode} Transfer History',
   },
 
   // Fee Adjustment module
