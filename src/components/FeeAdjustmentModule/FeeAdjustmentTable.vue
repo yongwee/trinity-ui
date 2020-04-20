@@ -5,13 +5,34 @@
     :columns="columns"
     :data="data"
     :pagination.sync="pagination"
-  />
+  >
+    <template v-slot:body="props">
+      <q-tr
+        :props="props"
+        :class="{
+          [$style.isModified]: props.row.feeScheduleId !== id,
+        }"
+      >
+        <q-td
+          v-for="column in columns"
+          :key="column.name"
+          :props="props"
+        >
+          {{ column.format && column.format(props.row[column.field]) || props.row[column.field] }}
+        </q-td>
+      </q-tr>
+    </template>
+  </q-table>
 </template>
 
 <script>
 export default {
   name: 'FeeAdjustmentTable',
   props: {
+    id: {
+      type: Number,
+      required: true,
+    },
     data: {
       /**
        * Properties should match data:column fields
@@ -24,143 +45,148 @@ export default {
     return {
       columns: [
         {
-          name: 'feeScheduleRowId',
-          label: 'Fee Schedule Row Id',
-          field: 'feeScheduleRowId',
-          align: 'left',
-          required: true,
-        },
-        // {
-        //   name: 'feeScheduleId',
-        //   label: 'Fee Schedule Id',
-        //   field: 'feeScheduleId',
-        //   align: 'left',
-        //   required: true,
-        // },
-        {
-          name: 'brokerId',
-          label: 'Broker Id',
-          field: 'feeScheduleBrokerId',
-          align: 'left',
-          required: true,
-        },
-        {
-          name: 'csvRowId',
-          label: 'Csv Row Id',
-          field: 'csvRowId',
-          align: 'left',
-          required: true,
-        },
-        {
-          name: 'inputDate',
-          label: 'Input Date',
-          field: 'inputDate',
-          align: 'left',
-          required: true,
-        },
-        {
-          name: 'lastUpdatedDate',
-          label: 'Last Updated Date',
-          field: 'lastUpdatedDate',
-          align: 'left',
-        },
-        {
-          name: 'blockchainTxId',
-          label: 'Blockchain Tx Id',
-          field: 'blockchainTxId',
-          align: 'left',
-        },
-        {
-          name: 'blockchainHeight',
-          label: 'Blockchain Height',
-          field: 'blockchainHeight',
-          align: 'left',
-        },
-        {
           name: 'directBill',
-          label: 'Direct Bill',
+          label: this.$t('feeAdjustmentTable.directBillLabel'),
           field: 'directBill',
           align: 'left',
         },
         {
           name: 'region',
-          label: 'Region',
+          label: this.$t('feeAdjustmentTable.regionLabel'),
           field: 'region',
           align: 'left',
           required: true,
         },
         {
           name: 'exchange',
-          label: 'Exchange',
+          label: this.$t('feeAdjustmentTable.exchangeLabel'),
           field: 'exchange',
           align: 'left',
           required: true,
         },
         {
           name: 'productGroupName',
-          label: 'Product Group Name',
+          label: this.$t('feeAdjustmentTable.productGroupNameLabel'),
           field: 'productGroupName',
           align: 'left',
         },
         {
           name: 'productName',
-          label: 'Product Name',
+          label: this.$t('feeAdjustmentTable.productNameLabel'),
           field: 'productName',
           align: 'left',
           required: true,
         },
         {
           name: 'productType',
-          label: 'Product Type',
+          label: this.$t('feeAdjustmentTable.productTypeLabel'),
           field: 'productType',
           align: 'left',
           required: true,
         },
         {
           name: 'currency',
-          label: 'Currency',
+          label: this.$t('feeAdjustmentTable.currencyLabel'),
           field: 'currency',
           align: 'left',
           required: true,
         },
         {
           name: 'tradeType',
-          label: 'Trade Type',
+          label: this.$t('feeAdjustmentTable.tradeTypeLabel'),
           field: 'tradeType',
           align: 'left',
         },
         {
           name: 'spreadType',
-          label: 'Spread Type',
+          label: this.$t('feeAdjustmentTable.spreadTypeLabel'),
           field: 'spreadType',
           align: 'left',
         },
         {
           name: 'rateType',
-          label: 'Rate Type',
+          label: this.$t('feeAdjustmentTable.rateTypeLabel'),
           field: 'rateType',
           align: 'left',
         },
         {
           name: 'execType',
-          label: 'Exec Type',
+          label: this.$t('feeAdjustmentTable.execTypeLabel'),
           field: 'execType',
           align: 'left',
         },
         {
           name: 'defaultValue',
-          label: 'Default Value',
+          label: this.$t('feeAdjustmentTable.defaultValueLabel'),
           field: 'defaultValue',
           align: 'left',
           required: true,
         },
         {
           name: 'brokerageAmount',
-          label: 'Brokerage Amount',
+          label: this.$t('feeAdjustmentTable.brokerageAmountLabel'),
           field: 'brokerageAmount',
           align: 'left',
           required: true,
         },
+        {
+          name: 'modification',
+          label: this.$t('feeAdjustmentTable.modificationLabel'),
+          field: 'feeScheduleId',
+          align: 'left',
+          format: val => {
+            return (val === this.id)
+              ? this.$t('feeAdjustmentTable.modifiedNo')
+              : this.$t('feeAdjustmentTable.modifiedYes');
+          },
+          required: true,
+        },
+        // {
+        //   name: 'feeScheduleRowId',
+        //   label: 'Fee Schedule Row Id',
+        //   field: 'feeScheduleRowId',
+        //   align: 'left',
+        //   required: true,
+        // },
+        // {
+        //   name: 'brokerId',
+        //   label: 'Broker Id',
+        //   field: 'feeScheduleBrokerId',
+        //   align: 'left',
+        //   required: true,
+        // },
+        // {
+        //   name: 'csvRowId',
+        //   label: 'Csv Row Id',
+        //   field: 'csvRowId',
+        //   align: 'left',
+        //   required: true,
+        // },
+        // {
+        //   name: 'inputDate',
+        //   label: 'Input Date',
+        //   field: 'inputDate',
+        //   align: 'left',
+        //   required: true,
+        // },
+        // {
+        //   name: 'lastUpdatedDate',
+        //   label: 'Last Updated Date',
+        //   field: 'lastUpdatedDate',
+        //   align: 'left',
+        // },
+        // {
+        //   name: 'blockchainTxId',
+        //   label: 'Blockchain Tx Id',
+        //   field: 'blockchainTxId',
+        //   align: 'left',
+        // },
+        // {
+        //   name: 'blockchainHeight',
+        //   label: 'Blockchain Height',
+        //   field: 'blockchainHeight',
+        //   align: 'left',
+        // },
         // {
         //   name: 'modification',
         //   label: 'Modification',
@@ -175,4 +201,7 @@ export default {
 </script>
 
 <style lang="scss" module>
+.isModified {
+  color: $orange-8;
+}
 </style>

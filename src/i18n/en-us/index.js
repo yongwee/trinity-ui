@@ -173,6 +173,25 @@ export default {
 
     emptyHistoryMessage: 'There are currently no items in history.',
   },
+  feeAdjustmentTable: {
+    directBillLabel: 'Direct Bill',
+    regionLabel: 'Region',
+    exchangeLabel: 'Exchange Code',
+    productGroupNameLabel: 'Product Group Name',
+    productNameLabel: 'Product Name',
+    productTypeLabel: 'Product Type',
+    currencyLabel: 'Currency',
+    tradeTypeLabel: 'Trade Type',
+    spreadTypeLabel: 'Spread Type',
+    rateTypeLabel: 'Rate Type',
+    execTypeLabel: 'Exec Type',
+    defaultValueLabel: 'Default Value',
+    brokerageAmountLabel: 'Brokerage Amount',
+    modificationLabel: 'Modified',
+
+    modifiedYes: 'Yes',
+    modifiedNo: 'No',
+  },
 
   // Trade Enrichment module
   tradeEnrichment: {
