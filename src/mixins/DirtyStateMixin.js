@@ -6,6 +6,7 @@ const DirtyMixin = {
   },
   methods: {
     /**
+     * @public
      * Shows dirty state dialog if isDirty is true,
      * otherwise invoke the `next` function immediately.
      *

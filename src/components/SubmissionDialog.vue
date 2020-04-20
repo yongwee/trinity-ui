@@ -82,7 +82,7 @@
 </template>
 
 <script>
-const stateType = {
+export const stateType = {
   submitting: 'submitting',
   success: 'success',
   failure: 'failure',
