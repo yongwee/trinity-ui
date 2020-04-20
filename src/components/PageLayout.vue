@@ -24,7 +24,7 @@
         <!-- current page breadcrumb el -->
         <q-breadcrumbs-el
           key="here"
-          :label="$t($route.meta.titleKey)"
+          :label="currentPageTitle"
           :to="{ name: $route.name }"
         />
       </q-breadcrumbs>
@@ -39,7 +39,7 @@
           class="q-mr-sm"
           @click="goBack"
         />
-        <slot name="title">{{ title || $t(titleKey) }}</slot>
+        <slot name="title">{{ title || currentPageTitle }}</slot>
       </span>
       <q-separator color="primary" />
     </div>
@@ -81,6 +81,10 @@ export default {
       type: String,
       default: undefined,
     },
+    titleFormatConfig: { // for formatting i18n strings, see: https://kazupon.github.io/vue-i18n/guide/formatting.html#named-formatting
+      type: Object,
+      default: null,
+    },
     isLoading: {
       type: Boolean,
       default: false,
@@ -95,6 +99,9 @@ export default {
     }
   },
   computed: {
+    currentPageTitle() {
+      return this.$t(this.titleKey, this.titleFormatConfig);
+    },
     titleKey() {
       return this.$route.meta.titleKey;
     },
