@@ -10,16 +10,18 @@
       <q-tr
         :props="props"
         :class="{
-          [$style.isModified]: props.row.feeScheduleId !== id,
+          [$style.isModified]: id !== null && props.row.feeScheduleId !== id,
         }"
       >
-        <q-td
-          v-for="column in columns"
-          :key="column.name"
-          :props="props"
-        >
-          {{ column.format && column.format(props.row[column.field]) || props.row[column.field] }}
-        </q-td>
+        <template v-for="column in columns">
+          <q-td
+            v-if="column.showColumn !== false"
+            :key="column.name"
+            :props="props"
+          >
+            {{ column.format && column.format(props.row[column.field]) || props.row[column.field] }}
+          </q-td>
+        </template>
       </q-tr>
     </template>
   </q-table>
@@ -29,9 +31,12 @@
 export default {
   name: 'FeeAdjustmentTable',
   props: {
+    /**
+     * Used for determining isModified
+     */
     id: {
       type: Number,
-      required: true,
+      default: null,
     },
     data: {
       /**
@@ -39,11 +44,16 @@ export default {
        */
       type: Array,
       required: true,
-    }
+    },
+    showModification: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
-      columns: [
+      pagination: {rowsPerPage: 0},
+      rawColumns: [
         {
           name: 'directBill',
           label: this.$t('feeAdjustmentTable.directBillLabel'),
@@ -139,6 +149,7 @@ export default {
               ? this.$t('feeAdjustmentTable.modifiedNo')
               : this.$t('feeAdjustmentTable.modifiedYes');
           },
+          showColumnToggle: 'showModification',
           required: true,
         },
         // {
@@ -194,9 +205,15 @@ export default {
         //   align: 'left',
         // },
       ],
-      pagination: {rowsPerPage: 0},
     };
-  }
+  },
+  computed: {
+    columns() {
+      return this.rawColumns.filter(col => {
+        return this[col.showColumnToggle] !== false;
+      });
+    },
+  },
 }
 </script>
 

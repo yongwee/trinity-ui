@@ -21,6 +21,7 @@
 
       <FeeAdjustmentTable
         v-if="details"
+        v-bind="$attrs"
         :id="details.id"
         class="q-mb-md"
         :class="$style.dialogBody"

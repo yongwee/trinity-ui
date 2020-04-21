@@ -105,6 +105,7 @@ export const routeAccess = {
 // ======================== URI ========================
 const host = 'https://mmglnzhrm6.execute-api.ap-southeast-1.amazonaws.com/dev/v1';
 // const host = 'http://localhost:4444/v1';
+
 const feeScheduleURL = host + '/feeSchedule';
 const spTokenURL = host + '/SPToken';
 const tradeEnrichURL = host + '/tradeEnrich';
@@ -115,8 +116,10 @@ export const URI = {
   // Fee schedule
   feeSchedule: feeScheduleURL,
   feeScheduleCompleted: feeScheduleURL + '/completed',
+  feeScheduleLatest: feeScheduleURL + '/latest/{brokerId}',
+  feeScheduleLatestDownload: feeScheduleURL + '/latest/download/{brokerId}',
   feeScheduleApprove: feeScheduleURL + '/approve/{id}',
-  feeScheduleDeny: feeScheduleURL + '/deny/{id}',
+  feeScheduleReject: feeScheduleURL + '/reject/{id}',
   feeSchedulePending: feeScheduleURL + '/pending',
   feeSchedulePendingIndividual: feeScheduleURL + '/pending/{id}',
 

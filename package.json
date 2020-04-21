@@ -16,6 +16,7 @@
   "dependencies": {
     "@quasar/extras": "^1.0.0",
     "axios": "^0.19.2",
+    "js-file-download": "^0.4.11",
     "quasar": "^1.0.0",
     "vue-i18n": "^8.16.0"
   },

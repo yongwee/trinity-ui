@@ -165,13 +165,22 @@ export default {
   feeHistory: {
     title: 'History',
 
+    versionLabel: 'Version {version}',
     approved: 'Approved',
     rejected: 'Rejected',
 
     viewDetails: 'View Details',
     download: 'Download',
+    viewReason: 'View Reason',
+
+    approvedReasonHeader: 'Reason for approval',
+    rejectedReasonHeader: 'Reason for rejection',
 
     emptyHistoryMessage: 'There are currently no items in history.',
+
+    // download button
+    downloadErrorTitle: 'Download Error',
+    downloadErrorMessage: 'Unable to start download. Please try again later.',
   },
   feeAdjustmentTable: {
     directBillLabel: 'Direct Bill',
@@ -239,7 +248,7 @@ export default {
     feeAdjustmentApprovalActions: {
       reason: 'Reason',
       accept: 'Approve',
-      deny: 'Reject',
+      reject: 'Reject',
     },
     submissionDialog: {
       submitting: 'Submitting',
