@@ -12,7 +12,7 @@
     <q-btn
       flat
       color="negative"
-      :label="$t('components.feeAdjustmentApprovalActions.deny')"
+      :label="$t('components.feeAdjustmentApprovalActions.reject')"
       :class="$style.approvalBtn"
       @click="doSubmit(false)"
     />
@@ -46,7 +46,7 @@ export default {
      * Submission event handler.
      * Propagates a 'submit' event with custom payload.
      * 
-     * @param {Boolean} isApproved - true for approved, false for denied
+     * @param {Boolean} isApproved - true for approved, false for rejected
      */
     doSubmit(isApproved) {
       this.$emit('submit', {

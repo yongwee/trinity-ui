@@ -20,7 +20,7 @@
             :props="props"
             :class="$style.uploaderCell"
           >
-            <span>{{ $t('feeApprovalList.newSchedule', { name: getBrokerCoyName(props.row.feeScheduleBrokerId) }) }}</span>
+            <span>{{ $t('feeApprovalList.newSchedule', { name: getBrokerName(props.row.feeScheduleBrokerId) }) }}</span>
           </q-td>
           <q-td
             key="actions"
@@ -50,6 +50,7 @@
     <FeeAdjustmentDetailsDialog
       :details="shownDetails"
       :value="showDetailsDialog"
+      show-modification
       :error-retry="showDetailsErrorRetry"
       @input="onShowDetailsDialogChange"
     >
@@ -179,12 +180,13 @@ export default {
         });
     },
     /**
-     * Gets broker coy name given an id
+     * Gets broker coy name + code given an id
      *
      * @param {Number} id
      */
-    getBrokerCoyName(id) {
-      return this.brokerMap[id].cpBrokerCoyName;
+    getBrokerName(id) {
+      const { cpBrokerCoyName, cpBrokerCode } = this.brokerMap[id];
+      return `${cpBrokerCoyName} — ${cpBrokerCode}`;
     },
     /**
      * Shows details dialog.
@@ -198,6 +200,7 @@ export default {
       const fetchDetails = () => {
         this.showDetailsDialog = true;
         this.showDetailsErrorRetry = null;
+        this.shownDetails = null;
 
         this.$axios.get(URI.feeSchedulePendingIndividual.replace('{id}', id))
           .then(({ data }) => {
@@ -253,7 +256,7 @@ export default {
     onApprovalSubmit(approvalObj) {
       this.submissionState = 'submitting';
 
-      const approvalURI = approvalObj.isApproved ? URI.feeScheduleApprove : URI.feeScheduleDeny;
+      const approvalURI = approvalObj.isApproved ? URI.feeScheduleApprove : URI.feeScheduleReject;
       this.$axios.post(
         approvalURI.replace('{id}', approvalObj.id),
         { reason: approvalObj.reason }
