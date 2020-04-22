@@ -287,7 +287,7 @@ export default {
 
       this.doHideDetails();
 
-      this.fetchPendingList();
+      this.fetchAll();
     },
     /**
      * Approval submission failure handler
