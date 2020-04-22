@@ -3,6 +3,7 @@ export default function () {
       id: null,
       email: null,
       role: null,
+      brokerCode: null,
     }
   }
   

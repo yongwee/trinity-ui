@@ -4,7 +4,6 @@ const roles = Object.values(role);
 
 /**
  * Sets role of user into state.
- * 
  * @param {Object} state
  * @param {string} role
  */
@@ -16,6 +15,16 @@ function setRole(state, newRole) {
   state.role = newRole;
 }
 
+/**
+ * Sets broker code of user into state.
+ * @param {Object} state
+ * @param {string} brokerCode
+ */
+function setBrokerCode(state, newBrokerCode) {
+  state.brokerCode = newBrokerCode;
+}
+
 export {
   setRole,
+  setBrokerCode,
 }

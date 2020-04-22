@@ -125,6 +125,7 @@ export const URI = {
 
   // Broker
   broker: brokerURL,
+  brokerByCode: brokerURL + '/{brokerCode}',
 
   // SP Token
   spToken: spTokenURL,

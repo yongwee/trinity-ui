@@ -8,7 +8,7 @@
 export default {
   name: 'App',
   created() {
-    this.$store.dispatch('user/fetchRole');
+    this.$store.dispatch('user/fetchUser');
   },
 }
 </script>

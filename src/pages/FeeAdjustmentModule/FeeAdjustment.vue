@@ -78,7 +78,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState } from 'vuex';
 import PageLayout from 'src/components/PageLayout';
 import FormSectionHeader from 'src/components/form/SectionHeader';
 import FormActionBar from 'src/components/form/ActionBar';
@@ -112,6 +112,7 @@ export default {
       files: null,
       clientOptions,
       marketOptions,
+      brokers: null,
 
       client: clientOptions[0],
       broker: null,
@@ -123,7 +124,7 @@ export default {
   computed: {
     ...mapState({
       userRole: state => state.user.role,
-      brokers: state => state.business.brokers,
+      userBrokerCode: state => state.user.brokerCode,
     }),
     brokerSelectLabel() {
       return this.isCPBroker
@@ -152,9 +153,6 @@ export default {
     this.fetchBrokerData();
   },
   methods: {
-    ...mapActions({
-      fetchBrokers: 'business/fetchBrokers',
-    }),
     /**
      * Fetches broker data and populates broker select
      */
@@ -162,7 +160,10 @@ export default {
       this.isLoading = true;
       this.hasError = false;
 
-      this.fetchBrokers()
+      this.$axios.get(URI.brokerByCode.replace('{brokerCode}', this.userBrokerCode))
+        .then(({ data }) => {
+          this.brokers = data;
+        })
         .catch(err => {
           this.hasError = true;
         })
