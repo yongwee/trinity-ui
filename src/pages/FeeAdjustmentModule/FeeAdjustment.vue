@@ -40,10 +40,7 @@
         />
       </div>
 
-      <FormSectionHeader
-        :header="$t('feeAdjustment.addScheduleLabel')"
-        :caption="$t('feeAdjustment.importAsCsv')"
-      />
+      <FormSubtitle :label="$t('feeAdjustment.importAsCsv')" />
 
       <q-file
         v-model="files"
@@ -80,7 +77,7 @@
 <script>
 import { mapState } from 'vuex';
 import PageLayout from 'src/components/PageLayout';
-import FormSectionHeader from 'src/components/form/SectionHeader';
+import FormSubtitle from 'src/components/form/Subtitle';
 import FormActionBar from 'src/components/form/ActionBar';
 import SubmissionDialog from 'src/components/SubmissionDialog';
 import DirtyStateMixin from 'src/mixins/DirtyStateMixin';
@@ -99,7 +96,7 @@ export default {
   name: 'FeeAdjustment',
   components: {
     PageLayout,
-    FormSectionHeader,
+    FormSubtitle,
     FormActionBar,
     SubmissionDialog,
   },

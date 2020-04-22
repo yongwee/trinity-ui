@@ -133,7 +133,6 @@ export default {
   feeAdjustment: {
     title: 'Fee Adjustment',
 
-    addScheduleLabel: 'Add fee schedule',
     clientSelectLabel: 'Client',
     cpBrokerSelectLabel: 'Counterparty Broker',
     exBrokerSelectLabel: 'Executing Broker',
