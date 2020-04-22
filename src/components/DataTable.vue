@@ -37,6 +37,7 @@
       />
     </template>
 
+    <!-- body slot -->
     <template
       v-if="!!$scopedSlots.body"
       v-slot:body="props"
@@ -46,12 +47,51 @@
         v-bind="props"
       />
     </template>
+
+    <!-- body cell slots -->
+    <template
+      v-for="bodyCellSlot in bodyCellSlots"
+      v-slot:[bodyCellSlot]="props"
+    >
+      <slot
+        :name="bodyCellSlot"
+        v-bind="props"
+      />
+    </template>
+
+    <!-- no data slot -->
+    <template
+      v-if="!!$scopedSlots.no-data || inLoadingState || inErrorState"
+      v-slot:no-data="props"
+    >
+      <GenericLoadingScreen
+        v-if="inLoadingState"
+        :centered="true"
+      />
+      <GenericErrorScreen
+        v-else-if="inErrorState"
+        :centered="true"
+        @retry="errorRetry"
+      />
+      <slot
+        v-else
+        name="no-data"
+        v-bind="props"
+      />
+    </template>
   </q-table>
 </template>
 
 <script>
+import GenericLoadingScreen from 'src/components/GenericLoadingScreen';
+import GenericErrorScreen from 'src/components/GenericErrorScreen';
+
 export default {
   name: 'DataTable',
+  components: {
+    GenericLoadingScreen,
+    GenericErrorScreen
+  },
   props: {
     columns: {
       type: Array,
@@ -61,6 +101,16 @@ export default {
       type: Array,
       default: undefined,
     },
+
+    isLoading: {
+      type: Boolean,
+      default: false,
+    },
+    errorRetry: {
+      type: Function,
+      default: null,
+    },
+
     searchLabel: {
       type: String,
       default() {
@@ -85,6 +135,36 @@ export default {
     selectOptions: {
       type: Array,
       default: undefined,
+    },
+  },
+  computed: {
+    /**
+     * Generates a list of passthrough body-cell-[slotname] slots
+     */
+    bodyCellSlots() {
+      const prefix = 'body-cell-';
+      const bodyCellSlots = [];
+
+      for (const { name } of this.columns) {
+        const slotName = prefix + name;
+        if (!!this.$scopedSlots[slotName]) {
+          bodyCellSlots.push(slotName);
+        }
+      }
+
+      return bodyCellSlots;
+    },
+    /**
+     * Property determining that table is not populated with data
+     */
+    noData() {
+      return !this.data || !this.data.length;
+    },
+    inLoadingState() {
+      return this.isLoading && this.noData;
+    },
+    inErrorState() {
+      return !!this.errorRetry && this.noData;
     },
   },
 }
