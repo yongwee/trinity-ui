@@ -5,6 +5,8 @@
       [$style.container]: true,
       [$style.centered]: !centered,
       'flex-center': centered,
+      'full-width': centered,
+      'full-height': centered,
     }"
   >
     <q-icon

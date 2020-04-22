@@ -1,7 +1,9 @@
 <template>
   <div
     :class="{
-      [$style.container]: !centered
+      [$style.container]: !centered,
+      'full-width': centered,
+      'full-height': centered,
     }"
     class="column flex-center"
   >
