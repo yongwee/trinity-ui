@@ -19,6 +19,9 @@ export default {
     // Base Cash Token
     baseCashToken: 'Base Cash Token',
 
+    // Fx Cash Trade
+    ExecuteFxCashTrade: 'Execute FX-Cash Trade',
+
     // Trade enrichment module
     tradeEnrichment: 'Trade Enrichment',
   },
@@ -127,6 +130,17 @@ export default {
 
     // History
     historyTitle: '{tokenCode} Transfer History',
+  },
+
+  // FX Cash Trade
+  fxCashTrade: {
+    executeTitle: 'Execute FX-Cash Trade',
+
+    completedTradesTab: 'Completed Trades',
+    pendingTradesTab: 'Pending Trades',
+
+    executeTradeBtnLabel: 'Execute Trade',
+    cancelTradeBtnLabel: 'Cancel Trade',
   },
 
   // Fee Adjustment module

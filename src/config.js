@@ -84,6 +84,13 @@ export const routes = {
     name: 'baseCashToken/history',
   },
 
+  // FX-Cash Trade
+  executeFxCashTrade: {
+    navBarTitleKey: 'routes.ExecuteFxCashTrade',
+    titleKey: 'fxCashTrade.executeTitle',
+    name: 'fxCashTrade/execute',
+  },
+
   // Trade enrichment module
   tradeEnrichment: {
     navBarTitleKey: 'routes.tradeEnrichment',
@@ -95,7 +102,7 @@ export const routes = {
 export const routeAccess = {
   [role.cro]: [routes.fxTokenOpenPosition, routes.fxTokenClosedPosition, routes.spToken, routes.investorRisk],
   [role.ops]: [routes.fxTokenOpenPosition, routes.fxTokenClosedPosition, routes.spToken, routes.baseCashToken],
-  [role.market]: [],
+  [role.market]: [routes.fxTokenOpenPosition, routes.fxTokenClosedPosition, routes.executeFxCashTrade],
   [role.creditRisk]: [],
   [role.counterParty]: [],
   [role.broker]: [routes.feeAdjustment, routes.feeApproval, routes.feeHistory],
@@ -111,6 +118,7 @@ const spTokenURL = host + '/SPToken';
 const tradeEnrichURL = host + '/tradeEnrich';
 const brokerURL = host + '/broker';
 const baseCashTokenURL = host + '/baseCashToken';
+const tradesURL = host + '/Trades';
 
 export const URI = {
   // Fee schedule
@@ -140,6 +148,12 @@ export const URI = {
   baseCashTokenTransferHistory: baseCashTokenURL + '/transferHistory',
   baseCashTokenTransferHistoryById: baseCashTokenURL + '/transferHistory/{id}',
   baseCashTokenTransfer: baseCashTokenURL + '/transfer',
+
+  // Trades
+  tradesExecute: tradesURL + '/execute/{id}',
+  tradesCancel: tradesURL + '/cancel/{id}',
+  tradesCompleted: tradesURL + '/completed',
+  tradesPending: tradesURL + '/pending',
 
   // Trade enrichment
   tradeEnrich: tradeEnrichURL,

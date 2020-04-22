@@ -133,6 +133,16 @@ const routes = [
         ],
       },
 
+      // FX-Cash Trade
+      {
+        path: '/executefxcashtrade',
+        name: routeConfig.executeFxCashTrade.name,
+        meta: {
+          titleKey: routeConfig.executeFxCashTrade.titleKey,
+        },
+        component: () => import('pages/FxCashTrade/Execute.vue'),
+      },
+
       // Investor Risk
       {
         path: '/investorrisk',
