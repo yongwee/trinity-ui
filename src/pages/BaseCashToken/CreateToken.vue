@@ -58,9 +58,8 @@
         />
       </div>
 
-      <div class=" q-mb-sm text-subtitle1 text-grey-8">
-        {{ $t('baseCashToken.uploaderLabel') }}
-      </div>
+      <Subtitle :label="$t('baseCashToken.uploaderLabel')" />
+
       <q-file
         v-model="files"
         outlined
@@ -93,6 +92,7 @@
 <script>
 import PageLayout from 'src/components/PageLayout';
 import SectionHeader from 'src/components/form/SectionHeader';
+import Subtitle from 'src/components/form/Subtitle';
 import ActionBar from 'src/components/form/ActionBar';
 import SubmissionDialog from 'src/components/SubmissionDialog';
 import DirtyStateMixin from 'src/mixins/DirtyStateMixin';
@@ -103,6 +103,7 @@ export default {
   components: {
     PageLayout,
     SectionHeader,
+    Subtitle,
     ActionBar,
     SubmissionDialog,
   },
