@@ -70,17 +70,12 @@
               <!-- TODO: show actual file name and fix download url -->
               <span>enriched_trade.csv</span>
               <q-space />
-              <a
-                href="http://downloadlinkhere"
-                download
-                :class="$style.downloadAnchor"
-              >
-                <q-btn
-                  color="secondary"
-                  unelevated
-                  label="Download"
-                />
-              </a>
+              <q-btn
+                color="secondary"
+                unelevated
+                label="Download"
+                @click="doDownload"
+              />
             </q-card-section>
           </q-card>
 
@@ -108,6 +103,7 @@
 </template>
 
 <script>
+import fileDownload from 'js-file-download';
 import PageLayout from 'src/components/PageLayout';
 import FormSectionHeader from 'src/components/form/SectionHeader';
 import FormActionBar from 'src/components/form/ActionBar';
@@ -127,6 +123,7 @@ export default {
   data() {
     return {
       file: null,
+      downloadFile: null,
       submissionState: null,
       step: 1,
     };
@@ -142,8 +139,8 @@ export default {
       formData.append('file', this.file);
 
       this.$axios.post(URI.tradeEnrich, formData)
-        .then(() => {
-          this.onSubmitSuccess();
+        .then(({ data }) => {
+          this.onSubmitSuccess(data);
         })
         .catch(() => {
           this.onSubmitFailure();
@@ -152,10 +149,11 @@ export default {
     /**
      * Handles successful submission.
      */
-    onSubmitSuccess() {
+    onSubmitSuccess(data) {
+      this.downloadFile = data;
       this.submissionState = 'success';
       this.resetForm();
-      // TODO: switch form to show download for CSV
+
       this.step++;
     },
     /**
@@ -206,6 +204,12 @@ export default {
         .onCancel(() => {
           next && next(false);
         });
+    },
+    /**
+     * Triggers download of returned csv
+     */
+    doDownload() {
+      fileDownload(this.downloadFile, 'enriched_trade.csv');
     },
     /**
      * Runs dirty state's navigation guard if step is at 1,
