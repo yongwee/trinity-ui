@@ -142,6 +142,11 @@ export default {
     executeTradeBtnLabel: 'Execute Trade',
     cancelTradeBtnLabel: 'Cancel Trade',
 
+    executeTradeConfirmTitle: 'Execute trade',
+    cancelTradeConfirmTitle: 'Cancel trade',
+    executeTradeConfirmLabel: 'Are you sure you wish to execute trade id {id}?',
+    cancelTradeConfirmLabel: 'Are you sure you wish to cancel trade id {id}?',
+
     executeSuccessLabel: 'Trade has been executed successfully',
     cancelSuccessLabel: 'Trade has been cancelled successfully',
   },

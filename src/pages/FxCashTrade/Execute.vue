@@ -78,7 +78,7 @@
     <!-- dialogs -->
     <SubmissionDialog
       :state.sync="submissionState"
-      :successLabel="successLabel"
+      :success-label="successLabel"
     />
   </PageLayout>
 </template>
@@ -261,8 +261,8 @@ export default {
      */
     confirmCancelTrade(id) {
       this.$q.dialog({
-        title: 'Cancel trade?',
-        message: 'Are you sure you want to cancel trade ' + id + '?',
+        title: this.$t('fxCashTrade.cancelTradeConfirmTitle'),
+        message: this.$t('fxCashTrade.cancelTradeConfirmLabel', { id }),
         cancel: true,
         persistent: true,
         focus: 'none',
@@ -278,8 +278,8 @@ export default {
      */
     confirmExecuteTrade(id) {
       this.$q.dialog({
-        title: 'Execute trade?',
-        message: 'Are you sure you want to execute trade ' + id + '?',
+        title: this.$t('fxCashTrade.executeTradeConfirmTitle'),
+        message: this.$t('fxCashTrade.executeTradeConfirmLabel', { id }),
         cancel: true,
         persistent: true,
         focus: 'none',
