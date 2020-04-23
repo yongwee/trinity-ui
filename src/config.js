@@ -13,8 +13,8 @@ export const role = {
 export const routes = {
   // FX token
   fxTokenOpenPosition: {
-    navBarTitleKey: 'routes.fxTokenOpenPosition',
-    titleKey: 'fxTokenOpenPosition.title',
+    navBarTitleKey: 'routes.fxTokenOpenPosition', // note: i18n key
+    titleKey: 'fxTokenOpenPosition.title', // note: i18n key
     name: 'fxToken/openPosition',
   },
   fxTokenOpenPositionCreateToken: {
@@ -29,6 +29,16 @@ export const routes = {
     navBarTitleKey: 'routes.fxTokenClosedPosition',
     titleKey: 'fxTokenClosedPosition.title',
     name: 'fxToken/closedPosition',
+  },
+  fxTokenDataEntry: {
+    navBarTitleKey: 'routes.fxTokenDataEntry',
+    titleKey: 'fxTokenDataEntry.title',
+    name: 'fxToken/dataEntry/home',
+  },
+  fxTokenDataEntryEnterSpotPrice: {
+    navBarTitleKey: 'routes.fxTokenDataEntry',
+    titleKey: 'fxTokenDataEntry.enterSpotPriceTitle',
+    name: 'fxToken/dataEntry/enterSpotPrice',
   },
 
   // Fee schedule module
@@ -111,7 +121,7 @@ export const routeAccess = {
   [role.ops]: [routes.fxTokenOpenPosition, routes.fxTokenClosedPosition, routes.spToken, routes.baseCashToken],
   [role.market]: [routes.fxTokenOpenPosition, routes.fxTokenClosedPosition, routes.executeFxCashTrade],
   [role.creditRisk]: [routes.riskModule, routes.fxTokenClosedPosition, routes.executeFxCashTrade],
-  [role.counterParty]: [],
+  [role.counterParty]: [routes.fxTokenDataEntry, routes.fxTokenOpenPosition, routes.fxTokenClosedPosition],
   [role.broker]: [routes.feeAdjustment, routes.feeApproval, routes.feeHistory],
   [role.esi]: [routes.feeApproval, routes.feeHistory, routes.tradeEnrichment],
 }

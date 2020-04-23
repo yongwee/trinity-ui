@@ -4,6 +4,7 @@ export default {
     // FX Token
     fxTokenOpenPosition: 'FX Token Open Position',
     fxTokenClosedPosition: 'FX Token Closed Position',
+    fxTokenDataEntry: 'FX Token Data Entry',
 
     // Fee Adjustment module
     feeAdjustment: 'Fee Adjustment',
@@ -55,6 +56,21 @@ export default {
     historyTitle: 'History',
     txHistoryTab: 'Transaction History',
     navHistoryTab: 'NAV History',
+  },
+
+  fxTokenDataEntry: {
+    title: 'FX Token Data Entry',
+
+    enterSpotPriceBtnLabel: 'Enter Spot Price',
+
+    searchLabel: 'Search',
+
+    enterSpotPriceTitle: 'Enter Spot Price',
+    enterSpotPriceFxTokenInputLabel: 'FX Token',
+    enterSpotPricePriceInputLabel: 'Price',
+
+    enterSpotPriceFxTokenInputError: 'Please provide a value for FX token',
+    enterSpotPricePriceInputError: 'Please provide a value for price',
   },
 
   // Investor Risk

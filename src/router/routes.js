@@ -58,6 +58,34 @@ const routes = [
         },
         component: () => import('pages/FxToken/FXTokenClosedPosition.vue'),
       },
+      {
+        path: '/fxtokendataentry',
+        component: ProxyLayout,
+        children: [
+          {
+            path: '',
+            name: routeConfig.fxTokenDataEntry.name,
+            meta: {
+              titleKey: routeConfig.fxTokenDataEntry.titleKey,
+            },
+            component: () => import('pages/FxToken/DataEntry/Home.vue'),
+          },
+          {
+            path: '/enterspotprice',
+            name: routeConfig.fxTokenDataEntryEnterSpotPrice.name,
+            meta: {
+              titleKey: routeConfig.fxTokenDataEntryEnterSpotPrice.titleKey,
+              breadcrumbs: [
+                {
+                  labelKey: routeConfig.fxTokenDataEntry.titleKey,
+                  name: routeConfig.fxTokenDataEntry.name,
+                },
+              ],
+            },
+            component: () => import('pages/FxToken/DataEntry/EnterSpotPrice.vue'),
+          },
+        ],
+      },
 
       // SP Token
       {
