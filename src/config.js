@@ -84,6 +84,13 @@ export const routes = {
     name: 'baseCashToken/history',
   },
 
+  // Risk module
+  riskModule: {
+    navBarTitleKey: 'routes.riskModule',
+    titleKey: 'riskModule.title',
+    name: 'riskModule/home',
+  },
+
   // FX-Cash Trade
   executeFxCashTrade: {
     navBarTitleKey: 'routes.ExecuteFxCashTrade',
@@ -103,7 +110,7 @@ export const routeAccess = {
   [role.cro]: [routes.fxTokenOpenPosition, routes.fxTokenClosedPosition, routes.spToken, routes.investorRisk],
   [role.ops]: [routes.fxTokenOpenPosition, routes.fxTokenClosedPosition, routes.spToken, routes.baseCashToken],
   [role.market]: [routes.fxTokenOpenPosition, routes.fxTokenClosedPosition, routes.executeFxCashTrade],
-  [role.creditRisk]: [],
+  [role.creditRisk]: [routes.riskModule, routes.fxTokenClosedPosition, routes.executeFxCashTrade],
   [role.counterParty]: [],
   [role.broker]: [routes.feeAdjustment, routes.feeApproval, routes.feeHistory],
   [role.esi]: [routes.feeApproval, routes.feeHistory, routes.tradeEnrichment],
@@ -115,6 +122,7 @@ const host = 'https://mmglnzhrm6.execute-api.ap-southeast-1.amazonaws.com/dev/v1
 
 const feeScheduleURL = host + '/feeSchedule';
 const spTokenURL = host + '/SPToken';
+const riskURL = host + '/Risk'
 const tradeEnrichURL = host + '/tradeEnrich';
 const brokerURL = host + '/broker';
 const baseCashTokenURL = host + '/baseCashToken';
@@ -139,6 +147,10 @@ export const URI = {
   spToken: spTokenURL,
   spTokenCreate: spTokenURL + '/issue',
   spTokenById: spTokenURL + '/issue/{id}',
+
+  // Risk
+  riskInvestor: riskURL + '/investors',
+  riskManage: riskURL + '/manage',
 
   // Base Cash Token
   baseCashToken: baseCashTokenURL,

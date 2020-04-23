@@ -19,6 +19,9 @@ export default {
     // Base Cash Token
     baseCashToken: 'Base Cash Token',
 
+    // Risk Module
+    riskModule: 'Risk Module',
+
     // Fx Cash Trade
     ExecuteFxCashTrade: 'Execute FX-Cash Trade',
 
@@ -149,6 +152,16 @@ export default {
 
     executeSuccessLabel: 'Trade has been executed successfully',
     cancelSuccessLabel: 'Trade has been cancelled successfully',
+  },
+
+  // Risk Module
+  riskModule: {
+    title: 'Risk Module',
+
+    totalPortfolioRiskThresholdLabel: 'Total Portfolio Risk Threshold',
+    availableFiatCashLabel: 'Available Fiat Cash',
+    navBaseCashTokensLabel: 'NAV of all Base Cash Tokens',
+    navSPTokensLabel: 'NAV of all SP Tokens',
   },
 
   // Fee Adjustment module

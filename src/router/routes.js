@@ -143,6 +143,16 @@ const routes = [
         component: () => import('pages/FxCashTrade/Execute.vue'),
       },
 
+      // Risk Module
+      {
+        path: '/riskmodule',
+        name: routeConfig.riskModule.name,
+        meta: {
+          titleKey: routeConfig.riskModule.titleKey,
+        },
+        component: () => import('pages/RiskModule/Home.vue'),
+      },
+
       // Investor Risk
       {
         path: '/investorrisk',
