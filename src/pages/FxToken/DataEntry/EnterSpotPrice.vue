@@ -27,6 +27,9 @@
       </div>
       <ActionBar />
     </q-form>
+
+    <!-- Dialogs -->
+    <SubmissionDialog :submission-promise="submissionPromise" />
   </PageLayout>
 </template>
 
@@ -34,12 +37,14 @@
 import PageLayout from 'src/components/PageLayout';
 import DirtyStateMixin from 'src/mixins/DirtyStateMixin';
 import ActionBar from 'src/components/form/ActionBar';
+import SubmissionDialog from 'src/components/SubmissionDialog';
 
 export default {
   name: 'FXTokenDataEntryEnterSpotPrice',
   components: {
     PageLayout,
     ActionBar,
+    SubmissionDialog,
   },
   mixins: [DirtyStateMixin],
   data() {
@@ -49,10 +54,22 @@ export default {
 
       priceValue: null,
       fxTokenValue: null,
+
+      submissionPromise: null,
     };
   },
   methods: {
-    submit() {},
+    submit() {
+      // TODO: proper post
+      const postDataPromise = Promise.reject();
+
+      this.submissionPromise = postDataPromise;
+
+      postDataPromise
+        .then(() => {
+          this.resetForm();
+        });
+    },
     reset() {
       this.priceValue = null;
       this.fxTokenValue = null;

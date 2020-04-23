@@ -98,7 +98,7 @@
       @submit="onTransferTokenSubmit"
     />
 
-    <SubmissionDialog :state.sync="submissionState" />
+    <SubmissionDialog :submission-promise="submissionPromise" />
   </PageLayout>
 </template>
 
@@ -106,7 +106,7 @@
 import PageLayout from 'src/components/PageLayout';
 import DataTable from 'src/components/DataTable';
 import TransferTokenDialog from './TransferTokenDialog';
-import SubmissionDialog, { stateType as submissionStateType } from 'src/components/SubmissionDialog';
+import SubmissionDialog from 'src/components/SubmissionDialog';
 import DirtyStateMixin from 'src/mixins/DirtyStateMixin';
 import { routes, URI } from 'src/config';
 
@@ -161,7 +161,7 @@ export default {
 
       transferTokenDialogOpen: false,
 
-      submissionState: null,
+      submissionPromise: null,
     };
   },
   created() {
@@ -218,16 +218,13 @@ export default {
      * @param {Object} payload
      */
     onTransferTokenSubmit(payload) {
-      this.submissionState = submissionStateType.submitting;
+      const postDataPromise = this.$axios.post(URI.baseCashTokenTransfer, payload)
+      this.submissionPromise = postDataPromise;
 
-      this.$axios.post(URI.baseCashTokenTransfer, payload)
+      postDataPromise
         .then(() => {
           this.isDirty = false;
-          this.submissionState = submissionStateType.success;
           this.transferTokenDialogOpen = false;
-        })
-        .catch(() => {
-          this.submissionState = submissionStateType.failure;
         });
     },
     /**

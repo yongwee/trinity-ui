@@ -96,7 +96,7 @@
 
     <!-- dialogs -->
     <SubmissionDialog
-      :state.sync="submissionState"
+      :submission-promise="submissionPromise"
       :success-label="$t('tradeEnrichment.successLabel')"
     />
   </PageLayout>
@@ -124,7 +124,7 @@ export default {
     return {
       file: null,
       downloadFile: null,
-      submissionState: null,
+      submissionPromise: null,
       step: 1,
     };
   },
@@ -133,34 +133,25 @@ export default {
      * Handles trade enrich submission.
      */
     onSubmit() {
-      this.submissionState = 'submitting';
-
       const formData = new FormData();
       formData.append('file', this.file);
 
-      this.$axios.post(URI.tradeEnrich, formData)
+      const postDataPromise = this.$axios.post(URI.tradeEnrich, formData);
+      this.submissionPromise = postDataPromise;
+
+      postDataPromise
         .then(({ data }) => {
           this.onSubmitSuccess(data);
         })
-        .catch(() => {
-          this.onSubmitFailure();
-        });
     },
     /**
      * Handles successful submission.
      */
     onSubmitSuccess(data) {
       this.downloadFile = data;
-      this.submissionState = 'success';
       this.resetForm();
 
       this.step++;
-    },
-    /**
-     * Handles failed submission.
-     */
-    onSubmitFailure() {
-      this.submissionState = 'failure';
     },
     /**
      * Reset handler hooked to form's reset event.

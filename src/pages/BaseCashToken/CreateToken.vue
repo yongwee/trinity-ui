@@ -38,6 +38,14 @@
           :rules="[val => !!val || $t('baseCashToken.createTokenCurrencyCodeError')]"
           :label="$t('baseCashToken.createTokenCurrencyCodeInput')"
         />
+        <q-input
+          v-model="amount"
+          outlined
+          class="col-6"
+          type="number"
+          :rules="[val => !!val || $t('baseCashToken.createTokenAmountError')]"
+          :label="$t('baseCashToken.createTokenAmountInput')"
+        />
       </div>
 
       <SectionHeader :header="$t('baseCashToken.issuanceInformationSubSectionHeader')" />
@@ -61,13 +69,13 @@
       <Subtitle :label="$t('baseCashToken.uploaderLabel')" />
 
       <q-file
-        v-model="files"
+        v-model="file"
         outlined
         clearable
         :rules="[value => !!value || $t('baseCashToken.uploaderError')]"
       >
         <div
-          v-if="!files"
+          v-if="!file"
           class="col-12 row flex-center text-grey-8 non-selectable full-height"
         >
           <q-icon
@@ -84,7 +92,7 @@
 
     <!-- dialogs -->
     <SubmissionDialog
-      :state.sync="submissionState"
+      :submission-promise="submissionPromise"
     />
   </PageLayout>
 </template>
@@ -110,54 +118,56 @@ export default {
   mixins: [DirtyStateMixin],
   data() {
     return {
-      tokenType: '',
+      tokenType: null,
       tokenTypeOptions: ['Base Cash'],
-      underlying: '',
-      tokenCode: '',
-      currencyCode: '',
-      amount: 0,
+      underlying: null,
+      tokenCode: null,
+      currencyCode: null,
+      amount: null,
 
-      issuerId: '',
-      issuingAddress: '',
+      issuerId: null,
+      issuingAddress: null,
 
-      files: null,
+      file: null,
 
-      submissionState: null,
+      submissionPromise: null,
     };
   },
   methods: {
     submit() {
-      this.submissionState = 'submitting';
+      const formData = new FormData();
 
-      this.$axios.post(URI.spTokenCreate, {
-        tokenType: this.tokenType,
-        underlying: this.underlying,
-        tokenCode: this.tokenCode,
-        currencyCode: this.currencyCode,
-        amount: this.amount,
+      formData.append('tokenType', this.tokenType);
+      formData.append('tokenCode', this.tokenCode);
+      formData.append('amount', this.amount);
+      formData.append('underlying', this.underlying);
+      formData.append('currencyCode', this.currencyCode);
 
-        issuerId: this.issuerId,
-        issuingAddress: this.issuingAddress,
-      })
+      formData.append('issuerAddress', this.issuingAddress);
+      formData.append('issuerId', this.issuerId);
+
+      formData.append('file', this.file);
+
+      const postDataPromise = this.$axios.post(URI.baseCashTokenIssue, formData);
+      this.submissionPromise = postDataPromise;
+
+      postDataPromise
         .then(() => {
           this.onSubmitSuccess();
-        })
-        .catch(() => {
-          this.onSubmitFailure();
         });
     },
     onSubmitSuccess() {
-      this.submissionState = 'success';
       this.resetForm();
     },
-    onSubmitFailure() {
-      this.submissionState = 'failure';
-    },
     reset() {
-      this.tokenName = '';
-      this.description = '';
-      this.investor = '';
-      this.amount = '';
+      this.tokenType = null;
+      this.tokenCode = null;
+      this.amount = null;
+      this.underlying = null;
+      this.currencyCode = null;
+
+      this.issuingAddress = null;
+      this.issuerId = null;
 
       this.isDirty = false;
     },

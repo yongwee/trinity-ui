@@ -82,7 +82,7 @@
 </template>
 
 <script>
-export const stateType = {
+const stateType = {
   submitting: 'submitting',
   success: 'success',
   failure: 'failure',
@@ -96,13 +96,9 @@ export const stateType = {
 export default {
   name: 'SubmissionDialog',
   props: {
-    /**
-     * state prop
-     * @values 'submitting', 'success', 'failure'
-     */ 
-    state: {
-      type: String,
-      default: '',
+    submissionPromise: {
+      type: Promise,
+      default: null,
     },
     submittingLabel: {
       type: String,
@@ -135,6 +131,11 @@ export default {
       },
     },
   },
+  data() {
+    return {
+      state: null,
+    }
+  },
   computed: {
     isSubmitting() {
       return this.state === stateType.submitting;
@@ -149,9 +150,22 @@ export default {
       return this.isSubmitting || this.isSuccessful || this.isFailed;
     },
   },
+  watch: {
+    submissionPromise() {
+      this.state = stateType.submitting;
+
+      this.submissionPromise
+        .then(() => {
+          this.state = stateType.success;
+        })
+        .catch(() => {
+          this.state = stateType.failure;
+        });
+    },
+  },
   methods: {
     onOk() {
-      this.$emit('update:state', null);
+      this.state = null;
     },
   },
 }

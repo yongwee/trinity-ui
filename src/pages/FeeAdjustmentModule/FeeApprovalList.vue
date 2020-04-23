@@ -66,7 +66,7 @@
     </FeeAdjustmentDetailsDialog>
 
     <SubmissionDialog
-      :state.sync="submissionState"
+      :submission-promise="submissionPromise"
       :success-title="successTitle"
       :success-label="successLabel"
     />
@@ -113,7 +113,8 @@ export default {
       showDetailsDialog: false,
       showDetailsErrorRetry: null,
       shownDetails: null,
-      submissionState: null,
+
+      submissionPromise: null,
       successTitle: '',
       successLabel: '',
     };
@@ -254,19 +255,16 @@ export default {
      * @param {String} approvalObj.reason
      */
     onApprovalSubmit(approvalObj) {
-      this.submissionState = 'submitting';
-
       const approvalURI = approvalObj.isApproved ? URI.feeScheduleApprove : URI.feeScheduleReject;
-      this.$axios.post(
+      const postDataPromise = this.$axios.post(
         approvalURI.replace('{id}', approvalObj.id),
         { reason: approvalObj.reason }
       )
+      this.submissionPromise = postDataPromise;
+      postDataPromise
         .then(() => {
           this.onSubmitSuccess(approvalObj.isApproved);
-        })
-        .catch(() => {
-          this.onSubmitFailure();
-        })
+        });
     },
     /**
      * Approval submission success handler
@@ -282,18 +280,11 @@ export default {
         ? this.$t('feeApprovalList.approveSuccessLabel')
         : this.$t('feeApprovalList.rejectSuccessLabel');
 
-      this.submissionState = 'success';
       this.isDirty = false;
 
       this.doHideDetails();
 
       this.fetchAll();
-    },
-    /**
-     * Approval submission failure handler
-     */
-    onSubmitFailure() {
-      this.submissionState = 'failure';
     },
     /**
      * Override dirty state mixin's beforeRouteLeave hook

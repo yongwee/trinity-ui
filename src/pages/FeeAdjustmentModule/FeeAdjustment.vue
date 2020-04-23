@@ -68,7 +68,7 @@
 
     <!-- dialogs -->
     <SubmissionDialog
-      :state.sync="submissionState"
+      :submission-promise="submissionPromise"
       :success-label="$t('feeAdjustment.successLabel')"
     />
   </PageLayout>
@@ -115,7 +115,7 @@ export default {
       broker: null,
       market: marketOptions[0],
 
-      submissionState: null,
+      submissionPromise: null,
     }
   },
   computed: {
@@ -178,37 +178,26 @@ export default {
      * Handles form submission.
      */
     submit() {
-      this.submissionState = 'submitting';
-
       const brokerType = this.isCPBroker
         ? 'ExBroker'
         : 'CpBroker';
 
       const formData = new FormData();
       formData.append(brokerType, this.broker.value);
-      formData.append('file', this.files);
+      formData.append('feeSchedule', this.files);
 
-      this.$axios.post(URI.feeSchedule, formData)
+      const postDataPromise = this.$axios.post(URI.feeSchedule, formData);
+      this.submissionPromise = postDataPromise;
+      postDataPromise
         .then(res => {
           this.onSubmitSuccessful();
-        })
-        .catch(() => {
-          this.onSubmitFailure();
         });
     },
     /**
      * Handles successful submission.
      */
     onSubmitSuccessful() {
-      this.submissionState = 'success';
       this.resetForm();
-    },
-    /**
-     * Handles failed submision.
-     */
-    onSubmitFailure() {
-      this.submissionState = 'failure';
-      // We do not reset form here so that user may attempt a resubmission
     },
     /**
      * Resets form.

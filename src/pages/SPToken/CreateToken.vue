@@ -36,7 +36,7 @@
 
     <!-- dialogs -->
     <SubmissionDialog
-      :state.sync="submissionState"
+      :submission-promise="submissionPromise"
     />
   </PageLayout>
 </template>
@@ -63,32 +63,25 @@ export default {
       investor: '',
       amount: '',
 
-      submissionState: null,
+      submissionPromise: null,
     };
   },
   methods: {
     submit() {
-      this.submissionState = 'submitting';
-
-      this.$axios.post(URI.spTokenCreate, {
+      const postDataPromise = this.$axios.post(URI.spTokenCreate, {
         tokenName: this.tokenName,
         description: this.description,
         investor: this.investor,
         amount: this.amount,
-      })
+      });
+      this.submissionPromise = postDataPromise;
+      postDataPromise
         .then(() => {
           this.onSubmitSuccess();
-        })
-        .catch(() => {
-          this.onSubmitFailure();
         });
     },
     onSubmitSuccess() {
-      this.submissionState = 'success';
       this.resetForm();
-    },
-    onSubmitFailure() {
-      this.submissionState = 'failure';
     },
     reset() {
       this.tokenName = '';

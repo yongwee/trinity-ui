@@ -77,7 +77,7 @@
 
     <!-- dialogs -->
     <SubmissionDialog
-      :state.sync="submissionState"
+      :submission-promise="submissionPromise"
       :success-label="successLabel"
     />
   </PageLayout>
@@ -86,7 +86,7 @@
 <script>
 import PageLayout from 'src/components/PageLayout';
 import DataTable from 'src/components/DataTable';
-import SubmissionDialog, { stateType as submissionStateType } from 'src/components/SubmissionDialog';
+import SubmissionDialog from 'src/components/SubmissionDialog';
 import { URI } from 'src/config';
 
 const tabType = {
@@ -143,7 +143,7 @@ export default {
 
       searchValue: '',
 
-      submissionState: null,
+      submissionPromise: null,
       successLabel: null,
 
       isLoadingCompletedData: false,
@@ -300,15 +300,11 @@ export default {
         ? URI.tradesExecute
         : URI.tradesCancel
 
-      this.submissionState = submissionStateType.submitting;
-
-      this.$axios.post(uri.replace('{id}', id))
+      const postDataPromise = this.$axios.post(uri.replace('{id}', id));
+      this.submissionPromise = postDataPromise;
+      postDataPromise
         .then(() => {
-          this.submissionState = submissionStateType.success;
           this.fetchCompletedData();
-        })
-        .catch(() => {
-          this.submissionState = submissionStateType.failure;
         });
     },
   },
