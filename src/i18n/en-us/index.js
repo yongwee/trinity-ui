@@ -141,6 +141,9 @@ export default {
 
     executeTradeBtnLabel: 'Execute Trade',
     cancelTradeBtnLabel: 'Cancel Trade',
+
+    executeSuccessLabel: 'Trade has been executed successfully',
+    cancelSuccessLabel: 'Trade has been cancelled successfully',
   },
 
   // Fee Adjustment module

@@ -78,6 +78,7 @@
     <!-- dialogs -->
     <SubmissionDialog
       :state.sync="submissionState"
+      :successLabel="successLabel"
     />
   </PageLayout>
 </template>
@@ -143,6 +144,7 @@ export default {
       searchValue: '',
 
       submissionState: null,
+      successLabel: null,
 
       isLoadingCompletedData: false,
       isLoadingPendingData: false,
@@ -266,6 +268,7 @@ export default {
         focus: 'none',
       })
         .onOk(() => {
+          this.successLabel = this.$t('fxCashTrade.cancelSuccessLabel');
           this.doPost(id, actionTypes.cancel);
         });
     },
@@ -282,6 +285,7 @@ export default {
         focus: 'none',
       })
         .onOk(() => {
+          this.successLabel = this.$t('fxCashTrade.executeSuccessLabel');
           this.doPost(id, actionTypes.execute);
         });
     },
@@ -300,14 +304,11 @@ export default {
 
       this.$axios.post(uri.replace('{id}', id))
         .then(() => {
-          this.submissionState = submissionStateType.successful;
+          this.submissionState = submissionStateType.success;
           this.fetchCompletedData();
         })
         .catch(() => {
-          this.submissionState - submissionStateType.failure;
-        })
-        .finally(() => {
-          this.submissionState = null;
+          this.submissionState = submissionStateType.failure;
         });
     },
   },
