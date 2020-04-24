@@ -137,6 +137,8 @@ const tradeEnrichURL = host + '/tradeEnrich';
 const brokerURL = host + '/broker';
 const baseCashTokenURL = host + '/baseCashToken';
 const tradesURL = host + '/Trades';
+const fxTokenURL = host + '/FXToken';
+
 
 export const URI = {
   // Fee schedule
@@ -179,4 +181,18 @@ export const URI = {
 
   // Trade enrichment
   tradeEnrich: tradeEnrichURL,
+
+  // FX Token
+  fxTokenClosed: fxTokenURL + '/closed',
+  fxTokenClosedByTokenCode: fxTokenURL + '/closed/{tokenCode}',
+  fxTokenIssue: fxTokenURL + '/issue',
+  fxTokenIssueByTokenCode: fxTokenURL + '/issue/{tokenCode}',
+  fxTokenNavHistory: fxTokenURL + '/navHist',
+  fxTokenNavHistoryClosed: fxTokenURL + '/navHist/closed',
+  fxTokenNavHistoryOpen: fxTokenURL + '/navHist/open',
+  fxTokenNavHistoryByTokenCode: fxTokenURL + '/navHist/{tokenCode}',
+  fxTokenOpen: fxTokenURL + '/open',
+  fxTokenOpenByTokenCode: fxTokenURL + '/open/{tokenCode}',
+  fxTokenTxHistoryClosed: fxTokenURL + '/txHist/closed',
+  fxTokenTxHistoryOpen: fxTokenURL + '/txHist/open',
 }

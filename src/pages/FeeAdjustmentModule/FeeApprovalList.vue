@@ -1,7 +1,6 @@
 <template>
   <PageLayout
-    :is-loading="isLoading"
-    :has-error="hasError"
+    :loading-data-promise="loadingDataPromise"
     :retry="boundFetchAll"
   >
     <q-table
@@ -93,8 +92,7 @@ export default {
   mixins: [DirtyStateMixin],
   data() {
     return {
-      isLoading: false,
-      hasError: false,
+      loadingDataPromise: null,
 
       // TODO: ensure columns are correct
       columns: [
@@ -157,19 +155,10 @@ export default {
      * Fetches pending items and broker data
      */
     fetchAll() {
-      this.isLoading = true;
-      this.hasError = false;
-
-      Promise.all([
+      this.loadingDataPromise = Promise.all([
         this.fetchBrokers(),
         this.fetchPendingList(),
-      ])
-        .catch(() => {
-          this.hasError = true;
-        })
-        .finally(() => {
-          this.isLoading = false;
-        });
+      ]);
     },
     /**
      * Fetches list of items awaiting approval.

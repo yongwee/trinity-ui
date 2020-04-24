@@ -1,7 +1,6 @@
 <template>
   <PageLayout
-    :has-error="hasError"
-    :is-loading="isLoading"
+    :loading-data-promise="loadingDataPromise"
     :retry="boundFetchAll"
   >
     <q-list
@@ -103,13 +102,12 @@ export default {
   },
   data() {
     return {
+      loadingDataPromise: null,
+
       rawHistory: null,
       showDetailsDialog: false,
       shownDetails: null,
       showDetailsErrorRetry: null,
-
-      hasError: false,
-      isLoading: false,
     };
   },
   computed: {
@@ -184,19 +182,10 @@ export default {
      * Fetches everything
      */
     fetchAll() {
-      this.isLoading = true;
-      this.hasError = false;
-
-      Promise.all([
+      this.loadingDataPromise = Promise.all([
         this.fetchBrokers(),
         this.fetchHistory(),
-      ])
-        .catch((e) => {
-          this.hasError = true;
-        })
-        .finally(() => {
-          this.isLoading = false;
-        });
+      ]);
     },
     /**
      * Fetches details modal.

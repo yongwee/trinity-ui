@@ -1,8 +1,7 @@
 <template>
   <PageLayout
     :title-format-config="titleFormatConfig"
-    :has-error="hasError"
-    :is-loading="isLoading"
+    :loading-data-promise="loadingDataPromise"
     :retry="boundFetchData"
   >
     <DataTable
@@ -29,6 +28,8 @@ export default {
   },
   data() {
     return {
+      loadingDataPromise: null,
+
       columns: [
         {
           name: 'investorAccount',
@@ -45,9 +46,6 @@ export default {
       ],
       data: [],
       searchValue: '',
-
-      hasError: false,
-      isLoading: false,
     }
   },
   computed: {
@@ -70,18 +68,10 @@ export default {
      * Fetches data based on token code grabbed from query params
      */
     fetchData() {
-      this.isLoading = true;
-      this.hasError = false;
-
-      this.$axios.get(URI.baseCashTokenTransferHistoryById.replace('{id}', this.tokenCode))
+      this.loadingDataPromise = this.$axios.get(URI.baseCashTokenTransferHistoryById.replace('{id}', this.tokenCode));
+      this.loadingDataPromise
         .then(res => {
           this.data = res.data;
-        })
-        .catch(() => {
-          this.hasError = true;
-        })
-        .finally(() => {
-          this.isLoading = false;
         });
     }
   },

@@ -1,7 +1,6 @@
 <template>
   <PageLayout
-    :is-loading="isLoading"
-    :has-error="hasError"
+    :loading-data-promise="loadingDataPromise"
     :retry="fetchBrokerData"
   >
     <q-form
@@ -103,8 +102,7 @@ export default {
   mixins: [DirtyStateMixin],
   data() {
     return {
-      isLoading: false,
-      hasError: false,
+      loadingDataPromise: null,
 
       files: null,
       clientOptions,
@@ -154,18 +152,10 @@ export default {
      * Fetches broker data and populates broker select
      */
     fetchBrokerData() {
-      this.isLoading = true;
-      this.hasError = false;
-
-      this.$axios.get(URI.brokerByCode.replace('{brokerCode}', this.userBrokerCode))
+      this.loadingDataPromise = this.$axios.get(URI.brokerByCode.replace('{brokerCode}', this.userBrokerCode));
+      this.loadingDataPromise
         .then(({ data }) => {
           this.brokers = data;
-        })
-        .catch(err => {
-          this.hasError = true;
-        })
-        .finally(() => {
-          this.isLoading = false;
         });
     },
     /**

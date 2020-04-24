@@ -1,7 +1,6 @@
 <template>
   <PageLayout
-    :is-loading="isLoading"
-    :has-error="hasError"
+    :loading-data-promise="loadingDataPromise"
     :retry="boundFetchData"
   >
     <div class="row q-mb-lg">
@@ -74,8 +73,7 @@ export default {
   },
   data() {
     return {
-      isLoading: false,
-      hasError: false,
+      loadingDataPromise: null,
 
       // TODO: fetch these values from API
       totalPortfolioRiskThresholdValue: 13,
@@ -116,12 +114,9 @@ export default {
   },
   methods: {
     fetchData() {
-      this.isLoading = true;
-      this.hasError = false;
-
       // TODO: proper fetch
-      // this.$axios.get(URI.riskManage)
-      Promise.resolve({ data: {
+      // this.loadingDataPromise = this.$axios.get(URI.riskManage);
+      this.loadingDataPromise = Promise.resolve({ data: {
         "allOpenSPTokenNAVAmount" : 11465812.980502945,
         "allBaseCashTokenNAVAmount" : 160274561.83070403,
         "availableFiatCashCurrency" : "USD",
@@ -129,7 +124,9 @@ export default {
         "allOpenSPTokenNAVCurrency" : "USD",
         "calculationDate" : "2020-03-20T23:12:14Z",
         "availableFiatCashAmount" : 108008281.90461012
-      }})
+      }});
+
+      this.loadingDataPromise
         .then(({ data }) => {
           const {
             availableFiatCashAmount,
@@ -149,13 +146,7 @@ export default {
           this.availableFiatCash = availableFiatCashAmount;
           this.navBaseCashTokens = allBaseCashTokenNAVAmount;
           this.navSPTokens = allOpenSPTokenNAVAmount;
-        })
-        .catch(() => {
-          this.hasError = true;
-        })
-        .finally(() => {
-          this.isLoading = false;
-        })
+        });
     },
     /**
      * Formats amount based on currency and locale.

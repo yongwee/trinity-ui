@@ -64,6 +64,7 @@
 </template>
 
 <script>
+import LoadingAndErrorStateMixin from 'src/mixins/LoadingAndErrorStateMixin';
 import GenericLoadingScreen from 'src/components/GenericLoadingScreen'
 import GenericErrorScreen from 'src/components/GenericErrorScreen'
 
@@ -76,6 +77,7 @@ export default {
     GenericLoadingScreen,
     GenericErrorScreen,
   },
+  mixins: [LoadingAndErrorStateMixin],
   props: {
     title: {
       type: String,
@@ -84,14 +86,6 @@ export default {
     titleFormatConfig: { // for formatting i18n strings, see: https://kazupon.github.io/vue-i18n/guide/formatting.html#named-formatting
       type: Object,
       default: null,
-    },
-    isLoading: {
-      type: Boolean,
-      default: false,
-    },
-    hasError: {
-      type: Boolean,
-      default: false,
     },
     retry: {
       type: Function,

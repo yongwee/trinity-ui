@@ -1,7 +1,6 @@
 <template>
   <PageLayout
-    :is-loading="isLoading"
-    :has-error="hasError"
+    :loading-data-promise="loadingDataPromise"
     :retry="boundFetchData"
   >
     <div class="q-mb-md">
@@ -29,7 +28,7 @@
 <script>
 import PageLayout from 'src/components/PageLayout';
 import DataTable from 'src/components/DataTable';
-import { routes } from 'src/config';
+import { routes, URI } from 'src/config';
 
 export default {
   name: 'FXTokenDataEntryHome',
@@ -39,6 +38,8 @@ export default {
   },
   data() {
     return {
+      loadingDataPromise: null,
+
       // TODO: proper definition
       columns: [
         {
@@ -58,9 +59,6 @@ export default {
       ],
       data: [],
       searchValue: '',
-
-      isLoading: false,
-      hasError: false,
     };
   },
   created() {
@@ -73,7 +71,8 @@ export default {
   methods: {
     fetchData() {
       // TODO: proper fetch
-      this.data = [
+      // this.loadingDataPromise = this.$axios.get(URI.fxTokenNavHistory)
+      this.loadingDataPromise = Promise.resolve({ data: [
         {
           id: 1,
           token: 'Token A',
@@ -82,7 +81,10 @@ export default {
           id: 2,
           token: 'Token B',
         },
-      ]
+      ]})
+        .then(({ data }) => {
+          this.data = data;
+        });
     },
     onEnterSpotPriceClick() {
       this.$router.push({ name: routes.fxTokenDataEntryEnterSpotPrice.name })
