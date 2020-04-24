@@ -25,7 +25,7 @@
       <q-space />
 
       <q-select
-        v-if="selectOptions && selectOptions.length"
+        v-if="showSelect && selectOptions && selectOptions.length"
         dense
         outlined
         clearable
@@ -133,6 +133,11 @@ export default {
     selectOptions: {
       type: Array,
       default: undefined,
+    },
+    // This prop is here temporarily to hide the select filter as they are currently unused
+    showSelect: {
+      type: Boolean,
+      default: false,
     },
   },
   computed: {
