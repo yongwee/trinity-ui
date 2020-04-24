@@ -19,13 +19,13 @@
         >
           <FormSectionHeader
             :header="$t('tradeEnrichment.uploadTrade')"
-            :caption="$t('tradeEnrichment.importAsXml')"
+            :caption="$t('tradeEnrichment.importFileCaption')"
           />
 
           <q-file
             v-model="file"
             outlined
-            accept="text/xml, application/xml"
+            accept="text/csv"
             clearable
             :rules="[value => !!value || $t('tradeEnrichment.uploaderError')]"
           >

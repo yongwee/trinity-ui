@@ -284,14 +284,14 @@ export default {
 
     stepUploadTrade: 'Step 1: Upload Trade',
     uploadTrade: 'Upload Trade',
-    importAsXml: 'Import as XML',
+    importFileCaption: 'Import as CSV',
 
     stepDownloadEnrichedTrade: 'Step 2: Download Enriched Trade',
     downloadEnrichedTrade: 'Download Enriched Trade',
     downloadEnrichedTradeCaption: 'Download enriched trade as CSV',
 
-    uploaderText: 'Drop XML file here, or click to browse.',
-    uploaderError: 'Please select a XML file',
+    uploaderText: 'Drop CSV file here, or click to browse.',
+    uploaderError: 'Please select a CSV file',
     successLabel: 'Trade has been enriched',
 
     goBackDialogTitle: 'Go back?',
