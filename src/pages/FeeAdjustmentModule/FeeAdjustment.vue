@@ -20,7 +20,7 @@
           @input="onFormChange"
         />
         <q-select
-          v-model="broker"
+          v-model="brokerPair"
           outlined
           :options="brokerOptions"
           :label="$t(brokerSelectLabel)"
@@ -110,7 +110,7 @@ export default {
       brokers: null,
 
       client: clientOptions[0],
-      broker: null,
+      brokerPair: null,
       market: marketOptions[0],
 
       submissionPromise: null,
@@ -134,9 +134,7 @@ export default {
           label: this.isCPBroker
             ? `${option.exBrokerCoyName} — ${option.exBrokerCode}`
             : `${option.cpBrokerCoyName} — ${option.cpBrokerCode}`,
-          value: this.isCPBroker
-            ? option.exBrokerCode
-            : option.cpBrokerCode,
+          value: option,
         };
       });
     },
@@ -168,13 +166,13 @@ export default {
      * Handles form submission.
      */
     submit() {
-      const brokerType = this.isCPBroker
-        ? 'ExBroker'
-        : 'CpBroker';
+      console.log(this.brokerPair)
+      const { exBrokerCode, cpBrokerCode } = this.brokerPair.value;
 
       const formData = new FormData();
-      formData.append(brokerType, this.broker.value);
-      formData.append('feeSchedule', this.files);
+      formData.append('ExBroker', exBrokerCode);
+      formData.append('CpBroker', cpBrokerCode);
+      formData.append('file', this.files);
 
       const postDataPromise = this.$axios.post(URI.feeSchedule, formData);
       this.submissionPromise = postDataPromise;
@@ -197,9 +195,9 @@ export default {
     },
     reset() {
       this.files = null;
-      this.client = null;
-      this.broker = null;
-      this.market = null;
+      // this.client = null; // commented out because there's only one pre-selected option for now
+      this.brokerPair = null;
+      // this.market = null;
       this.isDirty = false;
     },
   },
