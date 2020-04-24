@@ -83,6 +83,7 @@
 </template>
 
 <script>
+import LoadingAndErrorStateMixin from 'src/mixins/LoadingAndErrorStateMixin';
 import GenericLoadingScreen from 'src/components/GenericLoadingScreen';
 import GenericErrorScreen from 'src/components/GenericErrorScreen';
 
@@ -92,6 +93,7 @@ export default {
     GenericLoadingScreen,
     GenericErrorScreen
   },
+  mixins: [LoadingAndErrorStateMixin],
   props: {
     columns: {
       type: Array,
@@ -102,10 +104,6 @@ export default {
       default: undefined,
     },
 
-    isLoading: {
-      type: Boolean,
-      default: false,
-    },
     errorRetry: {
       type: Function,
       default: null,
@@ -164,7 +162,7 @@ export default {
       return this.isLoading && this.noData;
     },
     inErrorState() {
-      return !!this.errorRetry && this.noData;
+      return this.hasError && this.noData;
     },
   },
 }

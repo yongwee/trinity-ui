@@ -34,8 +34,8 @@
           <DataTable
             :data="completedData"
             :columns="completedColumns"
-            :is-loading="isLoadingCompletedData"
-            :error-retry="retryFetchCompletedData"
+            :loading-data-promise="loadingCompletedTradeDataPromise"
+            :error-retry="boundFetchCompletedData"
 
             :search-value.sync="searchValue"
           />
@@ -49,8 +49,8 @@
           <DataTable
             :data="pendingData"
             :columns="pendingColumns"
-            :is-loading="isLoadingPendingData"
-            :error-retry="retryFetchPendingData"
+            :loading-data-promise="loadingPendingTradeDataPromise"
+            :error-retry="boundFetchPendingData"
 
             :search-value.sync="searchValue"
           >
@@ -146,10 +146,8 @@ export default {
       submissionPromise: null,
       successLabel: null,
 
-      isLoadingCompletedData: false,
-      isLoadingPendingData: false,
-      retryFetchCompletedData: null,
-      retryFetchPendingData: null,
+      loadingCompletedTradeDataPromise: null,
+      loadingPendingTradeDataPromise: null,
     };
   },
   watch: {
@@ -203,11 +201,8 @@ export default {
      * Fetches data for completed trades
      */
     fetchCompletedData() {
-      this.retryFetchCompletedData = null;
-      this.isLoadingCompletedData = true;
-
       // TODO: proper fetch
-      Promise.resolve({ data: [
+      this.loadingCompletedTradeDataPromise = Promise.resolve({ data: [
         {
           id: 1,
           token: 'Token A',
@@ -216,26 +211,19 @@ export default {
           id: 2,
           token: 'Token B',
         },
-      ]})
+      ]});
+
+      this.loadingCompletedTradeDataPromise
         .then(({ data }) => {
           this.completedData = data;
-        })
-        .catch(() => {
-          this.retryFetchCompletedData = this.boundFetchCompletedData;
-        })
-        .finally(() => {
-          this.isLoadingCompletedData = false;
         });
     },
     /**
      * Fetches data for pending trades
      */
     fetchPendingData() {
-      this.retryFetchPendingData = null;
-      this.isLoadingPendingData = false;
-
       // TODO: proper fetch
-      Promise.resolve({ data: [
+      this.loadingPendingTradeDataPromise = Promise.resolve({ data: [
         {
           id: 1,
           token: 'Token A',
@@ -244,15 +232,11 @@ export default {
           id: 2,
           token: 'Token B',
         },
-      ]})
+      ]});
+
+      this.loadingPendingTradeDataPromise
         .then(({ data }) => {
           this.pendingData = data;
-        })
-        .catch(() => {
-          this.retryFetchPendingData = this.boundFetchPendingData;
-        })
-        .finally(() => {
-          this.isLoadingPendingData = false;
         });
     },
     /**
