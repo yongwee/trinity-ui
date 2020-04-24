@@ -90,10 +90,36 @@ export default {
 
     // Create Token
     createTokenTitle: 'Create SP Token',
-    createTokenNameInput: 'Token Name',
-    createTokenDescriptionInput: 'Description',
-    createTokenInvestorInput: 'Investor',
-    createTokenAmountInput: 'Amount',
+
+    createTokenCodeInput: 'Token Code',
+    createTokenClientIdInput: 'Client ID',
+    createTokenProductTypeInput: 'Product Type',
+    createTokenUnderlyingInput: 'Underlying',
+    createTokenNotionalAmountPerFixingInput: 'Notional Amount Per Fixing',
+    createTokenIndicativeSpotPriceInput: 'Indicative Spot Price',
+    createTokenStrikeRateInput: 'Strike Rate',
+    createTokenKnockOutPriceInput: 'Knock Out Price',
+    createTokenTenorInput: 'Tenor',
+    createTokenFixingPageInput: 'Fixing Page',
+    createTokenNoOfFixingInput: 'No. of Fixing',
+    createTokenCounterpartyIdInput: 'Counterparty ID',
+    createTokenOpsIdInput: 'Token Ops ID',
+
+    createTokenTenorInputSuffix: 'year(s)',
+
+    createTokenCodeInputError: 'Please provide a value for token code',
+    createTokenClientIdInputError: 'Please provide a value for client ID',
+    createTokenProductTypeInputError: 'Please provide a value for product type',
+    createTokenUnderlyingInputError: 'Please provide a value for underlying',
+    createTokenNotionalAmountPerFixingInputError: 'Please provide a value for notional amount per fixing',
+    createTokenIndicativeSpotPriceInputError: 'Please provide a value for indicative spot price',
+    createTokenStrikeRateInputError: 'Please provide a value for strike rate',
+    createTokenKnockOutPriceInputError: 'Please provide a value for knock out price',
+    createTokenTenorInputError: 'Please provide a value for tenor',
+    createTokenFixingPageInputError: 'Please provide a value for fixing page',
+    createTokenNoOfFixingInputError: 'Please provide a value for no. of fixing',
+    createTokenCounterpartyIdInputError: 'Please provide a value for counterparty ID',
+    createTokenOpsIdInputError: 'Please provide a value for token ops id',
   },
 
   //Base Cash Token

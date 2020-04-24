@@ -155,7 +155,7 @@ export const URI = {
 
   // SP Token
   spToken: spTokenURL,
-  spTokenCreate: spTokenURL + '/issue',
+  spTokenIssue: spTokenURL + '/issue',
   spTokenById: spTokenURL + '/issue/{id}',
 
   // Risk
