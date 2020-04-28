@@ -1,5 +1,8 @@
 <template>
-  <PageLayout>
+  <PageLayout
+    :loading-data-promise="loadingDataPromise"
+    :retry="boundFetchData"
+  >
     <div class="q-mb-md">
       <q-btn
         :label="$t('fxTokenOpenPosition.createToken')"
@@ -9,8 +12,8 @@
     </div>
 
     <DataTable
+      :value="data"
       :columns="columns"
-      :data="data"
       :search-label="$t('fxTokenOpenPosition.search')"
       :select-label="$t('fxTokenOpenPosition.tokenSelectLabel')"
 
@@ -20,47 +23,34 @@
 
       bordered
     >
-      <template v-slot:body="props">
-        <q-tr :props="props">
-          <q-td
-            key="id"
-            :props="props"
-          >
-            {{ props.row.id }}
-          </q-td>
-          <q-td
-            key="token"
-            :props="props"
-          >
-            {{ props.row.token }}
-          </q-td>
-          <q-td
-            key="actions"
-            :props="props"
-          >
-            <q-btn
-              flat
-              color="primary"
-              label="TX History"
-              @click="goToHistory('tx', props.row.id)"
-            />
-            <q-btn
-              flat
-              color="primary"
-              label="NAV History"
-              @click="goToHistory('nav', props.row.id)"
-            />
-          </q-td>
-        </q-tr>
+      <template v-slot:body-cell-actions="props">
+        <q-td
+          key="actions"
+          :props="props"
+        >
+          <q-btn
+            flat
+            color="primary"
+            label="TX History"
+            @click="goToHistory('tx', props.row.id)"
+          />
+          <q-btn
+            flat
+            color="primary"
+            label="NAV History"
+            @click="goToHistory('nav', props.row.id)"
+          />
+        </q-td>
       </template>
     </DataTable>
   </PageLayout>
 </template>
 
 <script>
+import FormatCurrencyMixin from 'src/mixins/FormatCurrencyMixin';
 import PageLayout from 'src/components/PageLayout';
 import DataTable from 'src/components/DataTable';
-import { routes } from 'src/config';
+import { URI, routes } from 'src/config';
 
 export default {
   name: 'FXTokenOpenPositionHome',
@@ -68,22 +58,93 @@ export default {
     PageLayout,
     DataTable,
   },
+  mixins: [FormatCurrencyMixin],
   data() {
     return {
       // TODO: proper definition
       columns: [
         {
-          name: 'id',
-          label: 'ID',
-          field: 'id',
+          name: 'baseCashTokenId',
+          label: 'Base Cash Token ID',
+          field: 'baseCashTokenId',
           required: true,
           align: 'left',
         },
         {
-          name: 'token',
-          label: 'Token',
-          field: 'token',
-          require: true,
+          name: 'tokenCode',
+          label: 'Token Code',
+          field: 'tokenCode',
+          required: true,
+          align: 'left',
+        },
+        {
+          name: 'amount',
+          label: 'Amount',
+          field: 'amount',
+          required: true,
+          format: (val, row) => {
+            return this.formatCurrency(
+              this.$i18n.locale,
+              row.underlying,
+              val,
+            );
+          },
+          align: 'left',
+        },
+        {
+          name: 'issuerAddress',
+          label: 'Issuer Address',
+          field: 'issuerAddress',
+          required: true,
+          align: 'left',
+        },
+        {
+          name: 'description',
+          label: 'Description',
+          field: 'description',
+          required: true,
+          align: 'left',
+        },
+        {
+          name: 'txId',
+          label: 'TX ID',
+          field: 'txId',
+          required: true,
+          align: 'left',
+        },
+        {
+          name: 'tokenType',
+          label: 'Token Type',
+          field: 'tokenType',
+          required: true,
+          align: 'left',
+        },
+        {
+          name: 'underlying',
+          label: 'Underlying',
+          field: 'underlying',
+          required: true,
+          align: 'left',
+        },
+        {
+          name: 'creationDate',
+          label: 'Creation Date',
+          field: 'creationDate',
+          required: true,
+          align: 'left',
+        },
+        {
+          name: 'currencyCode',
+          label: 'Currency Code',
+          field: 'currencyCode',
+          required: true,
+          align: 'left',
+        },
+        {
+          name: 'spTokenCode',
+          label: 'SP Token Code',
+          field: 'spTokenCode',
+          required: true,
           align: 'left',
         },
         {
@@ -91,30 +152,71 @@ export default {
           label: 'Actions',
           align: 'right',
           headerStyle: 'padding-right: 32px',
-        }
+        },
       ],
       data: [],
+      loadingDataPromise: null,
       searchValue: '',
       tokenSelectValue: '',
       tokenSelectOptions: ['asdf', 'zxcvzx'],
     };
   },
   created() {
+    this.boundFetchData = () => {
+      this.fetchData();
+    };
+
     this.fetchData();
   },
   methods: {
     fetchData() {
-      // TODO: proper fetch
-      this.data = [
+      // this.loadingDataPromise = this.$axios.get(URI.fxTokenOpen);
+      // --- TODO: START BLOCK: remove this block and uncomment the xhr above --
+      this.loadingDataPromise = Promise.resolve({ data: [
         {
-          id: 1,
-          token: 'Token A',
+          "BaseCashToken" : {
+            "tokenCode" : "JPY1",
+            "amount" : 1.0800828190461012,
+            "issuerAddress" : "300e5f3e8c3d2a8ff063a70df3d58b2573c03842d2ac259368e54b3014b19540",
+            "description" : "this represents the underlying FX tokens for accumulators only",
+            "txId" : "300e5f3e8c3d2a8ff063a70df3d58b2573c03842d2ac259368e54b3014b19540",
+            "underlying" : "JPY",
+            "tokenType" : "FX Token",
+            "creationDate" : "2020-03-20T23:12:14Z",
+            "currencyCode" : "840",
+            "spTokenCode" : "ABCUSDJPY1"
+          },
+          "baseCashTokenId" : 1,
+          "creationDate" : "2020-03-20T23:12:14Z"
         },
         {
-          id: 2,
-          token: 'Token B',
+          "BaseCashToken" : {
+            "tokenCode" : "JPY1",
+            "amount" : 1.0800828190461012,
+            "issuerAddress" : "300e5f3e8c3d2a8ff063a70df3d58b2573c03842d2ac259368e54b3014b19540",
+            "description" : "this represents the underlying FX tokens for accumulators only",
+            "txId" : "300e5f3e8c3d2a8ff063a70df3d58b2573c03842d2ac259368e54b3014b19540",
+            "underlying" : "JPY",
+            "tokenType" : "FX Token",
+            "creationDate" : "2020-03-20T23:12:14Z",
+            "currencyCode" : "840",
+            "spTokenCode" : "ABCUSDJPY1"
+          },
+          "baseCashTokenId" : 2,
+          "creationDate" : "2020-03-20T23:12:14Z"
         },
-      ]
+      ]});
+      // --- END BLOCK ---
+
+      this.loadingDataPromise
+        .then(({ data }) => {
+          this.data = data.map(item => {
+            return { // flatten data
+              baseCashTokenId: item.baseCashTokenId,
+              ...item.BaseCashToken,
+            }
+          });
+        });
     },
     onCreateTokenClick() {
       this.$router.push({ name: routes.fxTokenOpenPositionCreateToken.name });

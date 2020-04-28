@@ -38,6 +38,7 @@ import PageLayout from 'src/components/PageLayout';
 import DirtyStateMixin from 'src/mixins/DirtyStateMixin';
 import ActionBar from 'src/components/form/ActionBar';
 import SubmissionDialog from 'src/components/SubmissionDialog';
+import { URI } from 'src/config';
 
 export default {
   name: 'FXTokenDataEntryEnterSpotPrice',
@@ -61,7 +62,8 @@ export default {
   methods: {
     submit() {
       // TODO: proper post
-      const postDataPromise = Promise.reject();
+      // const postDataPromise = this.$axios.post(URI.fxTokenNavHistoryByTokenCode.replace('{tokenCode}', this.fxTokenValue));
+      const postDataPromise = Promise.resolve();
 
       this.submissionPromise = postDataPromise;
 

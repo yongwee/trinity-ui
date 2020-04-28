@@ -1,5 +1,8 @@
 <template>
-  <PageLayout>
+  <PageLayout
+    :loading-data-promise="loadingDataPromise"
+    :retry="boundFetchData"
+  >
     <q-btn
       class="q-mb-md"
       color="primary"
@@ -8,7 +11,7 @@
     />
 
     <DataTable
-      :data="data"
+      v-model="data"
       :columns="columns"
 
       :search-value.sync="searchValue"
@@ -19,94 +22,39 @@
 
       bordered
     >
-      <template v-slot:body="props">
-        <q-tr :props="props">
-          <q-td
-            key="tokenName"
-            :props="props"
-          >
-            {{ props.row.tokenName }}
-          </q-td>
-          <q-td
-            key="description"
-            :props="props"
-          >
-            {{ props.row.description }}
-          </q-td>
-          <q-td
-            key="investor"
-            :props="props"
-          >
-            {{ props.row.investor }}
-          </q-td>
-          <q-td
-            key="amount"
-            :props="props"
-          >
-            {{ props.row.amount }}
-          </q-td>
-          <q-td
-            key="actions"
-            :props="props"
-          >
-            <q-btn
-              flat
-              color="primary"
-              label="View Token"
-              @click="viewToken(props.row)"
-            />
-          </q-td>
-        </q-tr>
+      <template v-slot:body-cell-actions="props">
+        <q-td
+          key="actions"
+          :props="props"
+        >
+          <q-btn
+            flat
+            color="primary"
+            label="View Token"
+            @click="viewToken(props.row.tokenCode)"
+          />
+        </q-td>
       </template>
     </DataTable>
 
 
     <!-- Dialogs -->
-    <q-dialog v-model="viewTokenDialogOpen">
-      <q-card
-        v-if="viewTokenData"
-        :class="$style.dialogContainer"
-      >
-        <q-card-section class="row items-center justify-between">
-          <span class="text-h6">View {{ viewTokenData.tokenName }}</span>
-          <q-btn
-            v-close-popup
-            icon="close"
-            flat
-            round
-            dense
-          />
-        </q-card-section>
-
-        <q-list class="q-dialog__message">
-          <q-item
-            v-for="row in viewTokenRows"
-            :key="row.field"
-          >
-            <q-item-section
-              side
-              :class="$style.dialogLabel"
-            >
-              {{ row.label }}
-            </q-item-section>
-            <q-item-section>{{ viewTokenData[row.field] }}</q-item-section>
-          </q-item>
-        </q-list>
-      </q-card>
-    </q-dialog>
+    <ViewTokenDialog v-model="viewTokenDialogTokenCode" />
   </PageLayout>
 </template>
 
 <script>
 import PageLayout from 'src/components/PageLayout';
 import DataTable from 'src/components/DataTable';
-import { routes } from 'src/config';
+import ViewTokenDialog from './ViewTokenDialog';
+import { URI, routes } from 'src/config';
 
 export default {
   name: 'SPTokenHome',
   components: {
     PageLayout,
     DataTable,
+    ViewTokenDialog,
   },
   data() {
     return {
@@ -127,91 +75,60 @@ export default {
           align: 'left',
         },
         {
-          name: 'investor',
-          label: 'Investor',
-          field: 'investor',
-          require: true,
-          align: 'left',
-        },
-        {
-          name: 'amount',
-          label: 'Amount',
-          field: 'amount',
-          require: true,
-          align: 'left',
-        },
-        {
           name: 'actions',
           label: 'Actions',
           align: 'right',
           headerStyle: 'padding-right: 32px',
         },
       ],
+      loadingDataPromise: null,
       data: [],
       searchValue: '',
       tokenSelectValue: '',
       tokenSelectOptions: ['Token 1', 'Token 2'],
 
-      viewTokenDialogOpen: false,
-      viewTokenData: null,
-      viewTokenRows: [ // Field should match keys in token data
-        {
-          label: 'Token Name',
-          field: 'tokenName',
-        },
-        {
-          label: 'Description',
-          field: 'description',
-        },
-        {
-          label: 'Investor',
-          field: 'investor',
-        },
-        {
-          label: 'Amount',
-          field: 'amount',
-        },
-      ]
+      viewTokenDialogTokenCode: null,
     };
   },
   created() {
+    this.boundFetchData = () => {
+      this.fetchData();
+    };
+
     this.fetchData();
   },
   methods: {
     fetchData() {
-      // TODO: proper fetch
-      this.data = [
+      // this.loadingDataPromise = this.$axios(URI.spToken);
+      // --- TODO: START BLOCK: remove this block and uncomment the xhr above --
+      this.loadingDataPromise = Promise.resolve({ data: [
         {
-          tokenName: 'Token A',
-          description: 'Token A description',
-          investor: 'Xiaohuang',
-          amount: '12341234'
+          tokenCode: 'USDA',
+          tokenName: 'Token USDA',
+          description: 'Token USDA description',
         },
         {
-          tokenName: 'Token B',
-          description: 'Token B description',
-          investor: 'Xiaoliu',
-          amount: '45645632'
+          tokenCode: 'USDB',
+          tokenName: 'Token USDB',
+          description: 'Token USDB description',
         },
-      ]
+      ]});
+      // --- END BLOCK ---
+
+      this.loadingDataPromise
+        .then(({ data }) => {
+          this.data = data;
+        })
     },
     onCreateTokenClick() {
       this.$router.push({ name: routes.spTokenCreateToken.name });
     },
-    viewToken(tokenData) {
-      this.viewTokenData = tokenData;
-      this.viewTokenDialogOpen = true;
+    viewToken(tokenCode) {
+      this.viewTokenDialogTokenCode = tokenCode;
     }
   },
 }
 </script>
 
 <style lang="scss" module>
-.dialogContainer {
-  min-width: 350px;
-}
-
-.dialogLabel {
-  width: 120px;
-}
 </style>

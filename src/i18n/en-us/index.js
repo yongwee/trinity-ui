@@ -69,7 +69,7 @@ export default {
     enterSpotPriceFxTokenInputLabel: 'FX Token',
     enterSpotPricePriceInputLabel: 'Price',
 
-    enterSpotPriceFxTokenInputError: 'Please provide a value for FX token',
+    enterSpotPriceFxTokenInputError: 'Please select a FX token',
     enterSpotPricePriceInputError: 'Please provide a value for price',
   },
 
@@ -120,6 +120,9 @@ export default {
     createTokenNoOfFixingInputError: 'Please provide a value for no. of fixing',
     createTokenCounterpartyIdInputError: 'Please provide a value for counterparty ID',
     createTokenOpsIdInputError: 'Please provide a value for token ops id',
+
+    // View Token
+    viewTokenHeader: 'View {tokenName}',
   },
 
   //Base Cash Token
@@ -162,6 +165,7 @@ export default {
     uploaderError: 'Please select a file',
 
     // View Token
+    viewTokenHeader: 'View Base Cash Token {tokenName}',
     viewTokenName: 'Token Name',
     viewTokenDescription: 'Description',
     viewTokenAmount: 'Amount',

@@ -13,7 +13,7 @@
 
     <DataTable
       :columns="columns"
-      :data="data"
+      :value="data"
 
       :search-label="$t('fxTokenDataEntry.searchLabel')"
       :search-value.sync="searchValue"
@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import FormatCurrencyMixin from 'src/mixins/FormatCurrencyMixin';
 import PageLayout from 'src/components/PageLayout';
 import DataTable from 'src/components/DataTable';
 import { routes, URI } from 'src/config';
@@ -36,6 +37,7 @@ export default {
     PageLayout,
     DataTable,
   },
+  mixins: [FormatCurrencyMixin],
   data() {
     return {
       loadingDataPromise: null,
@@ -43,17 +45,45 @@ export default {
       // TODO: proper definition
       columns: [
         {
-          name: 'id',
-          label: 'ID',
-          field: 'id',
+          name: 'tokenCode',
+          label: 'Token Code',
+          field: 'tokenCode',
+          require: true,
+          align: 'left',
+        },
+        {
+          name: 'dataEntryAddress',
+          label: 'Data Entry Address',
+          field: 'dataEntryAddress',
+          require: true,
+          align: 'left',
+        },
+        {
+          name: 'txId',
+          label: 'TX ID',
+          field: 'txId',
           required: true,
           align: 'left',
         },
         {
-          name: 'token',
-          label: 'Token',
-          field: 'token',
+          name: 'creationDate',
+          label: 'Creation Date',
+          field: 'creationDate',
           require: true,
+          align: 'left',
+        },
+        {
+          name: 'navValueAmount',
+          label: 'NAV Value Amount',
+          field: 'navValueAmount',
+          require: true,
+          format: (val, row) => {
+            return this.formatCurrency(
+              this.$i18n.locale,
+              row.navValueCurrency,
+              val
+            );
+          },
           align: 'left',
         },
       ],
@@ -72,16 +102,25 @@ export default {
     fetchData() {
       // TODO: proper fetch
       // this.loadingDataPromise = this.$axios.get(URI.fxTokenNavHistory)
-      this.loadingDataPromise = Promise.resolve({ data: [
-        {
-          id: 1,
-          token: 'Token A',
-        },
-        {
-          id: 2,
-          token: 'Token B',
-        },
-      ]})
+      // --- TODO: START BLOCK: remove this block and uncomment the xhr above --
+      this.loadingDataPromise = Promise.resolve({ data: [{
+        "tokenCode" : "USDJPY",
+        "dataEntryAddress" : "300e5f3e8c3d2a8ff063a70df3d58b2573c03842d2ac259368e54b3014b19540",
+        "txId" : "300e5f3e8c3d2a8ff063a70df3d58b2573c03842d2ac259368e54b3014b19540",
+        "creationDate" : "2020-03-20T23:12:14Z",
+        "navValueCurrency" : "USD",
+        "navValueAmount" : 1.0800828190461012
+      }, {
+        "tokenCode" : "USDJPY",
+        "dataEntryAddress" : "300e5f3e8c3d2a8ff063a70df3d58b2573c03842d2ac259368e54b3014b19540",
+        "txId" : "300e5f3e8c3d2a8ff063a70df3d58b2573c03842d2ac259368e54b3014b19540",
+        "creationDate" : "2020-03-20T23:12:14Z",
+        "navValueCurrency" : "USD",
+        "navValueAmount" : 1.0800828190461012
+      }]});
+      // --- END BLOCK ---
+
+      this.loadingDataPromise
         .then(({ data }) => {
           this.data = data;
         });

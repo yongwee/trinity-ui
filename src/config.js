@@ -158,7 +158,7 @@ export const URI = {
   // SP Token
   spToken: spTokenURL,
   spTokenIssue: spTokenURL + '/issue',
-  spTokenById: spTokenURL + '/issue/{id}',
+  spTokenByTokenCode: spTokenURL + '/{tokenCode}',
 
   // Risk
   riskInvestor: riskURL + '/investors',
@@ -166,11 +166,11 @@ export const URI = {
 
   // Base Cash Token
   baseCashToken: baseCashTokenURL,
-  baseCashTokenById: baseCashTokenURL + '/{id}',
+  baseCashTokenByTokenCode: baseCashTokenURL + '/{tokenCode}',
   baseCashTokenIssue: baseCashTokenURL + '/issue',
-  baseCashTokenIssueById: baseCashTokenURL + '/issue/{id}',
+  baseCashTokenIssueByTokenCode: baseCashTokenURL + '/issue/{tokenCode}',
   baseCashTokenTransferHistory: baseCashTokenURL + '/transferHistory',
-  baseCashTokenTransferHistoryById: baseCashTokenURL + '/transferHistory/{id}',
+  baseCashTokenTransferHistoryByTokenCode: baseCashTokenURL + '/transferHistory/{tokenCode}',
   baseCashTokenTransfer: baseCashTokenURL + '/transfer',
 
   // Trades

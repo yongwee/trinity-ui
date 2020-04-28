@@ -1,6 +1,6 @@
 <template>
   <div
-    class="absolute-top full-width full-height column items-center"
+    class="q-pa-md absolute-top full-width full-height column items-center"
     :class="{
       [$style.container]: true,
       [$style.centered]: !centered,
@@ -15,7 +15,7 @@
       size="xl"
       class="q-mb-sm"
     />
-    <div class="q-mb-md">
+    <div class="q-mb-md text-center">
       {{ $t('components.genericErrorScreen.message') }}
     </div>
     <q-btn

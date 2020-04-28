@@ -1,5 +1,8 @@
 <template>
-  <PageLayout>
+  <PageLayout
+    :loading-data-promise="loadingDataPromise"
+    :retry="boundFetchData"
+  >
     <div class="q-mb-md row items-center">
       <q-btn
         class="q-mr-sm"
@@ -16,7 +19,7 @@
     </div>
 
     <DataTable
-      :data="data"
+      :value="data"
       :columns="columns"
 
       :search-value.sync="searchValue"
@@ -58,38 +61,7 @@
 
 
     <!-- Dialogs -->
-    <q-dialog v-model="viewTokenDialogOpen">
-      <q-card
-        v-if="viewTokenData"
-        :class="$style.dialogContainer"
-      >
-        <q-card-section class="row items-center justify-between">
-          <span class="text-h6">View {{ viewTokenData.tokenCode }}</span>
-          <q-btn
-            v-close-popup
-            icon="close"
-            flat
-            round
-            dense
-          />
-        </q-card-section>
-
-        <q-list class="q-dialog__message">
-          <q-item
-            v-for="row in viewTokenRows"
-            :key="row.field"
-          >
-            <q-item-section
-              side
-              :class="$style.dialogLabel"
-            >
-              {{ row.label }}
-            </q-item-section>
-            <q-item-section>{{ viewTokenData[row.field] }}</q-item-section>
-          </q-item>
-        </q-list>
-      </q-card>
-    </q-dialog>
+    <ViewTokenDialog v-model="viewTokenDialogTokenCode" />
 
     <TransferTokenDialog
       :value="transferTokenDialogOpen"
@@ -105,6 +77,7 @@
 <script>
 import PageLayout from 'src/components/PageLayout';
 import DataTable from 'src/components/DataTable';
+import ViewTokenDialog from './ViewTokenDialog';
 import TransferTokenDialog from './TransferTokenDialog';
 import SubmissionDialog from 'src/components/SubmissionDialog';
 import DirtyStateMixin from 'src/mixins/DirtyStateMixin';
@@ -115,6 +88,7 @@ export default {
   components: {
     PageLayout,
     DataTable,
+    ViewTokenDialog,
     TransferTokenDialog,
     SubmissionDialog,
   },
@@ -137,27 +111,13 @@ export default {
           headerStyle: 'padding-right: 32px',
         },
       ],
+      loadingDataPromise: null,
       data: [],
       searchValue: '',
       tokenSelectValue: '',
       tokenSelectOptions: ['Token 1', 'Token 2'],
 
-      viewTokenDialogOpen: false,
-      viewTokenData: null,
-      viewTokenRows: [ // Field should match keys in data/token
-        {
-          label: 'Token Code',
-          field: 'tokenCode',
-        },
-        {
-          label: 'Description',
-          field: 'description',
-        },
-        {
-          label: 'Amount',
-          field: 'amount',
-        },
-      ],
+      viewTokenDialogTokenCode: null,
 
       transferTokenDialogOpen: false,
 
@@ -165,19 +125,45 @@ export default {
     };
   },
   created() {
+    this.boundFetchData = () => {
+      this.fetchData();
+    };
+
     this.fetchData();
   },
   methods: {
     fetchData() {
-      // TODO: proper fetch
-      this.data = [
+      // this.loadingDataPromise = this.$axios.get(URI.baseCashToken);
+      // --- TODO: START BLOCK: remove this block and uncomment the xhr above --
+      this.loadingDataPromise = Promise.resolve({ data: [
         {
-          tokenCode: 'Token A',
-        },
-        {
-          tokenCode: 'Token B',
-        },
-      ]
+          "tokenCode" : "USDE",
+          "amount" : 1.0800828190461012,
+          "issuerAddress" : "300e5f3e8c3d2a8ff063a70df3d58b2573c03842d2ac259368e54b3014b19540",
+          "description" : "this represents fiat currency for accumulators only",
+          "txId" : "300e5f3e8c3d2a8ff063a70df3d58b2573c03842d2ac259368e54b3014b19540",
+          "underlying" : "USD",
+          "tokenType" : "BaseCash",
+          "creationDate" : "2020-03-20T23:12:14Z",
+          "currencyCode" : "840"
+        }, {
+          "tokenCode" : "USDF",
+          "amount" : 1.0800828190461012,
+          "issuerAddress" : "300e5f3e8c3d2a8ff063a70df3d58b2573c03842d2ac259368e54b3014b19540",
+          "description" : "this represents fiat currency for accumulators only",
+          "txId" : "300e5f3e8c3d2a8ff063a70df3d58b2573c03842d2ac259368e54b3014b19540",
+          "underlying" : "USD",
+          "tokenType" : "BaseCash",
+          "creationDate" : "2020-03-20T23:12:14Z",
+          "currencyCode" : "840"
+        }
+      ]});
+      // --- END BLOCK ---
+
+      this.loadingDataPromise
+        .then(({ data }) => {
+          this.data = data;
+        });
     },
     /**
      * Event handler for create token button click.
@@ -232,13 +218,7 @@ export default {
      * @param {String} tokenCode
      */
     viewDetails(tokenCode) {
-      this.viewTokenData = {
-        tokenCode,
-        description: 'token description',
-        amount: Math.random() * 1000000,
-      };
-
-      this.viewTokenDialogOpen = true;
+      this.viewTokenDialogTokenCode = tokenCode;
     },
     /**
      * Opens history page
@@ -257,11 +237,4 @@ export default {
 </script>
 
 <style lang="scss" module>
-.dialogContainer {
-  min-width: 350px;
-}
-
-.dialogLabel {
-  width: 120px;
-}
 </style>

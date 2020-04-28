@@ -1,7 +1,7 @@
 <template>
   <q-table
     :columns="columns"
-    :data="data"
+    :data="value"
     :filter="searchValue"
     flat
     v-bind="$attrs"
@@ -61,7 +61,7 @@
 
     <!-- no data slot -->
     <template
-      v-if="!!$scopedSlots.no-data || inLoadingState || inErrorState"
+      v-if="hasNoDataSlot || inLoadingState || inErrorState"
       v-slot:no-data="props"
     >
       <GenericLoadingScreen
@@ -99,9 +99,9 @@ export default {
       type: Array,
       required: true,
     },
-    data: {
+    value: {
       type: Array,
-      default: undefined,
+      default: () => [],
     },
 
     errorRetry: {
@@ -157,17 +157,33 @@ export default {
 
       return bodyCellSlots;
     },
+    hasNoDataSlot() {
+      return !!this.$scopedSlots['no-data'];
+    },
     /**
      * Property determining that table is not populated with data
      */
     noData() {
-      return !this.data || !this.data.length;
+      return !this.value || !this.value.length;
     },
     inLoadingState() {
       return this.isLoading && this.noData;
     },
     inErrorState() {
       return this.hasError && this.noData;
+    },
+  },
+  watch: {
+    loadingDataPromise: {
+      handler() {
+        if (!this.loadingDataPromise) return;
+
+        this.loadingDataPromise
+          .catch(() => {
+            this.$emit('input', []);
+          });
+      },
+      immediate: true,
     },
   },
 }
