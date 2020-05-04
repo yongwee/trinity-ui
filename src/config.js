@@ -1,3 +1,10 @@
+// ======================== Auth Tokens ========================
+export const authTokens = {
+  key: 'tokens', // local storage item key
+  expiration: 15 * 60 * 1000, // 15 mins
+}
+
+
 // ======================== Roles ========================
 export const role = {
   cro: 'cro',
@@ -9,8 +16,14 @@ export const role = {
   esi: 'esi',
 }
 
+
 // ======================== Routes ========================
 export const routes = {
+  // Login
+  login: {
+    name: 'login',
+  },
+
   // FX token
   fxTokenOpenPosition: {
     navBarTitleKey: 'routes.fxTokenOpenPosition', // note: i18n key
@@ -130,6 +143,8 @@ export const routeAccess = {
 const host = 'https://mmglnzhrm6.execute-api.ap-southeast-1.amazonaws.com/dev/v1';
 // const host = 'http://localhost:4444/v1';
 
+const loginHost = 'http://trinity-auth.ap-southeast-1.elasticbeanstalk.com';
+
 const feeScheduleURL = host + '/feeSchedule';
 const spTokenURL = host + '/SPToken';
 const riskURL = host + '/Risk'
@@ -141,6 +156,12 @@ const fxTokenURL = host + '/FXToken';
 
 
 export const URI = {
+  // Login
+  login: loginHost + '/auth',
+
+  // User
+  roles: host + '/roles',
+
   // Fee schedule
   feeSchedule: feeScheduleURL,
   feeScheduleCompleted: feeScheduleURL + '/completed',

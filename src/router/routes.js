@@ -1,5 +1,6 @@
 import { routes as routeConfig } from 'src/config';
 import ProxyLayout from 'src/components/ProxyLayout';
+import Login from 'src/pages/Login';
 
 const routes = [
   {
@@ -7,6 +8,15 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/Index.vue') },
+      {
+        path: '/login',
+        name: routeConfig.login.name,
+        component: Login,
+        meta: {
+          hideHeader: true,
+          hideDrawer: true,
+        },
+      },
       // FX Token
       {
         path: '/fxtokenopenposition',

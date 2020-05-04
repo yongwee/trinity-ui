@@ -30,6 +30,20 @@ export default {
     tradeEnrichment: 'Trade Enrichment',
   },
 
+  // Login
+
+  login: {
+    usernameInputLabel: 'Username',
+    passwordInputLabel: 'Password',
+    loginBtnLabel: 'Login',
+
+    usernameInputErrorLabel: 'Username is required',
+    passwordInputErrorLabel: 'Password is required',
+
+    invalidCredentialsErrorLabel: 'Invalid username or password',
+    serverErrorLabel: 'Something went wrong. Please try again later',
+  },
+
   // FX Token
   fxTokenOpenPosition: {
     title: 'FX Token Open Position',
