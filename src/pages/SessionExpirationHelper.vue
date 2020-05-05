@@ -92,7 +92,6 @@ export default {
 
         const currentTime = +new Date();
         const elapsedTime = currentTime - createdAt;
-        console.log('elapsedTime ', elapsedTime/1000/60)
 
         if (elapsedTime > expiration) {
           return this.showSessionExpired();
