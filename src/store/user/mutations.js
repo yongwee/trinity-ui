@@ -8,7 +8,6 @@ const roles = Object.values(role);
  * @param {Object} state
  */
 function resetUser(state) {
-  console.trace();
   Object.assign(state, defaultState());
 }
 /**

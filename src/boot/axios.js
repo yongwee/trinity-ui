@@ -31,20 +31,5 @@ export default function({ Vue, router, store }) {
     }
   );
 
-  // axiosInstance.interceptors.response.use(
-  //   res => {
-  //     return res;
-  //   },
-  //   err => {
-  //     const { response } = err;
-  //     console.log(router.push)
-  //     if (response && response.status === 401) { // Unauthorized
-  //       router.push({ name: routes.login.name });
-  //     }
-
-  //     return Promise.reject(err);
-  //   }
-  // );
-
   Vue.prototype.$axios = axiosInstance;
 }

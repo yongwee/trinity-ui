@@ -166,7 +166,6 @@ export default {
      * Handles form submission.
      */
     submit() {
-      console.log(this.brokerPair)
       const { exBrokerCode, cpBrokerCode } = this.brokerPair.value;
 
       const formData = new FormData();
