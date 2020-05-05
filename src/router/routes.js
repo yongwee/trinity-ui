@@ -4,19 +4,18 @@ import Login from 'src/pages/Login';
 
 const routes = [
   {
+    path: '/login',
+    name: routeConfig.login.name,
+    component: Login,
+    meta: {
+      skipBeforeEachRouteGuard: true, // skips accessible route checks
+    },
+  },
+  {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/Index.vue') },
-      {
-        path: '/login',
-        name: routeConfig.login.name,
-        component: Login,
-        meta: {
-          hideHeader: true,
-          hideDrawer: true,
-        },
-      },
       // FX Token
       {
         path: '/fxtokenopenposition',
