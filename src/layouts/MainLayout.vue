@@ -65,7 +65,6 @@
 
 <script>
 import { mapState } from 'vuex';
-import { role } from 'src/config';
 import UserProfileBtn from 'src/components/UserProfileBtn';
 import SessionExpirationHelper from 'src/pages/SessionExpirationHelper';
 
@@ -92,7 +91,7 @@ export default {
         };
       });
     },
-  }
+  },
 }
 </script>
 

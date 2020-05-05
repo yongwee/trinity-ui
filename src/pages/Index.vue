@@ -33,30 +33,5 @@ export default {
   components: {
     PageLayout,
   },
-  computed: {
-    ...mapState({
-      userRole: state => state.user.role,
-    }),
-  },
-  watch: {
-    userRole:{
-      immediate: true,
-      handler(role) {
-        // TODO: properly redirect user to their role's respective homepage
-        const routeAccessMap = routeAccess[role];
-        const defaultRoute = routeAccessMap && routeAccessMap[0];
-
-        if (defaultRoute) {
-          this.$router.replace({ name: defaultRoute.name });
-        } else {
-          this.$q.notify({
-            message: 'Unable to find a default route for this user',
-            color: 'negative',
-            position: 'top',
-          })
-        }
-      }
-    },
-  },
 }
 </script>

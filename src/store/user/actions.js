@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import { LocalStorage } from 'quasar';
-import { role, URI, authTokens } from 'src/config';
+import { URI, authTokens } from 'src/config';
 
 /**
  * Clears user data.
@@ -13,18 +13,6 @@ function clearData({ commit }) {
 
 /**
  * Makes a http request to fetch user information and commits it to state.
- * @param {Object} context
- */
-async function fetchUser({ commit }) {
-  const mockRole = role.broker;
-  const mockBrokerCode = 'CGML-ES';
-
-  commit('setRole', mockRole);
-  commit('setBrokerCode', mockBrokerCode);
-}
-
-/**
- * Makes a http request to fetch user role and accessible routes.
  * @param {Object} context
  * @param {boolean} forced - force a fetch
  */
@@ -40,6 +28,5 @@ async function fetchUserInfo({ commit, state }, forced) {
 
 export {
   clearData,
-  fetchUser,
   fetchUserInfo,
 }

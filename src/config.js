@@ -13,9 +13,9 @@ export const role = {
   cro: 'cro',
   ops: 'ops',
   market: 'market',
-  creditRisk: 'creditRisk',
-  counterParty: 'counterParty',
-  broker: 'broker',
+  creditRisk: 'creditrisk',
+  counterParty: 'counterparty',
+  broker: 'exbroker',
   esi: 'esi',
 }
 

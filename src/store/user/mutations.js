@@ -1,7 +1,5 @@
 import defaultState from './defaultState';
-import { role, pageNameToRoute } from 'src/config';
-
-const roles = Object.values(role);
+import { pageNameToRoute } from 'src/config';
 
 /**
  * Resets user state to default
@@ -9,27 +7,6 @@ const roles = Object.values(role);
  */
 function resetUser(state) {
   Object.assign(state, defaultState());
-}
-/**
- * Sets role of user into state.
- * @param {Object} state
- * @param {string} role
- */
-function setRole(state, newRole) {
-  if (roles.indexOf(newRole) === -1) {
-    throw new Error('Tried to set invalid role: ' + newRole);
-  }
-
-  state.role = newRole;
-}
-
-/**
- * Sets broker code of user into state.
- * @param {Object} state
- * @param {string} brokerCode
- */
-function setBrokerCode(state, newBrokerCode) {
-  state.brokerCode = newBrokerCode;
 }
 
 /**
@@ -74,8 +51,6 @@ function setUserInfo(state, newUserInfo) {
 
 export {
   resetUser,
-  setRole,
-  setBrokerCode,
   setUserInfo,
   setSessionAsExpired,
 }
