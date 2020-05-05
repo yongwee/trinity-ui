@@ -1,7 +1,10 @@
 // ======================== Auth Tokens ========================
+const authTokenExpiration = 15 * 60 * 1000; // 15 mins
+
 export const authTokens = {
   key: 'tokens', // local storage item key
-  expiration: 15 * 60 * 1000, // 15 mins
+  expiration: authTokenExpiration,
+  expirationWarning: authTokenExpiration - 1 * 60 * 1000,
 }
 
 
@@ -139,6 +142,13 @@ export const routeAccess = {
   [role.esi]: [routes.feeApproval, routes.feeHistory, routes.tradeEnrichment],
 }
 
+export const pageNameToRoute = {
+  'feeadjustment': routes.feeAdjustment,
+  'feehistory': routes.feeHistory,
+  'tradeenrich': routes.tradeEnrichment,
+  'feeapproval': routes.feeApproval,
+}
+
 // ======================== URI ========================
 const host = 'https://mmglnzhrm6.execute-api.ap-southeast-1.amazonaws.com/dev/v1';
 // const host = 'http://localhost:4444/v1';
@@ -158,9 +168,10 @@ const fxTokenURL = host + '/FXToken';
 export const URI = {
   // Login
   login: loginHost + '/auth',
+  refreshToken: loginHost + '/refreshToken',
 
   // User
-  roles: host + '/roles',
+  userInfo: host + '/userinfo',
 
   // Fee schedule
   feeSchedule: feeScheduleURL,
