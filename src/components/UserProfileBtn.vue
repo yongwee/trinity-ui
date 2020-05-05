@@ -20,6 +20,7 @@
             flat
             color="primary"
             label="Logout"
+            @click="handleLogout"
           />
         </q-card-section>
       </q-menu>
@@ -46,7 +47,11 @@ export default {
   methods: {
     ...mapActions({
       fetchUserInfo: 'user/fetchUserInfo',
+      logout: 'user/logout',
     }),
+    handleLogout() {
+      this.logout(this.$router);
+    },
   },
 }
 </script>

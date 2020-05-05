@@ -75,7 +75,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      clearUserData: 'user/clearData',
+      logout: 'user/logout',
       fetchUserInfo: 'user/fetchUserInfo'
     }),
     ...mapMutations({
@@ -177,9 +177,8 @@ export default {
      * Handles clicking of the log out button
      */
     handleLogOut() {
-      this.clearUserData();
+      this.logout(this.$router);
       this.closeDialog();
-      this.$router.push({ name: routes.login.name });
     },
     /**
      * Opens dialog.

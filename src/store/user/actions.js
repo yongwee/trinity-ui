@@ -1,14 +1,22 @@
 import Vue from 'vue';
 import { LocalStorage } from 'quasar';
-import { URI, authTokens } from 'src/config';
+import { URI, authTokens, routes } from 'src/config';
+import VueRouter from 'vue-router'
 
 /**
- * Clears user data.
+ * Clears user data and reroute to login (if able).
  * @param {Object} context
+ * @param {VueRouter} router
  */
-function clearData({ commit }) {
+function logout({ commit }, router) {
+  if (!(router instanceof VueRouter)) {
+    throw new Error('No valid vue router instance provided');
+  }
+
   LocalStorage.remove(authTokens.key);
   commit('resetUser');
+
+  router.push({ name: routes.login.name });
 }
 
 /**
@@ -27,6 +35,6 @@ async function fetchUserInfo({ commit, state }, forced) {
 }
 
 export {
-  clearData,
+  logout,
   fetchUserInfo,
 }
