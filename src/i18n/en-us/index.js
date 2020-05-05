@@ -30,6 +30,11 @@ export default {
     tradeEnrichment: 'Trade Enrichment',
   },
 
+  // App
+  userProfileBtn: {
+    welcomeMessage: 'Welcome, {name}',
+  },
+
   sessionExpirationHelper: {
     sessionExpiringTitle: 'Session expiring soon',
     sessionExpiringMessage: 'Your session is about to expire, would you like to extend it?\nYou will lose any unsaved changes if you choose not to extend your session.',
