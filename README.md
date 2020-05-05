@@ -40,12 +40,7 @@ yarn lint
 See [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).
 
 ## Testing in development mode
-- Set user role.
-  - Set the mock role that you want to assume in `src/store/user/actions`.
-  - Assign a new value to the `mockRole` variable.
-- Run mock server.
-  - Run a mock server that simulates the various API endpoints as the app makes actual requests.
-- Update `host` in `config.js` to point to production/mock API service.
+- Update `host` and `loginHost` in `config.js` to point to production/mock API service.
 
 
 ## Development FAQ
@@ -122,7 +117,7 @@ To add the route to the page:
       - `skipBeforeEachRouteGuard` — skip beforeEach route guard
 
 ### Navigating to a route
-Use route name to navigate to a route, do NOT use its path. This is so that if we need to change the path, we do not have to hunt down all the instances where paths are used. Names are much less liable to be changed since they have no semantic meaning visually.
+Use route name to navigate to a route, do **NOT** use its path. This is so that if we need to change the path, we do not have to hunt down all the instances where paths are used. Names are much less liable to be changed since they have no semantic meaning visually.
 
 To navigate to a route, do something like this
 ```
@@ -131,3 +126,7 @@ import { routes } from 'src/config'; // only do this once for every component
 const nameOfNextRoute = routes.somePage.name;
 this.$router.push({ name: nameOfNextRoute });
 ```
+
+## Additional Handover Notes
+- Ensure that `roles` in `src/config.js` matches the role strings that server will return for the `/userInfo` endpoint.
+  - Most of them are unused (as of 5/5/2020), the one of particular note is `counterParty` — it is used in the `feeadjustment` page.
