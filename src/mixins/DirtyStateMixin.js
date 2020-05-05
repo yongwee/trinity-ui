@@ -1,8 +1,16 @@
+import { mapState } from 'vuex';
+
 const DirtyMixin = {
   data() {
     return {
       isDirty: false,
+      dirtyDialog: null,
     }
+  },
+  computed: {
+    ...mapState({
+      sessionExpired: state => state.user.sessionExpired,
+    }),
   },
   methods: {
     /**
@@ -24,7 +32,13 @@ const DirtyMixin = {
      * @param {Function} next
      */
     showDirtyStateDialog(next) {
-      this.$q.dialog({
+      if (!!this.dirtyDialog) {
+        return;
+      }
+
+      this.isShowingDirty = true;
+
+      this.dirtyDialog = this.$q.dialog({
         title: this.$t('mixins.dirtyState.title'),
         message: this.$t('mixins.dirtyState.message'),
         persistent: true,
@@ -44,6 +58,9 @@ const DirtyMixin = {
         })
         .onCancel(() => {
           next(false);
+        })
+        .onDismiss(() => {
+          this.dirtyDialog = null;
         });
     },
     /**
@@ -57,6 +74,13 @@ const DirtyMixin = {
     },
   },
   beforeRouteLeave(to, from, next) {
+    // Ignore dirty logic if session has already expired
+    // and user is being re-routed to login.
+    if (this.sessionExpired) {
+      this.dirtyDialog && this.dirtyDialog.hide();
+      return next();
+    }
+
     if (this.preBeforeRouteLeave(to, from, next)) {
       this.confirmLeaveIfDirty(next);
     }
