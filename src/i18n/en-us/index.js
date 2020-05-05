@@ -30,8 +30,24 @@ export default {
     tradeEnrichment: 'Trade Enrichment',
   },
 
-  // Login
+  sessionExpirationHelper: {
+    sessionExpiringTitle: 'Session expiring soon',
+    sessionExpiringMessage: 'Your session is about to expire, would you like to extend it?\nYou will lose any unsaved changes if you choose not to extend your session.',
 
+    sessionExpiredTitle: 'Session expired',
+    sessionExpiredMessage: 'Your session has expired. Please log out and log back in to continue.',
+
+    sessionExtendedTitle: 'Session extended',
+    sessionExtendedMessage: 'Your session has been extended.',
+
+    sessionNotExtendedTitle: 'Session not extended',
+    sessionNotExtendedMessage: 'Your request for session extension has failed. Please try again, or log out and log back in.',
+
+    extendSessionBtnLabel: 'Extend Session',
+    logOutBtnLabel: 'Log Out',
+  },
+
+  // Login
   login: {
     usernameInputLabel: 'Username',
     passwordInputLabel: 'Password',
