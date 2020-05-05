@@ -1,9 +1,6 @@
+import defaultState from './defaultState';
+
 export default function () {
-    return {
-      id: null,
-      email: null,
-      role: null,
-      brokerCode: null,
-    }
-  }
+  return defaultState();
+}
   

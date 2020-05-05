@@ -55,6 +55,7 @@
 
 <script>
 import { LocalStorage } from 'quasar';
+import { mapState, mapActions } from 'vuex';
 import axios from 'axios';
 import { routes, URI } from 'src/config';
 
@@ -68,7 +69,23 @@ export default {
       isLoggingIn: false,
     };
   },
+  computed: {
+    ...mapState({
+      defaultRoute: state => state.user.defaultRoute,
+    }),
+  },
+  watch: {
+    defaultRoute: {
+      handler() {
+        this.goToDefaultRoute();
+      },
+      immediate: true,
+    }
+  },
   methods: {
+    ...mapActions({
+      fetchUserInfo: 'user/fetchUserInfo',
+    }),
     /**
      * Handles login process.
      */
@@ -97,7 +114,7 @@ export default {
 
           LocalStorage.set('tokens', tokens);
 
-          this.$router.push('/');
+          return this.fetchUserInfo()
         })
         .catch(err => {
           const { response } = err;
@@ -112,6 +129,18 @@ export default {
         .finally(() => {
           this.isLoggingIn = false;
         });
+    },
+    /**
+     * Routes user to their default page after being logged in.
+     */
+    goToDefaultRoute() {
+      const defaultRoute = this.defaultRoute;
+
+      if (!defaultRoute) {
+        return;
+      }
+
+      this.$router.replace(defaultRoute);
     },
   },
 }
