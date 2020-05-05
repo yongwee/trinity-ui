@@ -1,4 +1,4 @@
-import axios from 'axios';
+import Vue from 'vue';
 import { URI } from 'src/config';
 
 /**
@@ -15,7 +15,7 @@ async function fetchBrokers ({ commit, state }, forced) {
     return existingBroker;
   }
 
-  const { data: brokerMap } = await axios.get(URI.broker);
+  const { data: brokerMap } = await Vue.prototype.$axios.get(URI.broker);
 
   commit('setBrokers', brokerMap);
 }
