@@ -1,6 +1,8 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+    <q-header
+      elevated
+    >
       <q-toolbar class="justify-end">
         <!-- <q-btn
           flat
@@ -22,7 +24,7 @@
     >
       <img
         :class="$style.logo"
-        alt="Quasar logo"
+        alt="STACS logo"
         src="~assets/stacs_logo.png"
       >
 
@@ -56,22 +58,26 @@
     <q-page-container>
       <router-view />
     </q-page-container>
+
+    <SessionExpirationHelper />
   </q-layout>
 </template>
 
 <script>
 import { mapState } from 'vuex';
-import { role, routeAccess } from 'src/config';
+import { role } from 'src/config';
 import UserProfileBtn from 'src/components/UserProfileBtn';
+import SessionExpirationHelper from 'src/pages/SessionExpirationHelper';
 
 export default {
   name: 'MainLayout',
   components: {
     UserProfileBtn,
+    SessionExpirationHelper,
   },
   computed: {
     ...mapState({
-      userRole: state => state.user.role,
+      userRoutes: state => state.user.accessibleRoutes,
     }),
     /**
      * Returns navigation links based on role
@@ -79,13 +85,13 @@ export default {
      * @returns {Object[]} - links
      */
     navLinks() {
-      return routeAccess[this.userRole].map(route => {
+      return this.userRoutes.map(route => {
         return {
           titleKey: route.navBarTitleKey,
           to: { name: route.name },
         };
       });
-    }
+    },
   }
 }
 </script>
