@@ -36,6 +36,9 @@ yarn build
 yarn lint
 ```
 
+Note:
+Lint automatically fixes (most of) the linter warnings too, so it is a good habit to run it before making commits. Or consider setting up commit hooks (e.g. using husky) to run `yarn lint` before commit.
+
 ## Customize the configuration
 See [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).
 
@@ -45,6 +48,18 @@ See [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).
 
 ## Development FAQ
 Some additional development notes for smoother handover.
+
+### Folder structure
+Most things can be found under `src` folder.
+
+Sub-directories of note:
+- layout — contains MainLayout, which is the wrapper component for all pages that only logged-in users can see (excludes Login page itself)
+- router — contains `routes.js` where route definitions are
+- pages — contains implementations of all pages. `pages/index.js` is currently unused.
+  - page-specific components will also be found here, in their respective page sub-directories.
+- components — contains shared components that are used across different pages.
+- store — app's global state store.
+- i18n — i18n definitions.
 
 ### I18n
 #### Why use different i18n keys for the same string?
@@ -71,7 +86,7 @@ Search for `const host =`.
 New URI definitions can also be added underneath that line.
 
 ### Making AJAX requests
-AJAX requests can be made with (axios)[https://github.com/axios/axios] e.g.
+AJAX requests can be made with [axios](https://github.com/axios/axios) e.g.
 ```
 // GET request
 this.$axios.get(URI.resourceA);
@@ -126,6 +141,11 @@ import { routes } from 'src/config'; // only do this once for every component
 const nameOfNextRoute = routes.somePage.name;
 this.$router.push({ name: nameOfNextRoute });
 ```
+
+### Route guards
+Users are prevented from going to inaccessible routes using vue-router's `beforeEach` route guard; it also re-routes them back to their default route or login if they do so.
+
+The behaviour implementation can be found inside `router/index.js`.
 
 ## Additional Handover Notes
 - Ensure that `roles` in `src/config.js` matches the role strings that server will return for the `/userInfo` endpoint.
