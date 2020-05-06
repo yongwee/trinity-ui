@@ -153,7 +153,8 @@ export const pageNameToRoute = {
 const host = 'https://mmglnzhrm6.execute-api.ap-southeast-1.amazonaws.com/dev/v1';
 // const host = 'http://localhost:4444/v1';
 
-const loginHost = 'http://trinity-auth.ap-southeast-1.elasticbeanstalk.com';
+//const loginHost = 'http://trinity-auth.ap-southeast-1.elasticbeanstalk.com';
+const loginHost = 'https://lpco5zj9k6.execute-api.ap-southeast-1.amazonaws.com/dev';
 
 const feeScheduleURL = host + '/feeSchedule';
 const spTokenURL = host + '/SPToken';
