@@ -149,6 +149,7 @@ export default {
 <style lang="scss" module>
 .container {
   background-color: $primary;
+  overflow: auto;
 }
 
 .logo {
