@@ -44,7 +44,7 @@
       <q-file
         v-model="files"
         outlined
-        accept="text/csv"
+        accept=".csv"
         clearable
         :rules="[value => !!value || $t('feeAdjustment.uploaderError')]"
       >

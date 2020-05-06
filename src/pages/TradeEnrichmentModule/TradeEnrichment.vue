@@ -25,7 +25,7 @@
           <q-file
             v-model="file"
             outlined
-            accept="text/csv"
+            accept=".csv"
             clearable
             :rules="[value => !!value || $t('tradeEnrichment.uploaderError')]"
           >
