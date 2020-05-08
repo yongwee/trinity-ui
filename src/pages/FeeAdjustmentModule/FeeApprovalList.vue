@@ -175,8 +175,8 @@ export default {
      * @param {Number} id
      */
     getBrokerName(id) {
-      const { cpBrokerCoyName, cpBrokerCode } = this.brokerMap[id];
-      return `${cpBrokerCoyName} — ${cpBrokerCode}`;
+      const { exBrokerCode, cpBrokerCode } = this.brokerMap[id];
+      return `${exBrokerCode} — ${cpBrokerCode}`;
     },
     /**
      * Shows details dialog.

@@ -90,6 +90,7 @@ export default {
      * Handles login process.
      */
     login() {
+      this.username = this.username.trim();
       this.loginError = '';
       this.isLoggingIn = true;
 
