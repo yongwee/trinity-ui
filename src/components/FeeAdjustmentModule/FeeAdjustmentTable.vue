@@ -10,7 +10,7 @@
       <q-tr
         :props="props"
         :class="{
-          [$style.isModified]: id !== null && props.row.feeScheduleId !== id,
+          [$style.isModified]: getIsModified(props.row.feeScheduleId),
         }"
       >
         <template v-for="column in columns">
@@ -49,6 +49,13 @@ export default {
       type: Boolean,
       default: false,
     },
+    /**
+     * Forces all rows to show as modified rows
+     */
+    showAllRowsAsModified: {
+      type: Boolean,
+      default: false,
+    }
   },
   data() {
     return {
@@ -145,9 +152,9 @@ export default {
           field: 'feeScheduleId',
           align: 'left',
           format: val => {
-            return (val === this.id)
-              ? this.$t('feeAdjustmentTable.modifiedNo')
-              : this.$t('feeAdjustmentTable.modifiedYes');
+            return this.getIsModified(val)
+              ? this.$t('feeAdjustmentTable.modifiedYes')
+              : this.$t('feeAdjustmentTable.modifiedNo');
           },
           showColumnToggle: 'showModification',
           required: true,
@@ -212,6 +219,15 @@ export default {
       return this.rawColumns.filter(col => {
         return this[col.showColumnToggle] !== false;
       });
+    },
+  },
+  methods: {
+    getIsModified(feeScheduleId) {
+      return this.showAllRowsAsModified
+        || (
+          this.id !== null
+          && this.id !== feeScheduleId
+        );
     },
   },
 }

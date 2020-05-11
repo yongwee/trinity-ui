@@ -30,7 +30,7 @@
               :label="$t('feeApprovalList.review')"
               color="primary"
               class="text-no-wrap"
-              @click="doShowDetails(props.row.feeScheduleId)"
+              @click="doShowDetails(props.row.feeScheduleId, props.row.version)"
             />
           </q-td>
         </q-tr>
@@ -186,7 +186,7 @@ export default {
      * @param {String} details.id
      * @param {Object} details.data
      */
-    doShowDetails(id) {
+    doShowDetails(id, version) {
       const fetchDetails = () => {
         this.showDetailsDialog = true;
         this.showDetailsErrorRetry = null;
@@ -196,6 +196,7 @@ export default {
           .then(({ data }) => {
             this.shownDetails = {
               id,
+              showAllRowsAsModified: version === 1,
               data,
             };
           })

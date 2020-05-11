@@ -26,6 +26,7 @@
         class="q-mb-md"
         :class="$style.dialogBody"
         :data="details.data"
+        :show-all-rows-as-modified="details.showAllRowsAsModified"
       />
       <GenericErrorScreen
         v-else-if="!!errorRetry"
@@ -68,7 +69,8 @@ export default {
     },
     /**
      * details props.
-     * @property {String} id
+     * @property {string} id
+     * @property {boolean} forceShowModified
      * @property {Object} data 
      */
     details: {
