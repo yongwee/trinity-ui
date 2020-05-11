@@ -30,6 +30,17 @@ yarn dev
 yarn build
 ```
 
+You can also set the following env variables:
+ - `API_URL`
+ - `LOGIN_URL`
+
+e.g.
+```
+API_URL=https://mmglnzhrm6.execute-api.ap-southeast-1.amazonaws.com/dev/v1 \
+  LOGIN_URL=https://lpco5zj9k6.execute-api.ap-southeast-1.amazonaws.com/dev \
+  yarn build
+```
+
 ## Lint the files
 
 ```bash

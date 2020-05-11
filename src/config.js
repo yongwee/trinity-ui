@@ -150,11 +150,13 @@ export const pageNameToRoute = {
 }
 
 // ======================== URI ========================
-const host = 'https://mmglnzhrm6.execute-api.ap-southeast-1.amazonaws.com/dev/v1';
-// const host = 'http://localhost:4444/v1';
+// const defaultHost = 'https://mmglnzhrm6.execute-api.ap-southeast-1.amazonaws.com/dev/v1';
+const defaultHost = 'http://localhost:4444/v1';
+const host = process.env.API_URL || defaultHost;
 
-//const loginHost = 'http://trinity-auth.ap-southeast-1.elasticbeanstalk.com';
-const loginHost = 'https://lpco5zj9k6.execute-api.ap-southeast-1.amazonaws.com/dev';
+// const defaultLoginHost = 'https://lpco5zj9k6.execute-api.ap-southeast-1.amazonaws.com/dev';
+const defaultLoginHost = 'http://localhost:4444/v1';
+const loginHost = process.env.LOGIN_URL || defaultLoginHost;
 
 const feeScheduleURL = host + '/feeSchedule';
 const spTokenURL = host + '/SPToken';
