@@ -16,7 +16,7 @@
           <template v-slot:header>
             <q-item-section>
               <div class="row items-center">
-                {{ entry.brokerCoyName }}
+                {{ entry.brokerCodePair }}
                 <q-space />
                 <FeeAdjustmentHistoryDownloadBtn :broker-id="entry.brokerId" />
                 <q-btn
@@ -31,8 +31,8 @@
 
           <q-list>
             <q-item
-              v-for="item in entry.items"
-              :key="item.version"
+              v-for="(item, j) in entry.items"
+              :key="j"
               :inset-level="1"
             >
               <q-item-section>
@@ -129,11 +129,26 @@ export default {
       if (!this.rawHistory || !this.brokers) return;
 
       /**
+       * @typedef HistoryItem
+       * @property {number} version
+       * @property {boolean} approved
+       * @property {number} id
+       * @property {string} reason
+       */
+      /**
+       * @typedef History
+       * @property {string} brokerName
+       * @property {HistoryItem[]} items
+       */
+      /**
+       * @typedef {Object.<string, History>} HistoryMap
+       */
+      /**
        * historyByBrokerId e.g.
        * {
        *  [brokerId: Number]: {
        *    brokerName: String,
-       *    history: [{
+       *    items: [{
        *      version: Number,
        *      approved: Boolean,
        *      id: Number
@@ -142,6 +157,7 @@ export default {
        *  }
        * }
        */
+      /** @type {HistoryMap} */
       const historyByBrokerId = {};
 
       for (const item of this.rawHistory) {
@@ -150,18 +166,30 @@ export default {
         if (!historyByBrokerId[brokerId]) {
           historyByBrokerId[brokerId] = {
             brokerId,
-            brokerCoyName: this.getBrokerName(brokerId),
+            brokerCodePair: this.getBrokerCodePair(brokerId),
             items: [],
           };
         }
 
         const historyList = historyByBrokerId[brokerId].items;
-        historyList[item.version - 1] = {
+        historyList.push({
           version: item.version,
           approved: item.status === 'APPROVED',
           id: item.feeScheduleId,
           reason: item.actionReason,
-        };
+        });
+      }
+
+      // Sort by version in asc order. If version is the same, rejected should go first.
+      for (const { items } of Object.values(historyByBrokerId)) {
+        items.sort((item1, item2) => {
+          const versionOrder = item1.version - item2.version;
+          const item1Approval = item1.approved && 1 || 0;
+          const item2Approval = item2.approved && 1 || 0;
+
+          return versionOrder
+            || (item1Approval - item2Approval);
+        });
       }
 
       return Array.from(Object.values(historyByBrokerId));
@@ -201,10 +229,10 @@ export default {
      * @param {Number} brokerId
      * @returns {String}
      */
-    getBrokerName(brokerId) {
-      for (const { brokerMapId, cpBrokerCoyName, cpBrokerCode } of this.brokers) {
+    getBrokerCodePair(brokerId) {
+      for (const { brokerMapId, exBrokerCode, cpBrokerCode } of this.brokers) {
         if (brokerId === brokerMapId) {
-          return `${cpBrokerCoyName} — ${cpBrokerCode}`;
+          return `${exBrokerCode} — ${cpBrokerCode}`;
         }
       }
     },
