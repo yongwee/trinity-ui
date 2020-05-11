@@ -165,7 +165,9 @@ export default {
   },
   methods: {
     onOk() {
+      const okEvent = this.isSuccessful ? 'successOk' : 'failedOk';
       this.state = null;
+      window.setTimeout(() => this.$emit(okEvent), 300); // Defer to let dialog finish closing animation
     },
   },
 }

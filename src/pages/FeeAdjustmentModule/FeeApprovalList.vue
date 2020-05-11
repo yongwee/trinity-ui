@@ -68,6 +68,7 @@
       :submission-promise="submissionPromise"
       :success-title="successTitle"
       :success-label="successLabel"
+      @successOk="onSuccessOk"
     />
   </PageLayout>
 </template>
@@ -246,10 +247,14 @@ export default {
      */
     onApprovalSubmit(approvalObj) {
       const approvalURI = approvalObj.isApproved ? URI.feeScheduleApprove : URI.feeScheduleReject;
+
+      const formData = new FormData();
+      formData.append('reason', approvalObj.reason);
+
       const postDataPromise = this.$axios.post(
         approvalURI.replace('{id}', approvalObj.id),
-        { reason: approvalObj.reason }
-      )
+        formData,
+      );
       this.submissionPromise = postDataPromise;
       postDataPromise
         .then(() => {
@@ -273,7 +278,13 @@ export default {
       this.isDirty = false;
 
       this.doHideDetails();
-
+    },
+    /**
+     * Handles clicking on 'OK' of submission success dialog
+     */
+    onSuccessOk() {
+      // Do this here instead of inside onSubmitSuccess so that the
+      // change of loading state will not cause dialog to close
       this.fetchAll();
     },
     /**
