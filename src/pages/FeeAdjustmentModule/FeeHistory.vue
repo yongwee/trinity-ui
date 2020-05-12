@@ -137,7 +137,8 @@ export default {
        */
       /**
        * @typedef History
-       * @property {string} brokerName
+       * @property {number} brokerId
+       * @property {string} brokerCodePair
        * @property {HistoryItem[]} items
        */
       /**
@@ -147,7 +148,8 @@ export default {
        * historyByBrokerId e.g.
        * {
        *  [brokerId: Number]: {
-       *    brokerName: String,
+       *    brokerId: Number,
+       *    brokerCodePair: String,
        *    items: [{
        *      version: Number,
        *      approved: Boolean,
@@ -192,7 +194,13 @@ export default {
         });
       }
 
-      return Array.from(Object.values(historyByBrokerId));
+      // Lexicographically sort entries by broker code pair
+      const entriesList = Array.from(Object.values(historyByBrokerId));
+      entriesList.sort((entry1, entry2) => {
+        return entry1.brokerCodePair.localeCompare(entry2.brokerCodePair);
+      });
+
+      return entriesList;
     },
   },
   created() {
