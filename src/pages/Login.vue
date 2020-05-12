@@ -7,8 +7,8 @@
       <q-card-section class="q-px-xl q-pt-xl">
         <img
           :class="$style.logo"
-          alt="STACS logo"
-          src="~assets/stacs_logo.png"
+          alt="Mercury logo"
+          src="~assets/mercury_logo.png"
         >
       </q-card-section>
 
@@ -154,6 +154,6 @@ export default {
 }
 
 .logo {
-  height: 100px;
+  width: 200px;
 }
 </style>

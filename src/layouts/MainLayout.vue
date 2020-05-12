@@ -24,8 +24,8 @@
     >
       <img
         :class="$style.logo"
-        alt="STACS logo"
-        src="~assets/stacs_logo.png"
+        alt="Mercury logo"
+        src="~assets/mercury_logo.png"
       >
 
       <q-list v-if="navLinks && navLinks.length">
