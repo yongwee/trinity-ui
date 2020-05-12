@@ -84,12 +84,16 @@ export default {
      * @returns {Object[]} - links
      */
     navLinks() {
-      return this.userRoutes.map(route => {
-        return {
-          titleKey: route.navBarTitleKey,
-          to: { name: route.name },
-        };
-      });
+      return this.userRoutes
+        .filter(route => {
+          return !route.noNavDrawer;
+        })
+        .map(route => {
+          return {
+            titleKey: route.navBarTitleKey,
+            to: { name: route.name },
+          };
+        });
     },
   },
 }

@@ -36,10 +36,12 @@ export const routes = {
   fxTokenOpenPositionCreateToken: {
     name: 'fxToken/openPosition/createToken',
     titleKey: 'fxTokenOpenPosition.createTokenTitle',
+    noNavDrawer: true,
   },
   fxTokenOpenPositionHistory: {
     name: 'fxToken/openPosition/history',
     titleKey: 'fxTokenOpenPosition.historyTitle',
+    noNavDrawer: true,
   },
   fxTokenClosedPosition: {
     navBarTitleKey: 'routes.fxTokenClosedPosition',
@@ -55,6 +57,7 @@ export const routes = {
     navBarTitleKey: 'routes.fxTokenDataEntry',
     titleKey: 'fxTokenDataEntry.enterSpotPriceTitle',
     name: 'fxToken/dataEntry/enterSpotPrice',
+    noNavDrawer: true,
   },
 
   // Fee schedule module
@@ -91,6 +94,7 @@ export const routes = {
     navBarTitleKey: 'routes.spTokenCreateToken',
     titleKey: 'spToken.createTokenTitle',
     name: 'spToken/createToken',
+    noNavDrawer: true,
   },
 
   // Base Cash Token
@@ -103,11 +107,13 @@ export const routes = {
     navBarTitleKey: 'routes.baseCashTokenCreateToken',
     titleKey: 'baseCashToken.createTokenTitle',
     name: 'baseCashToken/createToken',
+    noNavDrawer: true,
   },
   baseCashTokenHistory: {
     navBarTitleKey: 'routes.baseCashToken',
     titleKey: 'baseCashToken.historyTitle',
     name: 'baseCashToken/history',
+    noNavDrawer: true,
   },
 
   // Risk module
@@ -143,6 +149,20 @@ export const routeAccess = {
 }
 
 export const pageNameToRoute = {
+  'investorrisk': routes.investorRisk,
+  'fxtokenopenposition': routes.fxTokenOpenPosition,
+  'fxtokenopenposition/createtoken': routes.fxTokenOpenPositionCreateToken,
+  'fxtokenopenposition/history': routes.fxTokenOpenPositionHistory,
+  'fxtokenclosedposition': routes.fxTokenClosedPosition,
+  'fxtokendataentry': routes.fxTokenDataEntry,
+  'fxtokendataentry/enterspotprice': routes.fxTokenDataEntryEnterSpotPrice,
+  'sptoken': routes.spToken,
+  'sptoken/createtoken': routes.spTokenCreateToken,
+  'basecashtoken': routes.baseCashToken,
+  'basecashtoken/createtoken': routes.baseCashTokenCreateToken,
+  'basecashtoken/history': routes.baseCashTokenHistory,
+  'executefxcashtrade': routes.executeFxCashTrade,
+  'riskmodule': routes.riskModule,
   'feeadjustment': routes.feeAdjustment,
   'feehistory': routes.feeHistory,
   'tradeenrich': routes.tradeEnrichment,
