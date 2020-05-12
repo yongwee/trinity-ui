@@ -131,6 +131,7 @@ To add the route to the page:
     - `titleKey` — i18n key to page's title; to be shown on the top of the page itself (defined in step #1).
       - e.g. `newPage.title`
     - `name` (required) — route name; to be used for programmatic navigation.
+    - `noNavDrawer` — do not display in navigation drawer. Usually used for children pages e.g. "Create FX Token" form page.
 3. Add route:
   - Go to `src/router/routes.js`.
   - Add a new entry under `routes.children` with the following properties:
