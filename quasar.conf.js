@@ -110,9 +110,9 @@ module.exports = function (ctx) {
       workboxPluginMode: 'GenerateSW', // 'GenerateSW' or 'InjectManifest'
       workboxOptions: {}, // only for GenerateSW
       manifest: {
-        name: 'Stacs',
-        short_name: 'Stacs',
-        description: 'UI',
+        name: 'Mercury',
+        short_name: 'Mercury',
+        description: 'Mercury UI',
         display: 'standalone',
         orientation: 'portrait',
         background_color: '#ffffff',
@@ -178,7 +178,7 @@ module.exports = function (ctx) {
       builder: {
         // https://www.electron.build/configuration/configuration
 
-        appId: 'stacs-ui'
+        appId: 'mercury-ui'
       },
 
       // More info: https://quasar.dev/quasar-cli/developing-electron-apps/node-integration
