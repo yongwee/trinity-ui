@@ -29,7 +29,32 @@ async function fetchUserInfo({ commit, state }, forced) {
     return;
   }
 
-  const { data } = await Vue.prototype.$axios.get(URI.userInfo);
+  // const { data } = await Vue.prototype.$axios.get(URI.userInfo);
+  const allpages = ['investorrisk',
+  'fxtokenopenposition',
+  'fxtokenopenposition/createtoken',
+  'fxtokenopenposition/history',
+  'fxtokenclosedposition',
+  'fxtokendataentry',
+  'fxtokendataentry/enterspotprice',
+  'sptoken',
+  'sptoken/createtoken',
+  'basecashtoken',
+  'basecashtoken/createtoken',
+  'basecashtoken/history',
+  'executefxcashtrade',
+  'riskmodule',
+  'feeadjustment',
+  'feehistory',
+  'tradeenrich',
+  'feeapproval',].join(',')
+  const data = {
+    "username": "mocked",
+    "name": "mocked user",
+    "brokerCode": null,
+    "pageNames": allpages,
+    "role": "esi"
+  }
 
   commit('setUserInfo', data);
 }
