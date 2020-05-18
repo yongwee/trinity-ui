@@ -8,7 +8,7 @@
     >
       <div class="row q-gutter-sm">
         <q-select
-          v-model="fxTokenValue"
+          v-model="fxToken"
           outlined
           :label="$t('fxTokenDataEntry.enterSpotPriceFxTokenInputLabel')"
           class="col-5"
@@ -16,13 +16,23 @@
           :rules="[val => !!val || $t('fxTokenDataEntry.enterSpotPriceFxTokenInputError')]"
           @input="onFormChange"
         />
+        <q-select
+          v-model="fxCurrency"
+          outlined
+          :label="$t('fxTokenDataEntry.enterSpotPriceFxCurrencyInputLabel')"
+          class="col-5"
+          :options="fxCurrencyOptions"
+          :rules="[val => !!val || $t('fxTokenDataEntry.enterSpotPriceFxCurrencyInputError')]"
+          @input="onFormChange"
+        />
         <q-input
-          v-model="priceValue"
+          v-model="price"
           outlined
           type="number"
           :label="$t('fxTokenDataEntry.enterSpotPricePriceInputLabel')"
+          step="0.00001"
           class="col-4"
-          :rules="[val => !!val || $t('fxTokenDataEntry.enterSpotPricePriceInputError')]"
+          :rules="[val => validatePrice(val) || $t('fxTokenDataEntry.enterSpotPricePriceInputError')]"
         />
       </div>
       <ActionBar />
@@ -39,6 +49,9 @@ import DirtyStateMixin from 'src/mixins/DirtyStateMixin';
 import ActionBar from 'src/components/form/ActionBar';
 import SubmissionDialog from 'src/components/SubmissionDialog';
 import { URI } from 'src/config';
+import currencyPairs from './currencyPairs';
+
+const priceRgx = /^\d*(\.\d{0,5})?$/; // allow up to 5 decimal places
 
 export default {
   name: 'FXTokenDataEntryEnterSpotPrice',
@@ -53,16 +66,21 @@ export default {
       // TODO: fetch values for this
       fxTokenOptions: ['Token A', 'Token B'],
 
-      priceValue: null,
-      fxTokenValue: null,
+      price: null,
+      fxToken: null,
+      fxCurrency: null,
+      fxCurrencyOptions: currencyPairs,
 
       submissionPromise: null,
     };
   },
   methods: {
+    validatePrice(val) {
+      return priceRgx.test(val);
+    },
     submit() {
       // TODO: proper post
-      // const postDataPromise = this.$axios.post(URI.fxTokenNavHistoryByTokenCode.replace('{tokenCode}', this.fxTokenValue));
+      // const postDataPromise = this.$axios.post(URI.fxTokenNavHistoryByTokenCode.replace('{tokenCode}', this.fxToken));
       const postDataPromise = Promise.resolve();
 
       this.submissionPromise = postDataPromise;
@@ -73,8 +91,9 @@ export default {
         });
     },
     reset() {
-      this.priceValue = null;
-      this.fxTokenValue = null;
+      this.price = null;
+      this.fxToken = null;
+      this.fxCurrency = null;
 
       this.isDirty = false;
     },

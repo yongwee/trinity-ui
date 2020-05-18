@@ -129,10 +129,12 @@ export default {
 
     enterSpotPriceTitle: 'Enter Spot Price',
     enterSpotPriceFxTokenInputLabel: 'FX Token',
+    enterSpotPriceFxCurrencyInputLabel: 'FX Currency',
     enterSpotPricePriceInputLabel: 'Price',
 
     enterSpotPriceFxTokenInputError: 'Please select a FX token',
-    enterSpotPricePriceInputError: 'Please provide a value for price',
+    enterSpotPriceFxCurrencyInputError: 'Please select a FX currency pair',
+    enterSpotPricePriceInputError: 'Please provide a valid number of up to 5 decimal places for price e.g. 22.12345',
   },
 
   // Investor Risk
