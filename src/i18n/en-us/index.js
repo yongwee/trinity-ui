@@ -78,6 +78,33 @@ export default {
     createTokenTitle: 'Create FX Token',
     createTokenSectionHeader: 'Create FX Token',
 
+    basicInformationSubSectionHeader: 'Basic Information',
+    createTokenTypeInput: 'Token Type',
+    createTokenFXCurrenncyInput: 'FX Currency',
+    createTokenTokenCodeInput: 'Token Code',
+    createTokenCurrencyCodeInput: 'Currency Code',
+    createTokenAmountInput: 'Amount',
+
+    issuanceInformationSubSectionHeader: 'Issuance Information',
+    createTokenIssuerIdInput: 'Issuer ID',
+    createTokenIssuingAddressInput: 'Issuing Address',
+    createTokenSPTokenCodeInput: 'SP Token Code',
+    createTokenSupportingDocumentsHeader: 'Supporting Documents',
+
+    uploaderLabel: 'Upload Supporting Documents',
+    uploaderText: 'Drop supporting document files here, or click to browse.',
+
+    createTokenTypeError: 'Please select a token type',
+    createTokenFXCurrencyError: 'Please provide a FX currency',
+    createTokenTokenCodeError: 'Please provide a token code',
+    createTokenCurrencyCodeError: 'Please provide an integer for currency code e.g. 231',
+    createTokenAmountError: 'Please provide a number up to 2 decimal points for amount e.g. 123.11',
+
+    createTokenIssuerIdError: 'Please provide an issuer ID',
+    createTokenIssuingAddressError: 'Please proivde an issuing address',
+    createTokenSPTokenCodeError: 'Please proivde a SP token code',
+    uploaderError: 'Please select a file',
+
     // History
     historyTitle: 'History',
     txHistoryTab: 'Transaction History',
