@@ -30,7 +30,8 @@ async function fetchUserInfo({ commit, state }, forced) {
   }
 
   // const { data } = await Vue.prototype.$axios.get(URI.userInfo);
-  const allpages = ['investorrisk',
+  const allpages = [
+  'investorrisk',
   'fxtokenopenposition',
   'fxtokenopenposition/createtoken',
   'fxtokenopenposition/history',

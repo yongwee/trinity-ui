@@ -100,7 +100,8 @@ export default {
       };
 
       // Use a clean instace of axios here because we do not want the injected customs of this.$axios
-      axios.post(URI.login, loginPayload)
+      // axios.post(URI.login, loginPayload)
+      Promise.resolve({ data: {} })
         .then(({ data }) => {
           const { idToken, accessToken, refreshToken, session } = data;
 
@@ -110,7 +111,8 @@ export default {
             accessToken,
             refreshToken,
             session,
-            createdAt: +Date.now(),
+            // createdAt: +Date.now(),
+            createdAt: 91589787563710,
           };
 
           LocalStorage.set('tokens', tokens);

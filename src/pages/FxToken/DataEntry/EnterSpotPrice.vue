@@ -6,7 +6,7 @@
       @submit="submit"
       @change="onFormChange"
     >
-      <div class="row q-gutter-sm">
+      <InputLayout>
         <q-select
           v-model="fxToken"
           outlined
@@ -32,9 +32,9 @@
           :label="$t('fxTokenDataEntry.enterSpotPricePriceInputLabel')"
           step="0.00001"
           class="col-4"
-          :rules="[val => validatePrice(val) || $t('fxTokenDataEntry.enterSpotPricePriceInputError')]"
+          :rules="[val => !!val || $t('fxTokenDataEntry.enterSpotPricePriceInputError')]"
         />
-      </div>
+      </InputLayout>
       <ActionBar />
     </q-form>
 
@@ -46,17 +46,17 @@
 <script>
 import PageLayout from 'src/components/PageLayout';
 import DirtyStateMixin from 'src/mixins/DirtyStateMixin';
+import InputLayout from 'src/components/form/InputLayout';
 import ActionBar from 'src/components/form/ActionBar';
 import SubmissionDialog from 'src/components/SubmissionDialog';
 import { URI } from 'src/config';
 import currencyPairs from './currencyPairs';
 
-const priceRgx = /^\d*(\.\d{0,5})?$/; // allow up to 5 decimal places
-
 export default {
   name: 'FXTokenDataEntryEnterSpotPrice',
   components: {
     PageLayout,
+    InputLayout,
     ActionBar,
     SubmissionDialog,
   },
@@ -75,9 +75,6 @@ export default {
     };
   },
   methods: {
-    validatePrice(val) {
-      return priceRgx.test(val);
-    },
     submit() {
       // TODO: proper post
       // const postDataPromise = this.$axios.post(URI.fxTokenNavHistoryByTokenCode.replace('{tokenCode}', this.fxToken));

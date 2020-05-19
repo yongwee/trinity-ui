@@ -7,7 +7,7 @@
       @change="onFormChange"
     >
       <SectionHeader :header="$t('baseCashToken.basicInformationSubSectionHeader')" />
-      <div class="row q-gutter-sm q-mb-md">
+      <InputLayout class="q-mb-sm">
         <q-select
           v-model="tokenType"
           outlined
@@ -43,13 +43,14 @@
           outlined
           class="col-6"
           type="number"
+          step="0.01"
           :rules="[val => !!val || $t('baseCashToken.createTokenAmountError')]"
           :label="$t('baseCashToken.createTokenAmountInput')"
         />
-      </div>
+      </InputLayout>
 
       <SectionHeader :header="$t('baseCashToken.issuanceInformationSubSectionHeader')" />
-      <div class="row q-gutter-sm q-mb-sm">
+      <InputLayout class="q-mb-sm">
         <q-input
           v-model="issuerId"
           outlined
@@ -64,7 +65,7 @@
           :rules="[val => !!val || $t('baseCashToken.createTokenIssuingAddressError')]"
           :label="$t('baseCashToken.createTokenIssuingAddressInput')"
         />
-      </div>
+      </InputLayout>
 
       <Subtitle :label="$t('baseCashToken.uploaderLabel')" />
 
@@ -101,6 +102,7 @@
 import PageLayout from 'src/components/PageLayout';
 import SectionHeader from 'src/components/form/SectionHeader';
 import Subtitle from 'src/components/form/Subtitle';
+import InputLayout from 'src/components/form/InputLayout';
 import ActionBar from 'src/components/form/ActionBar';
 import SubmissionDialog from 'src/components/SubmissionDialog';
 import DirtyStateMixin from 'src/mixins/DirtyStateMixin';
@@ -112,6 +114,7 @@ export default {
     PageLayout,
     SectionHeader,
     Subtitle,
+    InputLayout,
     ActionBar,
     SubmissionDialog,
   },

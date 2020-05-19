@@ -37,7 +37,7 @@
           outlined
           class="col-6"
           type="number"
-          :rules="[val => validateInt(val) || $t('fxTokenOpenPosition.createTokenCurrencyCodeError')]"
+          :rules="[val => !!val || $t('fxTokenOpenPosition.createTokenCurrencyCodeError')]"
           :label="$t('fxTokenOpenPosition.createTokenCurrencyCodeInput')"
         />
         <q-input
@@ -46,7 +46,7 @@
           class="col-6"
           type="number"
           step="0.01"
-          :rules="[val => !!val && validateAmt(val) || $t('fxTokenOpenPosition.createTokenAmountError')]"
+          :rules="[val => !!val || $t('fxTokenOpenPosition.createTokenAmountError')]"
           :label="$t('fxTokenOpenPosition.createTokenAmountInput')"
         />
       </div>
@@ -119,8 +119,6 @@ import SubmissionDialog from 'src/components/SubmissionDialog';
 import DirtyStateMixin from 'src/mixins/DirtyStateMixin';
 import { URI } from 'src/config';
 
-const amtRgx = /^\d*(\.\d{0,2})?$/; // 2 decimal places
-
 export default {
   name: 'FXTokenOpenPositionCreateToken',
   components: {
@@ -156,12 +154,6 @@ export default {
     this.tokenType = this.tokenTypeOptions[0];
   },
   methods: {
-    validateInt(val) {
-      return Number.isInteger(Number.parseFloat(val, 10));
-    },
-    validateAmt(val) {
-      return amtRgx.test(val);
-    },
     submit() {
       const formData = new FormData();
 

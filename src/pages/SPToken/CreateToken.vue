@@ -15,7 +15,7 @@
           :label="$t('spToken.createTokenCodeInput')"
           :rules="[val => !!val || $t('spToken.createTokenCodeInputError')]"
         />
-        <br>
+        <div class="break" />
 
         <q-input
           v-model="clientId"
@@ -24,7 +24,7 @@
           :label="$t('spToken.createTokenClientIdInput')"
           :rules="[val => !!val || $t('spToken.createTokenClientIdInputError')]"
         />
-        <br>
+        <div class="break" />
 
         <q-select
           v-model="productType"
@@ -34,7 +34,7 @@
           :label="$t('spToken.createTokenProductTypeInput')"
           :rules="[val => !!val || $t('spToken.createTokenProductTypeInputError')]"
         />
-        <br>
+        <div class="break" />
 
         <q-input
           v-model="underlying"
@@ -43,20 +43,33 @@
           :label="$t('spToken.createTokenUnderlyingInput')"
           :rules="[val => !!val || $t('spToken.createTokenUnderlyingInputError')]"
         />
+        <div class="break" />
+
+        <q-input
+          v-model="notionalAmount"
+          outlined
+          type="number"
+          step="0.01"
+          class="col-4"
+          :label="$t('spToken.createTokenNotionalAmountInput')"
+          :rules="[val => !!val || $t('spToken.createTokenNotionalAmountInputError')]"
+        />
         <q-input
           v-model="notionalAmountPerFixing"
           outlined
           type="number"
+          step="0.01"
           class="col-5"
           :label="$t('spToken.createTokenNotionalAmountPerFixingInput')"
           :rules="[val => !!val || $t('spToken.createTokenNotionalAmountPerFixingInputError')]"
         />
-        <br>
+        <div class="break" />
 
         <q-input
           v-model="indicativeSpotPrice"
           outlined
           type="number"
+          step="0.00001"
           class="col-4"
           :label="$t('spToken.createTokenIndicativeSpotPriceInput')"
           :rules="[val => !!val || $t('spToken.createTokenIndicativeSpotPriceInputError')]"
@@ -65,6 +78,7 @@
           v-model="strikeRate"
           outlined
           type="number"
+          step="0.00001"
           class="col-3"
           :label="$t('spToken.createTokenStrikeRateInput')"
           :rules="[val => !!val || $t('spToken.createTokenStrikeRateInputError')]"
@@ -73,21 +87,23 @@
           v-model="knockOutPrice"
           outlined
           type="number"
+          step="0.00001"
           class="col-4"
           :label="$t('spToken.createTokenKnockOutPriceInput')"
           :rules="[val => !!val || $t('spToken.createTokenKnockOutPriceInputError')]"
         />
+        <div class="break" />
 
         <q-input
-          v-model="tenor"
+          v-model="maturityDate"
           outlined
-          class="col-3"
-          :suffix="$t('spToken.createTokenTenorInputSuffix')"
+          class="col-4"
+          :suffix="$t('spToken.createTokenMaturityDateInputSuffix')"
           type="number"
-          :label="$t('spToken.createTokenTenorInput')"
-          :rules="[val => !!val || $t('spToken.createTokenTenorInputError')]"
+          :label="$t('spToken.createTokenMaturityDateInput')"
+          :rules="[val => !!val || $t('spToken.createTokenMaturityDateInputError')]"
         />
-        <br>
+        <div class="break" />
 
         <q-input
           v-model="fixingPage"
@@ -104,7 +120,7 @@
           :label="$t('spToken.createTokenNoOfFixingInput')"
           :rules="[val => !!val || $t('spToken.createTokenNoOfFixingInputError')]"
         />
-        <br>
+        <div class="break" />
 
         <q-input
           v-model="counterpartyId"
@@ -113,7 +129,7 @@
           :label="$t('spToken.createTokenCounterpartyIdInput')"
           :rules="[val => !!val || $t('spToken.createTokenCounterpartyIdInputError')]"
         />
-        <br>
+        <div class="break" />
 
         <q-input
           v-model="opsId"
@@ -160,10 +176,11 @@ export default {
       productType: null,
       underlying: null,
       notionalAmountPerFixing: null,
+      notionalAmount: null,
       indicativeSpotPrice: null,
       strikeRate: null,
       knockOutPrice: null,
-      tenor: null,
+      maturityDate: null,
       fixingPage: null,
       noOfFixing: null,
       counterpartyId: null,
@@ -181,11 +198,12 @@ export default {
         clientId: this.clientId,
         productType: this.productType,
         underlying: this.underlying,
+        notionalAmount: this.notionalAmount,
         notionalAmountPerFixing: this.notionalAmountPerFixing,
         indicativeSpotPrice: this.indicativeSpotPrice,
         strikeRate: this.strikeRate,
         knockOutPrice: this.knockOutPrice,
-        tenor: this.tenor,
+        maturityDate: this.maturityDate,
         fixingPage: this.fixingPage,
         noOfFixing: this.noOfFixing,
         counterpartyId: this.counterpartyId,
@@ -207,11 +225,12 @@ export default {
       this.productType = null;
       this.underlying = null;
       this.amount = null;
+      this.notionalAmount = null;
       this.notionalAmountPerFixing = null;
       this.indicativeSpotPrice = null;
       this.strikeRate = null;
       this.knockOutPrice = null;
-      this.tenor = null;
+      this.maturityDate = null;
       this.fixingPage = null;
       this.noOfFixing = null;
       this.counterpartyId = null;

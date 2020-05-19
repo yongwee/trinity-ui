@@ -14,9 +14,8 @@ export default {
 </script>
 
 <style lang="scss" module>
-.layout :global(br) {
+.layout :global(.break) {
   width: 100%;
-  content: '';
   margin: 0;
 }
 </style>

@@ -34,12 +34,6 @@
             label="TX History"
             @click="goToHistory('tx', props.row.id)"
           />
-          <q-btn
-            flat
-            color="primary"
-            label="NAV History"
-            @click="goToHistory('nav', props.row.id)"
-          />
         </q-td>
       </template>
     </DataTable>
@@ -64,9 +58,9 @@ export default {
       // TODO: proper definition
       columns: [
         {
-          name: 'baseCashTokenId',
-          label: 'Base Cash Token ID',
-          field: 'baseCashTokenId',
+          name: 'clientId',
+          label: 'Client ID',
+          field: 'clientId',
           required: true,
           align: 'left',
         },
@@ -186,7 +180,7 @@ export default {
             "currencyCode" : "840",
             "spTokenCode" : "ABCUSDJPY1"
           },
-          "baseCashTokenId" : 1,
+          "clientId" : 1,
           "creationDate" : "2020-03-20T23:12:14Z"
         },
         {
@@ -202,7 +196,7 @@ export default {
             "currencyCode" : "840",
             "spTokenCode" : "ABCUSDJPY1"
           },
-          "baseCashTokenId" : 2,
+          "clientId" : 2,
           "creationDate" : "2020-03-20T23:12:14Z"
         },
       ]});
@@ -212,7 +206,7 @@ export default {
         .then(({ data }) => {
           this.data = data.map(item => {
             return { // flatten data
-              baseCashTokenId: item.baseCashTokenId,
+              clientId: item.clientId,
               ...item.BaseCashToken,
             }
           });
