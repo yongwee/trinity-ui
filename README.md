@@ -72,6 +72,24 @@ Sub-directories of note:
 - store — app's global state store.
 - i18n — i18n definitions.
 
+### "Disabling" login
+You might want to disable login and the session expiration window for easier development. However, to keep the code clean, instead of completely disabling/removing the login screen, we will do a fake non-expiring login instead.
+
+1. Inside `Login.vue`, comment out `axios.post` and replace it like:
+```
+// axios.post(URI.login, loginPayload)
+Promise.resolve({ data: {} })
+```
+this causes "login" to always succeed with empty data.
+
+2. To make your session never expire (on frontend), change the `createdAt` to some incredibly large value like:
+```
+// createdAt: +Date.now(),
+createdAt: 91589787563710,
+```
+
+3. Log in as per normal, doesn't matter what the credentials are (no longer used after the above changes). You should now stay permamently logged in.
+
 ### I18n
 #### Why use different i18n keys for the same string?
 Some strings that are the same have different keys
